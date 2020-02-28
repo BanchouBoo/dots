@@ -1,0 +1,99 @@
+[colors]
+background = ${xrdb:background:#000}
+foreground = ${xrdb:color7:#fff}
+foreground-alt = #66
+
+[bar/main]
+modules-left = bspwm monocle-tabs
+modules-right = date clock
+
+background= ${colors.background}
+foreground= ${colors.foreground}
+
+module-margin = 1
+padding-right = 2
+padding-left = 2
+
+fixed-center = true
+
+border-size = 0
+
+height = 20
+line-size = 3
+
+; fonts
+font-0 = "Fira Code Medium:size=12;3"
+font-1 = "Font Awesome 5 Free Regular:size=11;3"
+font-2 = "Font Awesome 5 Brands Regular:size=11;3"
+
+[bar/minimal]
+modules-left = bspwm-min
+
+background= ${colors.background}
+foreground= ${colors.foreground}
+
+module-margin = 1
+padding-right = 2
+padding-left = 2
+
+fixed-center = true
+
+border-size = 0
+
+height = 3
+line-size = 3
+
+; fonts
+font-0 = "Fira Code Medium:size=12;3"
+font-1 = "Font Awesome 5 Free Regular:size=11;3"
+font-2 = "Font Awesome 5 Brands Regular:size=11;3"
+
+[module/clock]
+type = internal/date
+interval = 0
+time = %I:%M
+label =  %time%
+
+[module/date]
+type = internal/date
+interval = 0
+date = %a %h %d
+label =  %date%
+
+[module/bspwm]
+type = internal/bspwm
+format = <label-state>
+label-focused = 
+label-occupied = 
+label-empty = 
+label-urgent = 
+label-empty-foreground = ${colors.foreground-alt}
+
+; invisible separator to add padding between workspace icons
+label-separator = -
+label-separator-foreground = #00
+
+[module/bspwm-min]
+type = internal/bspwm
+format = <label-state>
+label-focused = ▇
+label-occupied = ▇
+label-empty = -
+label-urgent = ▇
+label-empty-foreground = ${colors.foreground-alt}
+label-occupied-foreground = ${colors.foreground-alt}
+
+; invisible separator to add padding between workspace icons
+label-separator = -
+label-separator-foreground = #00
+
+[module/monocle-tabs]
+type = custom/script
+exec = "${XDG_CONFIG_HOME}/polybar/scripts/bspwm-tabs true"
+interval = 0
+
+[module/updates]
+type = custom/script
+exec = "${XDG_CONFIG_HOME}/polybar/scripts/updates"
+label = # %output%
+interval = 600

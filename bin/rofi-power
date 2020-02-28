@@ -1,0 +1,21 @@
+#!/bin/sh
+# Power menu with rofi, modify logout to match you wm
+
+res=$(echo "logout|reboot|shutdown|hibernate" | rofi -sep "|" -dmenu -i -p 'Power Menu')
+
+case $res in
+    "logout")
+        bspc quit || dwmc quit
+        ;;
+    "reboot")
+        systemctl reboot
+        ;;
+    "shutdown")
+        systemctl poweroff
+        ;;
+    "hibernate")
+        systemctl hibernate
+        ;;
+esac
+
+exit 0

@@ -1,0 +1,21 @@
+#!/bin/sh
+# Integrate emacs window navigation with bspwm window navigation
+
+dirs="west south north east"
+cycles="prev.local next.local prev.local next.local"
+emacsdirs="left down up right"
+
+action="$1"
+index=$2
+
+test $(bspc query -T -n focused | jq '{client}[]' | jq '{className}[]') = \"Emacs\" || xprop -id $(xdotool getwindowfocus) | grep -q "tmacs"
+is_emacs_window=$?
+
+if [ $is_emacs_window = 0 ] && [ ! "$action" = "-s" ] ; then
+    dir=$(echo "$emacsdirs" | cut -d ' ' -f $index)
+    emacsclient -e "(evil-window-$dir 1)" && exit
+fi
+
+dir=$(echo "$dirs" | cut -d ' ' -f $index)
+cycle=$(echo "$cycles" | cut -d ' ' -f $index)
+bspc node $action $dir || bspc node $action $cycle

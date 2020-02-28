@@ -1,0 +1,44 @@
+#!/bin/sh
+#
+# original script: http://github.com/mitchweaver/bin
+#
+# record a selected rectangle with ffmpeg
+#
+# deps: ffmpeg, slop
+#
+
+mkdir -p /tmp/record
+sock=/tmp/record/sock
+pidfile=/tmp/record/pidfile
+rate=60
+savedir="$HOME/videos/recordings/"
+
+die() { >&2 echo "$*" ; exit 1 ; }
+isrunning() {
+    [ -f $pidfile ] && [ -e /proc/$(cat $pidfile) ]
+    return $?
+}
+
+if isrunning ; then
+    echo q >> $sock
+    rm -r /tmp/record
+    notify-send "Video saved in $savedir"
+else
+    echo > $sock
+    set -- $(slop -l -c "${SLOPCOLOR:-0.3,0.4,0.6,0.4}" -q -f '%x %y %w %h')
+
+    # note: need this for mp4s to play in firefox, requires ffmpeg 4.0.2+ "-pix_fmt yuv420p"
+    #       note-note: this is breaking script for some people if added?
+    #
+    # "${savedir}$(date '+%Y-%m-%d %H-%M-%S')"
+    <$sock ffmpeg -y -f x11grab -show_region 1 -s ${3}x${4} \
+        -framerate $rate -i ${display:=:0.0}+${1},${2} \
+        -vcodec libx264 -preset:v fast -profile:v baseline -pix_fmt yuv420p \
+		-threads 4 \
+        -filter:v "crop=iw-mod(iw\\,2):ih-mod(ih\\,2)" \
+        "${savedir}$(date '+%Y-%m-%d %H-%M-%S').mp4" > /tmp/record/log \
+        2> /tmp/record/err_log &
+
+    echo "* recording on pid $!"
+    echo $! > $pidfile
+fi

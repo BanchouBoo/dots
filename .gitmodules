@@ -1,0 +1,3 @@
+[submodule "bin/bootique"]
+	path = bin/bootique
+	url = https://github.com/BanchouBoo/bootique.git

@@ -1,0 +1,39 @@
+! special
+foreground: ffc6c7
+background: 101010
+cursorColor: ffc6c7
+
+! black
+color0: 101010
+color8: 101010
+
+! red
+color1: 49acaa
+color9: 49ac6c
+
+! green
+color2: 833031
+color10: 833031
+
+! yellow
+color3: ad693d
+color11: ad693d
+
+! blue
+color4: 8251a1
+color12: 8251a1
+
+! magenta
+color5: a75550
+color13: a75550
+
+! cyan
+color6: 6574a9
+color14: 6574a9
+
+! white
+color7: ffc6c7
+color15: ffc6c7
+
+wallpaper: $WALLPAPERDIR/cinna-landscape.png
+font: Fira Code Medium

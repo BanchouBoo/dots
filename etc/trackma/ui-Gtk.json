@@ -1,0 +1,28 @@
+{
+    "close_to_tray": true,
+    "colors": {
+        "is_airing": "#0099cc",
+        "is_playing": "#6c2dc7",
+        "is_queued": "#54c571",
+        "new_episode": "#fbb917",
+        "not_aired": "#999900",
+        "progress_bg": "#212b30",
+        "progress_complete": "#99ccb3",
+        "progress_fg": "#16a085",
+        "progress_sub_bg": "#34434a",
+        "progress_sub_fg": "#125d4f"
+    },
+    "episodebar_style": 1,
+    "last_height": 480,
+    "last_width": 740,
+    "remember_geometry": false,
+    "show_tray": true,
+    "start_in_tray": true,
+    "tray_api_icon": false,
+    "visible_columns": [
+        "Title",
+        "Progress",
+        "Percent",
+        "Start"
+    ]
+}

@@ -1,0 +1,39 @@
+#!/bin/sh
+
+info() {
+    printf "\r  [ \033[00;34m..\033[0m ] %s\n" "$1"
+}
+
+query() {
+    printf "\r  [ \033[0;33m??\033[0m ] %s\n" "$1"
+}
+
+warn() {
+    printf "\r\033[2K  [\033[0;33mWARN\033[0m] %s\n" "$1"
+}
+
+if [ -z "$XDG_CONFIG_HOME" ]; then
+    info "Appending XDG directories to /etc/security/pam_env.conf"
+    echo "XDG_CONFIG_HOME DEFAULT=@{HOME}/etc
+XDG_DATA_HOME DEFAULT=@{HOME}/usr
+XDG_CACHE_HOME DEFAULT=@{HOME}/tmp" | sudo tee --append /etc/security/pam_env.conf > /dev/null
+    query "XDG directories set, restart? [y/n] (recommended)"
+    do_restart=""
+    while [ -z "$do_restart" ]; do
+        read do_restart
+
+        case $do_restart in
+            y*|Y*)
+                systemctl reboot
+                ;;
+            n*|N*)
+                exit
+                ;;
+            *)
+                warn "Invalid option, expecting [y/n]"
+                do_restart=""
+        esac
+    done
+else
+    info "XDG directories already assigned, skipping"
+fi

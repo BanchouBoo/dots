@@ -1,0 +1,57 @@
+#
+# hotkeys for bspwm
+#
+
+# focus/swap windows
+super + {_,shift + } {h,j,k,l}
+	bspwm-window {-f,-s} {1,2,3,4}; cursor
+
+super + ctrl + {h,j,k,l}
+	bspc node -p {west,south,north,east}
+
+# cancel split
+super + ctrl + space
+	bspc node -p cancel
+
+# change workspace
+super + {_,shift + } {1-9,0}
+	bspc {desktop -f,node -d} {1-9,10}
+
+# quit window
+super + {_,shift + } q
+	bspc node {-c,-k}
+
+# set the window state
+super + {t,shift + t,s,f}
+	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+
+# set the node flags
+super + ctrl + {m,x,y,z}
+	bspc node -g {marked,locked,sticky,private}
+
+# reload config/exit bspwm
+super + shift + {r,e}
+	{bspc wm -r,rofi-power}
+	# bspc {wm -r,quit}
+
+# toggle monocle
+super + m
+	bspc desktop -l next
+
+# swap the current node and the biggest node
+super + g
+	bspc node -s biggest.local; cursor
+
+super + shift + g
+	$XDG_CONFIG_HOME/bspwm/toggle-gaps
+
+# swap to last workspace
+super + grave
+	bspc desktop -f last
+
+# resize
+super + alt + {h,j,k,l}
+	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+super + alt + shift + {h,j,k,l}
+	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}

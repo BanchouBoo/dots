@@ -1,0 +1,4 @@
+! Set caps lock to escape, disable escape
+remove Lock = Caps_Lock
+keysym Caps_Lock = Escape
+keysym Escape = 0x0000

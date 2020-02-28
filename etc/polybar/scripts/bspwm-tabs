@@ -1,0 +1,46 @@
+#!/bin/sh
+#
+# based on: https://github.com/cliqqz/dotfiles/blob/master/.config/polybar/tabs
+#
+# $1 = true if tabs should only show in monocle layout
+
+if [ "$1" = true ]; then
+    LAYOUT=$(bspc query -T -d focused | jq '{layout}[]')
+
+    if [ ! $LAYOUT = \"monocle\" ]; then
+        exit 1
+    fi
+fi
+
+FOCUSED_COLOR="$(xrdb -query | grep "\*.foreground" | cut -d'#' -f2)" # Grab the foreground color from xrdb
+UNFOCUSED_COLOR="66$FOCUSED_COLOR" # Set to a focused color but slightly transparent
+
+TABS=""
+WINDOW_IDS=$(bspc query -N -n .window -d focused)
+
+CURRENT_WINDOW_ID=$(bspc query -N -n .window.focused)
+CURRENT_WINDOW_EVALUATED=false
+
+for ID in $WINDOW_IDS; do
+    TITLE="[ $(xtitle $ID | sed -E 's/(.{20})(.{1,})$/\1.../') ]"
+    COLOR=$UNFOCUSED_COLOR
+    if [ $ID = $CURRENT_WINDOW_ID ]; then
+       COLOR=$FOCUSED_COLOR
+       CURRENT_WINDOW_EVALUATED=true
+    fi
+
+    TABS="$TABS%{F$COLOR}$TITLE%{F- O18 A}"
+
+    CHAR_COUNT="$(echo $TABS | wc -c)"
+    if [ $CHAR_COUNT -gt 180 ]; then
+        if [ $CURRENT_WINDOW_EVALUATED = true ]; then
+            TABS="$TABS->"
+            break
+        else
+            TABS="<-%{F- O18 A}"
+        fi
+    fi
+    # TABS="$(echo "${TABS}%{F${COLOR}}$TITLE" | sed -E 's/(.{250})(.{1,})$/\1.../') %{F- O18 A}" # works but too slow
+done
+
+echo $TABS

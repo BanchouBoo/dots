@@ -1,0 +1,129 @@
+### STYLE ###
+	colorscheme improved-term
+
+	## HIGHLIGHTERS
+		add-highlighter global/ number-lines -relative
+		add-highlighter global/ regex '\h*$' 0:red,red # highlight trailing whitespace
+		# add-highlighter global/linewrap column 80 magenta,magenta
+
+	## OPTIONS
+		# tabs tabs tabs
+		set-option global indentwidth 0
+		set-option global aligntab true
+		set-option global tabstop 4
+
+		set global ui_options ncurses_enable_mouse=false
+		set global ui_options ncurses_assistant=cat
+
+		# show all keys
+		# set global autoinfo command|onkey|normal
+
+### HOOKS ###
+	hook global WinCreate .* %{
+		set-option global termcmd 'xst -e sh -c'
+	}
+
+	hook global BufOpenFile "%val{config}/kakrc" %{
+		set-option buffer tabstop 2
+	}
+
+### COMMANDS ###
+	define-command surround %{
+		declare-option -hidden str surround_string
+		prompt "Surround string: " %{
+			set-option current surround_string %val{text}
+			evaluate-commands %sh{
+				SURROUNDER="$kak_opt_surround_string"
+				SURROUNDER="$(echo $SURROUNDER | sed "s/'/'\\\''/g")"
+				SURROUNDER="$(echo $SURROUNDER | sed 's/"/""/g')"
+				SURROUNDER="$(echo $SURROUNDER | sed 's/</<lt>/g')"
+				printf 'exec "|surround %s<ret>"\n' "'${SURROUNDER}'"
+			}
+		}
+	}
+
+	define-command buffer-list %{
+		evaluate-commands %sh{
+			eval set -- "$kak_quoted_buflist"
+			BUFFER=$(printf "%s\n" "$@" | rofi -dmenu -i -p 'Buffer')
+			[ "$BUFFER" ] && printf "buffer %%{%s}" "$BUFFER"
+		}
+	}
+
+	define-command choose-file %{
+		evaluate-commands %sh{
+			FILE="$(rf "$(dirname $kak_buffile)" | sed 's/ /\\ /g')"
+			if [ -n "$FILE" ]; then
+				printf 'exec ": edit %s<ret>"' "$FILE"
+			fi
+		}
+	}
+
+	define-command align-with-spaces %{
+		set-option current aligntab false
+		exec '&'
+	}
+
+### KEYBINDS ###
+
+	## MODE DECLARATIONS (Not using currently)
+		declare-user-mode file
+		declare-user-mode clip
+
+	## NORMAL MODE
+		# space as leader
+		map global normal <space> , -docstring 'leader'
+		map global normal , <space>
+
+		map global normal & ':align-with-spaces<ret>'
+
+	## USER MODE (leader)
+		# modes
+		# map global user -docstring 'Buffer management'             b ': enter-user-mode file<ret>'
+		# map global user -docstring 'Clipboard'                     y ': enter-user-mode clip<ret>'
+
+		map global user -docstring 'surround selections'           s ': surround<ret>'
+		map global user -docstring 'comment lines'                 c ': comment-line<ret>'
+
+	## CLIP MODE (y) NOT USING MODES
+		map global user -docstring 'yank to system clipboard'      y '<a-|>xclip -sel clip<ret>'
+		map global user -docstring 'paste (after) from clipboard'  p '<a-!>xclip -o -sel clip<ret>'
+		map global user -docstring 'paste (before) from clipboard' P '!xclip -o -sel clip<ret>'
+
+	## FILE MODE (b) NOT USING MODES
+		map global user -docstring 'change buffer through rofi'    b ': buffer-list<ret>'
+		map global user -docstring 'open a file chooser in rofi'   f ': choose-file<ret>'
+
+	## INSERT MODE
+		# use tab with completions
+		hook global InsertCompletionShow .* %{
+			try %{
+				# this command temporarily removes cursors preceded by whitespace;
+				# if there are no cursors left, it raises an error, does not
+				# continue to execute the mapping commands, and the error is eaten
+				# by the `try` command so no warning appears.
+				exec -draft 'h<a-K>\h<ret>'
+				map window insert <tab> <c-n>
+				map window insert <s-tab> <c-p>
+			}
+		}
+
+		hook global InsertCompletionHide .* %{
+			unmap window insert <tab> <c-n>
+			unmap window insert <s-tab> <c-p>
+		}
+
+### PLUGINS ###
+	source "%val{config}/plugins/plug.kak/rc/plug.kak"
+	plug 'jjk96/kakoune-rainbow'
+	plug 'whereswaldon/shellcheck.kak'
+	plug 'delapouite/kakoune-palette'
+	plug 'Skytrias/gdscript-kak'
+
+	## LSP
+		eval %sh{kak-lsp --kakoune -s $kak_session}
+		set global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
+		hook global WinSetOption filetype=(csharp|gd|rust) %{
+			lsp-enable-window
+			map window normal <C-l> ': enter-user-mode lsp<ret>'
+		}

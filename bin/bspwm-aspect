@@ -1,0 +1,27 @@
+#!/bin/sh
+# Maintain the aspect ration of windows in bspwm when they set a maximum aspect (meant for psuedo tiled windows)
+# Script is unfinished, it works but it's a bit janky sometimes
+
+if [ ! $(command -v qalc) ]; then
+	echo "libqalculate not installed"
+	exit 1
+fi
+
+while true; do
+	bspc subscribe node_geometry | while read -r msg; do
+		geometry=$(echo "$msg" | cut -d ' ' -f 5)
+		win_id=$(echo "$msg" | cut -d ' ' -f 4)
+
+		# get aspect ratio information
+		aspect_line=$(xprop -id "$win_id" | grep "maximum aspect") || continue
+		aspect_ratio=$(echo "$aspect_line" | cut -d ':' -f 2-)
+		aspect_ratio=$(qalc -t "$aspect_ratio")
+
+		size=$(echo "$geometry" | cut -d '+' -f 1)
+		size_x=$(echo "$size" | cut -d 'x' -f 1)
+		size_y=$(echo "$size" | cut -d 'x' -f 2)
+
+		bspc node "$win_id" -z bottom 0 $(qalc -t "($size_x/$aspect_ratio)-$size_y")
+		break
+	done
+done

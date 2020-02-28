@@ -1,0 +1,35 @@
+# URL specific binds
+bindurl duckduckgo.com f hint -Jc ul:not(#duckbar_dropdowns) .zcm__item .zcm__link,.result__a,.result--more
+bindurl duckduckgo.com F hint -Jcb ul:not(#duckbar_dropdowns) .zcm__item .zcm__link,.result__a,.result--more
+bindurl duckduckgo.com ;s hint -Jc .result__icon__img
+bindurl duckduckgo.com s hint -Jcb #search_form_input
+
+bindurl youtube.com f hint -Jc [href^="/watch"]:not([id="thumbnail"]),[href*="/user/"],[href*="/channel/"],input#search,button[aria-label="Notifications"]
+bindurl youtube.com F hint -Jcb [href^="/watch"]:not([id="thumbnail"]),[href*="/user/"],[href*="/channel/"],input#search,button[aria-label="Notifications"]
+bindurl youtube.com gF hint -qJcb [href^="/watch"]:not([id="thumbnail"]),[href*="/user/"],[href*="/channel/"],input#search,button[aria-label="Notifications"]
+bindurl youtube.com/watch* v composite get_current_url | mpvsafe
+
+bindurl twitter.com f hint -Jc [class*="r-1ny4l3l"],[href*="/status/"],[role="button"]
+bindurl twitter.com F hint -Jcb [class*="r-1ny4l3l"],[href*="/status/"],[role="button"]
+bindurl twitter.com gF hint -qJcb [class*="r-1ny4l3l"],[href*="/status/"],[role="button"]
+
+# Global keybinds
+bind t tabnew
+bind T fillcmdline tabnew
+bind / fillcmdline find
+bind ? fillcmdline find -?
+bind n findnext 1
+bind N findnext -1
+bind <C-/> clearsearchhighlight
+
+bind --mode=normal <C-\> mode ignore
+bind --mode=ignore <C-\> mode normal
+
+bind ;s composite hint -pipe p textContent | speedread
+bind ;S composite hint -qpipe p textContent | speedread_array
+bind ;a composite hint -pipe img src | echo https://trace.moe/?url= | js -p JS_ARG.replace(/\s/g, '') | tabnew
+
+# Commands to make keybinds work properly
+command speedread js -p (function() {var addStyle = function (url) {var style = document.createElement('link');style.rel = 'stylesheet';style.type = 'text/css';style.href = url;document.head.appendChild(style);};var addScript = function (url, cb) {var script = document.createElement('script');script.src = url;if (cb) {script.onload = cb;}document.body.appendChild(script);};if (typeof window.wrappedJSObject.jetzt === 'undefined') {var cb = function () {window.wrappedJSObject.jetzt.fromText(JS_ARG);};addStyle('https://BanchouBoo.github.io/jetzt/jetzt.css');addScript('https://BanchouBoo.github.io/jetzt/jetzt.js', cb);} else {window.wrappedJSObject.jetzt.fromText(JS_ARG);};})();
+
+command speedread_array js -p (function() {var addStyle = function (url) {var style = document.createElement('link');style.rel = 'stylesheet';style.type = 'text/css';style.href = url;document.head.appendChild(style);};var addScript = function (url, cb) {var script = document.createElement('script');script.src = url;if (cb) {script.onload = cb;}document.body.appendChild(script);};if (typeof window.wrappedJSObject.jetzt === 'undefined') {var cb = function () {window.wrappedJSObject.jetzt.fromText(JS_ARG.join(" "));};addStyle('https://BanchouBoo.github.io/jetzt/jetzt.css');addScript('https://BanchouBoo.github.io/jetzt/jetzt.js', cb);} else {window.wrappedJSObject.jetzt.fromText(JS_ARG.join(" "));};})();

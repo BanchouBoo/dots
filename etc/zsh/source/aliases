@@ -1,0 +1,37 @@
+alias cp="cp -i"                          # confirm before overwriting something
+alias df="df -h"                          # human-readable sizes
+alias free="free -m"                      # show sizes in MB
+alias less="less -FWR"
+
+alias ls="ls --color"
+alias la="ls -a"
+
+alias copy="xclip -sel clip"
+alias paste="xclip -o -sel clip"
+
+alias tmacs="emacs -nw"
+
+alias sukak="TERM=xterm-256color sudo -E kak"
+alias :q="exit"
+
+alias pfetch="EDITOR=kakoune pfetch"
+
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+
+function weather() {
+	curl v2.wttr.in/$*
+}
+
+function radeon-profile() {
+    radeon_pid=$(pgrep -u $USER radeon-profile)
+    if [ $? -eq 0 ]; then
+       kill $radeon_pid
+	fi
+    command radeon-profile & disown
+}
+
+function zork1() {
+	current_dir=$(pwd)
+	cd ~/usr/zork1
+	command zork1 $* && cd $current_dir
+}

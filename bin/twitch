@@ -1,0 +1,10 @@
+#!/bin/sh
+# Start Twitch stream and the matching chat in weechat if proper env vars are set
+
+mpv "https://www.twitch.tv/$*" &
+
+if [ ! "$TWITCH_USER" ] || [ ! "$TWITCH_AUTH" ]; then
+    echo "TWITCH_USER and/or TWITCH_AUTH not set, not starting chat."
+else
+    xst -c twitch-chat weechat -t --run-command "/server add twitch irc.chat.twitch.tv/6667 -nick=${TWITCH_USER} -password=${TWITCH_AUTH};/connect twitch;/set irc.server.twitch.autojoin \"#${*}\";/bar toggle nicklist;/bar toggle buflist;/set weechat.look.buffer_time_format \"\";/buffer clear" &
+fi

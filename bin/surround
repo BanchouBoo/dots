@@ -1,0 +1,31 @@
+#!/bin/sh
+# Surround text with a string
+# Reads input through a pipe, an argument, or a prompt
+# Any series of ({[< as the surround string will place their matches at the end
+# HTML tags are also supported
+
+if [ -p /dev/stdin ]; then
+	TEXT="$(cat /dev/stdin)"
+else
+	[ $# -eq 0 ] && echo "No input" && exit
+	TEXT="$1"
+	shift 1
+fi
+
+SURROUND="$*"
+
+if [ -z "$SURROUND" ]; then
+	printf "Surround with: "
+	read -r SURROUND < /dev/tty
+fi
+
+if echo "$SURROUND" | grep -Eq "^(\(|\[|\{|<)*$"; then
+	END="$(echo "$SURROUND" | rev | sed -e 's/(/)/g' -e 's/\[/]/g' -e 's/{/}/g' -e 's/</>/g')"
+elif echo "$SURROUND" | grep -Eq "^<.*>$"; then
+	END="$(echo "$SURROUND" | cut -c 2- | awk '{print $1}')"
+	END="</$END>"
+else
+	END="$SURROUND"
+fi
+
+echo "${SURROUND}${TEXT}${END}"

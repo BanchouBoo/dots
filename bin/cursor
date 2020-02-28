@@ -1,0 +1,6 @@
+#!/bin/sh
+# Center the cursor on the focused window
+
+focus=$(xdotool getwindowfocus)
+eval $(xdotool getwindowgeometry --shell "$focus")
+xdotool mousemove -w "$focus" $((WIDTH/2)) $((HEIGHT/2))

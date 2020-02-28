@@ -1,0 +1,18 @@
+#!/bin/sh
+# Kakoune session management for Godot
+# In Godot, set the external editor to 'kakdot' and the flags to '{file} {line} {col}'
+# Change the terminal command to match your terminal of choice
+
+FILE="$1"
+LINE="$2"
+COLUMN="$3"
+
+kak -clear
+
+if kak -l | grep "godot"; then
+    FILE="$(echo ${FILE} | sed 's/ /\\ /g')"
+    # FILE="'$(echo ${FILE} | sed "s/'/''/g")'"
+	printf "eval -verbatim -client client0 edit %s %s %s" "${FILE}" "${LINE}" "${COLUMN}" | kak -p "godot"
+else
+	xst -c kakoune -n kakoune kak -s "godot" "$FILE" "+${LINE}:${COLUMN}"
+fi

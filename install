@@ -1,0 +1,106 @@
+#!/bin/sh
+
+info() {
+    printf "\r  [ \033[00;34m..\033[0m ] %s\n" "$1"
+}
+
+query() {
+    printf "\r  [ \033[0;33m??\033[0m ] %s\n" "$1"
+}
+
+success() {
+    printf "\r\033[2K  [ \033[00;32mOK\033[0m ] %s\n" "$1"
+}
+
+warn() {
+    printf "\r\033[2K  [\033[0;33mWARN\033[0m] %s\n" "$1"
+}
+
+fail() {
+    printf "\r\033[2K  [\033[0;31mFAIL\033[0m] %s\n" "$1"
+    exit 1
+}
+
+setup_dash() {
+    CURRENT_SH=$(readlink /usr/bin/sh)
+    if [ "$CURRENT_SH" = "dash" ]; then
+        info "Already using dash, skipping setup"
+    else
+        query "/bin/sh is linked to $CURRENT_SH, would you like to replace it with dash? [y/n]"
+        do_dash=""
+        while [ -z "$do_dash" ]; do
+            read do_dash
+            case $do_dash in
+                y*|Y*)
+                    sudo ln -sfT dash /usr/bin/sh
+                    printf "[Trigger]\nType = Package\nOperation = Install\nOperation = Upgrade\nTarget = bash\n\n[Action]\nDescription = Re-pointing /bin/sh symlink to dash...\nWhen = PostTransaction\nExec = /usr/bin/ln -sfT dash usr/bin/sh\nDepends = dash" | sudo tee /etc/pacman.d/hooks/sh-to-dash.hook > /dev/null
+                    info "Created pacman hook and symlink to dash from /usr/bin/sh, please run this script again"
+                    exit
+                    ;;
+                n*|N*)
+                    info "Skipping dash setup"
+                    ;;
+                *)
+                    fail "Unrecognized input, aborting"
+            esac
+        done
+    fi
+}
+
+setup_zsh() {
+    CURRENT_SHELL=$(echo "$SHELL" | rev | cut -d '/' -f 1 | rev)
+    if [ "$CURRENT_SHELL" = "zsh" ]; then
+        info "Already using zsh, skipping"
+    else
+        query "Write to /etc/zprofile and /etc/zshenv? [y/n]"
+        do_etc_zsh=""
+        while [ -z "$do_etc_zsh" ]; do
+            read do_etc_zsh
+            case $do_etc_zsh in
+                y*|Y*)
+                    echo "emulate sh -c 'source /etc/profile'" | sudo tee /etc/zprofile > /dev/null
+                    echo 'export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"' | sudo tee /etc/zprofile > /dev/null
+                    ;;
+                n*|N*)
+                    ;;
+                *)
+                    do_etc_zsh=""
+                    warn "Invalid option, expecting [y/n]"
+            esac
+        done
+
+        query "Change shell to zsh? [y/n]"
+        use_zsh=""
+        while [ -z "$use_zsh" ]; do
+            read use_zsh
+            case $use_zsh in
+                y*|Y*)
+                    chsh -s /bin/zsh
+                    ;;
+                n*|N*)
+                    ;;
+                *)
+                    use_zsh=""
+                    warn "Invalid option, expecting [y/n]"
+            esac
+        done
+    fi
+    info "Setting up dotfile directory environment variables"
+    DOTFILEDIR=$(dirname "$(realpath $0)")
+    echo "export DOTFILEDIR=$(echo $DOTFILEDIR | sed "s:$HOME:\$HOME:g")\n"'export WALLPAPERDIR=$DOTFILEDIR/wallpapers' > "${XDG_DATA_HOME:-~/.local/share}/zsh/source/dotfile_vars"
+}
+
+if command -v pacman > /dev/null; then
+	if [ ! $(command -v yay) ]; then
+	    fail "yay not installed"
+	fi
+
+	DEPFILES="$(find ./ -mindepth 1 -name '*.deps')"
+	for file in $DEPFILES; do
+	    PKGLIST="$PKGLIST $(cat $file)"
+	done
+
+	yay -S --needed $PKGLIST
+	setup_dash
+fi
+setup_zsh

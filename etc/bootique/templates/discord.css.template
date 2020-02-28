@@ -1,0 +1,197 @@
+:root {
+    /* special */
+    --background: #<background>;
+    --foreground: #<foreground>;
+    --cursorColor: #<cursorColor>;
+
+    /* black */
+    --color0: #<color0>;
+    --color8: #<color8>;
+
+    /* red */
+    --color1: #<color1>;
+    --color9: #<color9>;
+
+    /* green */
+    --color2: #<color2>;
+    --color10: #<color10>;
+
+    /* yellow */
+    --color3: #<color3>;
+    --color11: #<color11>;
+
+    /* blue */
+    --color4: #<color4>;
+    --color12: #<color12>;
+
+    /* magenta */
+    --color5: #<color5>;
+    --color13: #<color13>;
+
+    /* cyan */
+    --color6: #<color6>;
+    --color14: #<color14>;
+
+    /* white */
+    --color7: #<color7>;
+    --color15: #<color15>;
+
+
+    /* --text-normal: var(--foreground); */
+    --background-primary: var(--background);
+    --background-secondary: var(--background);
+    --background-tertiary: var(--background);
+    --deprecated-panel-background: var(--background);
+    --channeltextarea-background: var(--background);
+    --text-link: var(--color4);
+}
+
+/* scrollbar stuff */
+[class*="scroller"]::-webkit-scrollbar {
+    width: 5px !important;
+}
+
+[class*="scroller"]::-webkit-scrollbar-track-piece {
+    display: none;
+}
+
+[class*="scroller"]::-webkit-scrollbar-thumb {
+    background-color: var(--color2) !important;
+}
+
+[class*="scroller"]::-webkit-scrollbar-thumb,
+[class*="scroller"]::-webkit-scrollbar-track {
+    border-style: none !important;
+}
+
+/* text input area */
+[class*="channelTextArea"] } div {
+    filter: brightness(1.5);
+}
+
+[class*="channelTextArea"] } div [class*="textAreaEnabled"] {
+    filter: brightness(calc(1/1.5));
+}
+
+[class*="channelTextArea"] [class*="buttons"] {
+	opacity: 0;
+}
+
+/* code blocks */
+code {
+    border: 1px solid var(--color2) !important;
+}
+
+/* new messages top bar */
+[class*="newMessagesBar"] {
+    background: var(--color4);
+}
+
+/* dividers */
+hr[class*="divider"] {
+    opacity: 0; /* using `display: none;` messes up positioning when entering channels with unread messages */
+}
+
+[class*="dividerRed"] {
+    color: var(--color1);
+}
+
+[class*="dividerRed"] [class*="dividerContent"]:before,
+[class*="dividerRed"] [class*="dividerContent"]:after {
+    background-color: var(--color1);
+}
+
+/* folders */
+[class*="expandedFolderBackground"] {
+    /* filter: brightness(1.5); */
+    /* background: var(--color2); */
+}
+
+foreignObject [class*="folder"] {
+    /* background: none !important; */
+    /* background: var(--color2); */
+}
+
+/* friends page */
+[class*="friendsTable"] {
+    background: var(--background);
+}
+
+[class*="friendsRow"] {
+    border: none !important;
+}
+
+/* text color stuff */
+[class*="username"] {
+    color: var(--color2);
+}
+
+/* video player */
+[class*="mediaBarProgress"],
+[class*="mediaBarProgress"]:before,
+[class*="mediaBarProgress"]:after,
+[class*="mediaBarGrabber"] {
+    background: var(--color2) !important;
+}
+
+/* icon strikethrough */
+path[class*="strikethrough"] {
+    color: var(--color1);
+}
+
+/* notification badge */
+[class*="numberBadge"] {
+    background-color: var(--color1) !important;
+}
+
+/* online status icons, very finicky */
+/* [aria-label*="Online"]:not([aria-label*="mobile"]) rect { */
+/*     fill: var(--color2); */
+/* } */
+
+[aria-label*="Online"] mask + rect,
+[aria-label*="Online"] foreignObject + rect {
+    fill: var(--color2);
+}
+
+[aria-label*="Do Not Disturb"] rect {
+    fill: var(--color1);
+}
+
+[aria-label*="Idle"] mask + rect,
+[aria-label*="Idle"] foreignObject + rect {
+    fill: var(--color3);
+}
+
+/* maybe remove */
+[aria-label*="Offline"] svg {
+    /* filter: grayscale(100%); */
+}
+
+/* top server list icon + servers without icons */
+[class*="listItem"] [class*="childWrapper"] {
+    color: var(--foreground) !important;
+    background: var(--color4) !important;
+}
+
+/* mentions */
+[class*="isMentionedCozy"],
+[class*="isMentionedCozy"]:after {
+    background: #<color3>33 !important;
+}
+
+[class*="isMentionedCozy"]:after {
+    border-left: 4px solid var(--color3);
+}
+
+.mention {
+    color: var(--color4) !important;
+    background: #<color4>33 !important;
+    transition: background-color 100ms ease-out,color 100ms ease-out;
+}
+
+.mention:hover {
+    color: var(--background) !important;
+    background: var(--color4) !important;
+    transition: background-color 100ms ease-out,color 100ms ease-out;
+}

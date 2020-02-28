@@ -1,0 +1,10 @@
+export PF_INFO="title os wm editor shell uptime memory palette"
+
+# Color of info names
+export PF_COL1=4
+
+# Color of info data
+export PF_COL2=7
+
+# Color of title
+export PF_COL3=2

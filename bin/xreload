@@ -1,0 +1,5 @@
+#!/bin/sh
+xrdb "$@"
+kill -USR1 $(pgrep xst)
+kill -USR1 $(pgrep emacs)
+xdotool key alt+F5

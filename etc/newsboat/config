@@ -1,0 +1,33 @@
+# Feeds
+auto-reload yes
+reload-time 10
+reload-threads 4
+download-retries 4
+download-timeout 10
+prepopulate-query-feeds yes
+history-limit 0
+
+# Display
+color listnormal_unread yellow black
+color listfocus black green
+color listfocus_unread black yellow
+# color listfocus         color85 default bold
+# color listfocus_unread  color85 default bold
+color info black green reverse
+# color info              color36 default reverse 
+
+# # highlights
+# highlight article "https?://[^ ]+" 		color117 default
+# highlight article "^(Title):.*$"		color117 default
+# highlight article "\\[image\\ [0-9]+\\]" 	color117 default
+
+# Keybinds
+browser "exo-open --launch WebBrowser %u" # not a keybinding
+macro m set browser "mpv %u"; open-in-browser ; set browser "exo-open --launch WebBrowser %u"
+bind-key k up
+bind-key j down
+bind-key l open
+bind-key ; toggle-show-read-feeds
+
+# Misc
+confirm-exit yes

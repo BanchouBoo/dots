@@ -1,0 +1,10 @@
+#!/bin/sh
+
+GAP_ON_VALUE=10
+WINDOW_GAP=$(bspc query -T -d focused | jq "{windowGap}[]")
+
+if [ $WINDOW_GAP -eq 0 ]; then
+    bspc config window_gap $GAP_ON_VALUE
+else
+    bspc config window_gap 0
+fi

@@ -1,0 +1,40 @@
+! special
+foreground: cbf3f3
+background: 101010
+cursorColor: cbf3f3
+
+! black
+color0: 101010
+color8: 101010
+
+! red
+color1: 833031
+color9: 833031
+
+! green
+! 49acaa
+color2: 49acaa
+color10: 49ac6c
+
+! yellow
+color3: 9276bd
+color11: 9276bd
+
+! blue
+color4: 4e7cc0
+color12: 4e7cc0
+
+! magenta
+color5: bd65b3
+color13: bd65b3
+
+! cyan
+color6: 5ca4cc
+color14: 5ca4cc
+
+! white
+color7: cbf3f3
+color15: cbf3f3
+
+wallpaper: $WALLPAPERDIR/phos-face.png
+font: Fira Code Medium

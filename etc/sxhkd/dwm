@@ -1,0 +1,43 @@
+#
+# hotkeys for dwm
+#
+
+# focus/swap windows up and down the stack
+super + {k,j}
+	dwmc focusstack {-,+}1
+
+# increase/decrease master size
+super + {h,l}
+	dwmc setmfact {-,+}0.05
+
+# change tags
+super + {_,ctrl +}{_,shift +} {1-9}
+	dwmc {_,toggle}{viewex,tagex} {0-8}
+
+# show all tags
+super + 0
+	dwmc viewall
+
+# close window
+super + q
+	dwmc killclient
+
+# quit/restart(?)
+super + shift + {e,r}
+	{rofi-power,dwmc quit 1}
+
+# move window between master/slave
+# or not this is weird
+super + {d,i}
+	dwmc incnmaster {-,+}1
+
+# promote window to master
+super + g
+	dwmc zoom
+
+# layouts
+super + alt + {1-5}
+	dwmc setlayoutex {0-4}
+
+super + shift + b
+	dwmc togglebar

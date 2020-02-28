@@ -1,0 +1,5 @@
+#!/bin/sh
+booexec: chmod +x <file>; <file>
+if [ -f "<wallpaper>" ]; then
+    feh --bg-scale <wallpaper> --no-fehbg
+fi

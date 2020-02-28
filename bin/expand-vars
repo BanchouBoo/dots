@@ -1,0 +1,26 @@
+#!/bin/sh
+# Replace evironment vars in a file with their values out output to stdout
+# Does not modify input file
+# Does not work with ${VAR} format unless you use the commented code below
+
+FILE=$1
+
+if [ ! -f "$FILE" ]; then
+	echo "$FILE is not a file!"
+	exit 1
+fi
+
+FILECONTENTS=$(cat "$FILE")
+
+while read -r var; do
+	# slower but works with both '$var' and '${var}'
+	# var_value=$(env | grep "^$(echo $var | sed -r 's/(\{|\})//g')=" | cut -d '=' -f 2-)
+
+	var_value=$(env | grep "^${var}=" | cut -d '=' -f 2-)
+	test -z "$var_value" && continue
+	FILECONTENTS=$(echo "$FILECONTENTS" | sed "s@\$${var}@${var_value}@g")
+done << ENV_VARS
+	$(grep -o -P '((?<=\$).*?(?:(?!(\ |$)).)*)' "$FILE" | sort -u)
+ENV_VARS
+
+echo "$FILECONTENTS"

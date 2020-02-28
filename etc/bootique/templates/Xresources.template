@@ -1,0 +1,85 @@
+booexec: xreload <file>
+! special
+*.foreground:               #<foreground>
+*.background:               #<background>
+*.cursorColor:              #<cursorColor>
+
+! black
+*.color0:                   #<color0>
+*.color8:                   #<color8>
+
+! red
+*.color1:                   #<color1>
+*.color9:                   #<color9>
+
+! green
+! 49acaa
+*.color2:                   #<color2>
+*.color10:                  #<color10>
+
+! yellow
+*.color3:                   #<color3>
+*.color11:                  #<color11>
+
+! blue
+*.color4:                   #<color4>
+*.color12:                  #<color12>
+
+! magenta
+*.color5:                   #<color5>
+*.color13:                  #<color13>
+
+! cyan
+*.color6:                   #<color6>
+*.color14:                  #<color14>
+
+! white
+*.color7:                   #<color7>
+*.color15:                  #<color15>
+
+! dwm
+dwm.normbordercolor:        #<background>
+dwm.normbgcolor:            #<background>
+dwm.normfgcolor:            #<foreground>
+
+dwm.selbordercolor:         #<color2>
+dwm.selbgcolor:             #<color2>
+dwm.selfgcolor:             #<background>
+
+! st
+st.font:                    <font>:pixelsize=18:antialias=true:autohint=true
+st.termname:                xterm-256color
+! st.termname:                xterm-24bit
+st.tabspaces:               4
+st.borderpx:                20
+st.xfps:                    120
+st.actionfps:		    60
+
+! rofi
+rofi.modi:                  run,window,windowcd,calc
+
+! rofi.font:                  <font> 12
+rofi.hide-scrollbar:        true
+rofi.location:              2 ! Top-middle of the screen
+rofi.separator-style:       none
+rofi.bw:                    0 ! Border width
+rofi.padding:               10
+rofi.yoffset:               -10
+
+! COLORS
+!                           BG              FG              BG-ALT          HLBG        HL-FG
+rofi.color-normal:          #<background>,   #<foreground>,   #<background>,   #<color2>,   #<background>
+rofi.color-urgent:          #<background>,   #<color1>,       #<background>,   #<color1>,   #<background>
+rofi.color-active:          #<background>,   #<color4>,       #<background>,   #<color4>,   #<background>
+!                           BG              BORDER
+rofi.color-window:          #<background>,   #<color2>
+
+! KEYBOARD
+rofi.kb-row-up:             Up,Control+p,ISO_Left_Tab,Control+k
+rofi.kb-row-down:           Down,Control+n,Control+j
+rofi.kb-mode-previous:      Control+h
+rofi.kb-mode-next:          Control+l
+
+rofi.kb-remove-char-back:   BackSpace,Shift+BackSpace
+rofi.kb-accept-entry:       Return,KP_Enter
+rofi.kb-remove-to-eol:      Control+Delete

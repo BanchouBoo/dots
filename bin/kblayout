@@ -1,0 +1,9 @@
+#!/bin/sh
+# Change system and X keyboard layout, restart sxhkd, and run Xmodmap
+# I use Dvorak but this is in case someone needs to hop on my PC and use QWERTY
+
+sudo localectl set-keymap --no-convert $1
+sudo localectl --no-convert set-x11-keymap $1
+setxkbmap $1
+start-sxhkd
+xmodmap ${XDG_CONFIG_HOME:-~/.config}/Xmodmap

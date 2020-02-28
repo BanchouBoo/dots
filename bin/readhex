@@ -1,0 +1,18 @@
+#!/bin/sh
+# Read a range of hex values in a file using hexdump
+
+if [ ! $# -eq 3 ]; then
+    echo "Invalid syntax, use as: readhex OFFSET LENGTH FILE"
+    exit 1
+fi
+
+OFFSET=$1
+LENGTH=$2
+FILE=$3
+
+if [ ! -f "$FILE" ]; then
+   echo "Invalid file"
+   exit 1
+fi
+
+hexdump -e '"%_p"' -s $OFFSET -n $LENGTH "$FILE"

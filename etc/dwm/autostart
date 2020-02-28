@@ -1,0 +1,23 @@
+#!/bin/sh
+
+### LAYOUTS ###
+
+# 0 = tile
+# 1 = monocle
+# 2 = centeredmaster
+# 3 = centeredfloatingmaster
+# 4 = NULL
+
+dwmc viewex 3; dwmc setlayoutex 1
+dwmc viewex 4; dwmc setlayoutex 1; dwmc togglebar
+dwmc viewex 0
+
+###############
+
+
+### PROGRAMS ###
+
+autostart &
+${XDG_CONFIG_HOME:-$HOME/.config}/dwm/bar &
+
+################

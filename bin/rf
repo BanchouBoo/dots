@@ -1,0 +1,26 @@
+#!/bin/sh
+# Select a file or folder with rofi and echo it to stdout
+
+WORKING_DIR="$(realpath ${1:-$(pwd)})"
+test ! -d "$WORKING_DIR" && echo "Invalid directory" && exit 1
+
+while [ -z "$FILE" ]; do
+	cd "$WORKING_DIR"
+	DIRS="$(find "$WORKING_DIR" -mindepth 1 -maxdepth 1 -type d -printf '%p/\n' | sort | tr '\n' '|')"
+	FILES="$(find "$WORKING_DIR" -mindepth 1 -maxdepth 1 -type f | sort | tr '\n' '|')"
+	OUTPUT="$(echo ".|..|${DIRS}${FILES}" | rofi -dmenu -sep '|' -i -p "$WORKING_DIR" | sed -e 's/ /\ /g')"
+	if [ -d "$OUTPUT" ]; then
+		WORKING_DIR="$(realpath "$OUTPUT")"
+		if [ "$OUTPUT" = "." ]; then
+			FILE="$WORKING_DIR"
+		fi
+	elif [ -f "$OUTPUT" ]; then
+		FILE="$OUTPUT"
+	elif [ -z "$OUTPUT" ]; then
+		exit 0
+	else
+		echo "Invalid selection"
+	fi
+done
+
+echo "$FILE"
