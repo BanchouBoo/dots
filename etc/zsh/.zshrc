@@ -39,13 +39,13 @@ source $ZDOTDIR/prompts/boo.zsh-theme
 # source "${XDG_CONFIG_HOME:-~/.config}/user-dirs.dirs"
 
 # User files to source that are under VC
-for file in $(ls $ZDOTDIR/source); do
-	source "$ZDOTDIR/source/$file"
+find "$ZDOTDIR/source" -type f | while read -r file; do
+	source "$file"
 done
 
 # User files to source that are NOT under VC
-for file in $(ls "${XDG_DATA_HOME:-~/.local/share}/zsh/source"); do
-	source "${XDG_DATA_HOME:-~/.local/share}/zsh/source/$file"
+find "${XDG_DATA_HOME:-~/.local/share}/zsh/source" -type f | while read -r file; do
+	source "$file"
 done
 
 # Change this
