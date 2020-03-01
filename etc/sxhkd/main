@@ -4,7 +4,7 @@
 
 # terminal emulator
 super + Return
-	xst
+	$TERMINAL
 
 # rofi
 super + {semicolon,Tab}

@@ -4,9 +4,7 @@
 
 # 0 = tile
 # 1 = monocle
-# 2 = centeredmaster
-# 3 = centeredfloatingmaster
-# 4 = NULL
+# 2 = NULL
 
 dwmc viewex 3; dwmc setlayoutex 1
 dwmc viewex 4; dwmc setlayoutex 1; dwmc togglebar

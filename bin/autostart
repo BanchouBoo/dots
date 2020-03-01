@@ -13,7 +13,7 @@ termstart() {
     COMMAND=$1
     shift 1
     ARGS=$*
-    test $(pgrep -u "$USER" -ic "$COMMAND") -eq 0 && xst -c $COMMAND $COMMAND $ARGS &
+    test $(pgrep -u "$USER" -ic "$COMMAND") -eq 0 && st -c $COMMAND $COMMAND $ARGS &
 }
 
 #################

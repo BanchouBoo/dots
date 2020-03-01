@@ -36,8 +36,8 @@ super + g
 	dwmc zoom
 
 # layouts
-super + alt + {1-5}
-	dwmc setlayoutex {0-4}
+super + alt + {1-3}
+	dwmc setlayoutex {0-2}
 
 super + shift + b
 	dwmc togglebar

@@ -1,5 +1,5 @@
 export PATH="$(find -L ~/bin/ -maxdepth 1 -type d | sed 's|/$||'| tr '\n' ':')$PATH"
-export TERMINAL=xst
+export TERMINAL=st
 export TERMINFO=${XDG_CONFIG_HOME:-$HOME/.config}/terminfo
 export EDITOR=kak
 
@@ -19,7 +19,6 @@ setopt appendhistory autocd extendedglob
 unsetopt beep
 
 # Plugins
-# plugins=(git vi-mode zsh-syntax-highlighting zsh-autosuggestions)
 source "$ZDOTDIR/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=4'
 
@@ -49,7 +48,6 @@ find "${XDG_DATA_HOME:-~/.local/share}/zsh/source" -type f | while read -r file;
 done
 
 # Change this
-test -f "$BOOTIQUE_OUTPUT_DIR/slop_color" && source "$BOOTIQUE_OUTPUT_DIR/slop_color"
 test -f "$BOOTIQUE_OUTPUT_DIR/tty-colors" && "$BOOTIQUE_OUTPUT_DIR/tty-colors"
 
 # less/man colors
@@ -57,9 +55,5 @@ export LESS=-R
 export LESS_TERMCAP_md=$'\033[1;34m'       # begin blink
 export LESS_TERMCAP_{me,ue}=$'\033[0m'     # reset bold/blink and underline
 export LESS_TERMCAP_us=$'\033[1;35m'       # begin underline
-
-# kak as pager and man
-# export PAGER=kak-pager
-# export MANPAGER=kak-man
 
 source /home/boo/etc/broot/launcher/bash/br
