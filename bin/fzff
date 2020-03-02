@@ -6,9 +6,9 @@ test ! -d "$WORKING_DIR" && echo "Invalid directory" && exit 1
 
 while [ -z "$FILE" ]; do
 	cd "$WORKING_DIR"
-	DIRS="$(find "$WORKING_DIR" -mindepth 1 -maxdepth 1 -type d -printf '%p/\n' | sort | tr '\n' '|')"
-	FILES="$(find "$WORKING_DIR" -mindepth 1 -maxdepth 1 -type f | sort | tr '\n' '|')"
-	OUTPUT="$(echo ".|..|${DIRS}${FILES}" | rofi -dmenu -sep '|' -i -p "$WORKING_DIR" | sed -e 's/ /\ /g')"
+	DIRS="$(find -L "$WORKING_DIR" -mindepth 1 -maxdepth 1 -type d -printf '%p/\n' | sort)"
+	FILES="$(find -L "$WORKING_DIR" -mindepth 1 -maxdepth 1 -type f | sort)"
+	OUTPUT="$(printf ".\n..\n${DIRS}\n${FILES}" | fzfmenu --preview 'cat {}' --prompt "$WORKING_DIR> " | sed -e 's/ /\ /g')"
 	if [ -d "$OUTPUT" ]; then
 		WORKING_DIR="$(realpath "$OUTPUT")"
 		if [ "$OUTPUT" = "." ]; then

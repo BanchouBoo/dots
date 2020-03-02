@@ -45,14 +45,14 @@
 	define-command buffer-list %{
 		evaluate-commands %sh{
 			eval set -- "$kak_quoted_buflist"
-			BUFFER=$(printf "%s\n" "$@" | rofi -dmenu -i -p 'Buffer')
+			BUFFER=$(printf "%s\n" "$@" | fzfmenu -i --prompt 'Buffer> ')
 			[ "$BUFFER" ] && printf "buffer %%{%s}" "$BUFFER"
 		}
 	}
 
 	define-command choose-file %{
 		evaluate-commands %sh{
-			FILE="$(rf "$(dirname $kak_buffile)" | sed 's/ /\\ /g')"
+			FILE="$(fzff "$(dirname $kak_buffile)" | sed 's/ /\\ /g')"
 			if [ -n "$FILE" ]; then
 				printf 'exec ": edit %s<ret>"' "$FILE"
 			fi

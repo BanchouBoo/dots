@@ -7,7 +7,30 @@ mkfifo "$input"
 mkfifo "$output"
 chmod 600 "$input" "$output"
 
-st -c fzfmenu -e sh -c "cat $input | fzf $* | tee $output" &
+# [ -t 0 ] && notify-send 1 || notify-send 2
+
+args=$*
+tempstring=""
+for arg in $args; do
+	case $arg in
+		-*)
+			if [ "$tempstring" ]; then
+				args=$(echo "$args" | sed "s~$tempstring~\"$tempstring\"~")
+				tempstring=""
+			fi
+			;;
+		*)
+			if [ "$tempstring" ]; then
+				tempstring="$tempstring $arg"
+			else
+				tempstring="$arg"
+			fi
+			;;
+	esac
+done
+[ "$tempstring" ] && args=$(echo "$args" | sed "s~$tempstring~\"$tempstring\"~")
+
+st -c fzfmenu -e sh -c "cat $input | fzf $args | tee $output""$command" &
 
 # handle ctrl+c outside child terminal window
 trap 'kill $! 2>/dev/null; rm -f $input $output' EXIT
