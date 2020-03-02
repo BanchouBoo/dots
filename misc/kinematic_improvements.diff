@@ -108,13 +108,13 @@ index 6766bafde3..7ce441d214 100644
  
 +	Vector2 slide_floor(Vector2 p_motion, Vector2 p_up_direction, float p_floor_max_angle, Collision p_collision);
 +	Vector2 slide_ceiling(Vector2 p_motion, Vector2 p_up_direction, float p_floor_max_angle, Collision p_collision);
-+	Vector2 slide_wall(Vector2 p_motion, Vector2 p_up_direction, float p_floor_max_angle, Collision p_collision);
++	Vector2 slide_wall(Vector2 p_motion, Vector2 p_up_direction, float p_floor_max_angle, Collision p_collision); 
 +
  	bool _test_motion(const Vector2 &p_motion, bool p_infinite_inertia = true, float p_margin = 0.08, const Ref<Physics2DTestMotionResult> &p_result = Ref<Physics2DTestMotionResult>());
  
  protected:
 diff --git a/scene/3d/physics_body.cpp b/scene/3d/physics_body.cpp
-index caeae90238..9899bee763 100644
+index caeae90238..2453580742 100644
 --- a/scene/3d/physics_body.cpp
 +++ b/scene/3d/physics_body.cpp
 @@ -1191,6 +1191,8 @@ Vector3 KinematicBody::move_and_slide(const Vector3 &p_linear_velocity, const Ve
@@ -203,6 +203,17 @@ index caeae90238..9899bee763 100644
  Vector3 KinematicBody::move_and_slide_with_snap(const Vector3 &p_linear_velocity, const Vector3 &p_snap, const Vector3 &p_up_direction, bool p_stop_on_slope, int p_max_slides, float p_floor_max_angle, bool p_infinite_inertia) {
  
  	bool was_on_floor = on_floor;
+@@ -1420,6 +1472,10 @@ void KinematicBody::_bind_methods() {
+ 	ClassDB::bind_method(D_METHOD("get_slide_count"), &KinematicBody::get_slide_count);
+ 	ClassDB::bind_method(D_METHOD("get_slide_collision", "slide_idx"), &KinematicBody::_get_slide_collision);
+ 
++	BIND_VMETHOD(MethodInfo(Variant::VECTOR3, "slide_floor", PropertyInfo(Variant::VECTOR3, "motion"), PropertyInfo(Variant::VECTOR3, "up_direction"), PropertyInfo(Variant::REAL, "floor_max_angle"), PropertyInfo(Variant::OBJECT, "collision", PROPERTY_HINT_RESOURCE_TYPE, "KinematicCollision")));
++	BIND_VMETHOD(MethodInfo(Variant::VECTOR3, "slide_ceiling", PropertyInfo(Variant::VECTOR3, "motion"), PropertyInfo(Variant::VECTOR3, "up_direction"), PropertyInfo(Variant::REAL, "floor_max_angle"), PropertyInfo(Variant::OBJECT, "collision", PROPERTY_HINT_RESOURCE_TYPE, "KinematicCollision")));
++	BIND_VMETHOD(MethodInfo(Variant::VECTOR3, "slide_wall", PropertyInfo(Variant::VECTOR3, "motion"), PropertyInfo(Variant::VECTOR3, "up_direction"), PropertyInfo(Variant::REAL, "floor_max_angle"), PropertyInfo(Variant::OBJECT, "collision", PROPERTY_HINT_RESOURCE_TYPE, "KinematicCollision")));
++
+ 	ADD_PROPERTYI(PropertyInfo(Variant::BOOL, "move_lock_x", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NOEDITOR), "set_axis_lock", "get_axis_lock", PhysicsServer::BODY_AXIS_LINEAR_X);
+ 	ADD_PROPERTYI(PropertyInfo(Variant::BOOL, "move_lock_y", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NOEDITOR), "set_axis_lock", "get_axis_lock", PhysicsServer::BODY_AXIS_LINEAR_Y);
+ 	ADD_PROPERTYI(PropertyInfo(Variant::BOOL, "move_lock_z", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NOEDITOR), "set_axis_lock", "get_axis_lock", PhysicsServer::BODY_AXIS_LINEAR_Z);
 diff --git a/scene/3d/physics_body.h b/scene/3d/physics_body.h
 index 05bcbe22f0..714a58c2bc 100644
 --- a/scene/3d/physics_body.h
