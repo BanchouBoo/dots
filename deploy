@@ -43,7 +43,7 @@ if [ $# -gt 1 ]; then
 fi
 
 DOTDIR="$(realpath "$(dirname "$0")")"
-PRIVDOTDIR="$(realpath "$(dirname "$0")/private")"
+PRIVDOTDIR="$(realpath "$(dirname "$0")/pdots")"
 case "$1" in
     "bin")
         test ! -d "$HOME/bin" && mkdir "$HOME/bin"
