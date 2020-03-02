@@ -1,0 +1,16 @@
+#!/bin/sh
+# fzfmenu - fzf as dmenu replacement
+
+input=$(mktemp -u --suffix .fzfmenu.input)
+output=$(mktemp -u --suffix .fzfmenu.output)
+mkfifo "$input"
+mkfifo "$output"
+chmod 600 "$input" "$output"
+
+st -c fzfmenu -e sh -c "cat $input | fzf $* | tee $output" &
+
+# handle ctrl+c outside child terminal window
+trap 'kill $! 2>/dev/null; rm -f $input $output' EXIT
+
+cat > "$input"
+cat "$output"

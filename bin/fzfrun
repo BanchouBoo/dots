@@ -1,0 +1,8 @@
+#!/bin/sh
+IFS=:; for dir in $PATH; do
+	for file in "$dir"/*; do
+		if test -f "$file" -a -x "$file"; then
+			printf '%s\n' "${file##*/}"
+		fi
+	done
+done | sort -u | fzfmenu "$@" | ${SHELL:-"/bin/sh"} &
