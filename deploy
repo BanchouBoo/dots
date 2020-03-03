@@ -57,7 +57,7 @@ case "$1" in
 		[ -d "$PRIVDOTDIR/etc" ] && makelinks "$PRIVDOTDIR/etc" "$CONFIG_HOME"
         makelinks "$DOTDIR/etc" "$CONFIG_HOME"
         ;;
-    "dot")
+    "home")
         info "Making symlinks for $HOME"
 		[ -d "$PRIVDOTDIR/home" ] && makelinks "$PRIVDOTDIR/home" "$HOME"
 		makelinks "$DOTDIR/home" "$HOME"
@@ -76,11 +76,11 @@ case "$1" in
         ;;
     ""|"help")
         echo "deploy
-  - bin - create symlinks from DOTFILEDIR/bin/* to HOME/bin/
-  - etc - create symlinks from DOTFILEDIR/etc/* to XDG_CONFIG_HOME/
-  - dot - create symlinks from DOTFILEDIR/dot/* to HOME/
-  - usr - create symlinks from DOTFILEDIR/usr/* to XDG_DATA_HOME/
-  - all - do all of the above"
+  - bin  - create symlinks from DOTFILEDIR/bin/* to HOME/bin/
+  - etc  - create symlinks from DOTFILEDIR/etc/* to XDG_CONFIG_HOME/
+  - home - create symlinks from DOTFILEDIR/dot/* to HOME/
+  - usr  - create symlinks from DOTFILEDIR/usr/* to XDG_DATA_HOME/
+  - all  - do all of the above"
         ;;
     *)
         fail "Invalid argument, try 'deploy help'"
