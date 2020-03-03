@@ -22,10 +22,6 @@ super + 0
 super + q
 	dwmc killclient
 
-# quit/restart(?)
-super + shift + {e,r}
-	{rofi-power,dwmc quit 1}
-
 # move window between master/slave
 # or not this is weird
 super + {d,i}

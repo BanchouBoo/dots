@@ -6,22 +6,27 @@
 super + Return
 	$TERMINAL
 
-# rofi
-super + {semicolon,Tab}
-	rofi -show {run,window}
+# application launcher
+super + semicolon
+	fzfrun
 
+super + shift + e
+	power-menu
+
+# get password
 super + p
 	bwmenu
 
 super + shift + c
 	rofi -show calc
 
+# change theme
 super + ctrl + t
-    bootique --menu
+    bootique -m
 
 # ranger
 super + shift + f
-	xst ranger
+	$TERMINAL ranger
 
 # firefox
 super + b
@@ -31,19 +36,12 @@ super + b
 super + c
 	org-capture
 
-# org agenda
-super + a
-	org-agenda
-
 # toggle mic mute and send a notification with mute status
 super + m
 	SOURCE=$(pactl info | grep 'Default Source' | cut -d ' ' -f3); \
 	pactl set-source-mute "$SOURCE" toggle; \
 	MUTE_STATUS=$(pactl list sources | grep "$SOURCE" -A 6 | tail -n1 | cut -d ' ' -f 2); \
 	if [ "$MUTE_STATUS" = "no" ]; then notify-send -t 1500 "Mic unmuted"; else notify-send -t 1500 "Mic muted"; fi
-
-super + shift + d
-	feh ~/pictures/dvorak.png
 
 super + control + k
 	printf "https://kakoune.org/why-kakoune/why-kakoune.html" | xclip -sel clip
@@ -58,6 +56,6 @@ super + x
 	maim "$tmpbg"; corrupter "$tmpbg" "$tmpbg"; \
 	i3lock -i "$tmpbg"; rm "$tmpbg"
 
-# make sxhkd reload its configuration files:
+# make sxhkd reload its configuration files
 super + Escape
 	pkill -USR1 -x sxhkd
