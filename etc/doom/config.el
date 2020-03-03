@@ -35,7 +35,7 @@
 (after! org
   (setq org-capture-templates
         '(("f" "Food Log" entry
-           (file+olp+datetree "~/org/food.org")
+           (file+olp+datetree "~/dotfiles/pdots/org/food.org")
            "* %? @ %<%I:%M%p>\n%T\n%^{Type}p" :time-prompt t))
         )
 )
