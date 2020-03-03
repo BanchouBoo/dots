@@ -31,6 +31,8 @@ MODE_CURSOR_SEARCH="white underline"
 MODE_CURSOR_VISUAL="white block"
 KEYTIMEOUT=1
 
+source "$ZDOTDIR/plugins/fzf-tab/fzf-tab.plugin.zsh"
+
 # Theme
 autoload -U colors && colors
 source $ZDOTDIR/prompts/boo.zsh-theme
