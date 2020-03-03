@@ -1,5 +1,5 @@
 #!/bin/sh
-# Select a file or folder with rofi and echo it to stdout
+# Select a file or folder with fzfmenu and echo it to stdout
 
 WORKING_DIR="$(realpath ${1:-$(pwd)})"
 test ! -d "$WORKING_DIR" && echo "Invalid directory" && exit 1
