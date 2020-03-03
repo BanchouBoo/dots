@@ -1,7 +1,7 @@
 #!/bin/sh
-# Power menu with rofi, modify logout to match you wm
+# Power menu with fzfmenu, modify logout to match you wm
 
-res=$(echo "logout|reboot|shutdown|hibernate" | rofi -sep "|" -dmenu -i -p 'Power Menu')
+res=$(echo "logout\nreboot\nshutdown\nhibernate" | fzfmenu -i --prompt 'Power Menu>')
 
 case $res in
     "logout")
