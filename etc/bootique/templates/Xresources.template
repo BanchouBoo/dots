@@ -49,20 +49,18 @@ dwm.selfgcolor:             #<background>
 ! st
 st.font:                    <font>:pixelsize=18:antialias=true:autohint=true
 st.termname:                xterm-256color
-! st.termname:                xterm-24bit
 st.tabspaces:               4
 st.borderpx:                20
 st.xfps:                    120
-st.actionfps:		    60
+st.actionfps:               60
 
 ! rofi
 rofi.modi:                  run,window,windowcd,calc
 
-! rofi.font:                  <font> 12
 rofi.hide-scrollbar:        true
 rofi.location:              2 ! Top-middle of the screen
 rofi.separator-style:       none
-rofi.bw:                    0 ! Border width
+rofi.bw:                    0
 rofi.padding:               10
 rofi.yoffset:               -10
 
