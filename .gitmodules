@@ -1,3 +1,15 @@
 [submodule "bin/bootique"]
 	path = bin/bootique
 	url = https://github.com/BanchouBoo/bootique.git
+[submodule "etc/zsh/plugins/fzf-tab"]
+	path = etc/zsh/plugins/fzf-tab
+	url = https://github.com/Aloxaf/fzf-tab.git
+[submodule "etc/zsh/plugins/zsh-autosuggestions"]
+	path = etc/zsh/plugins/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions.git
+[submodule "etc/zsh/plugins/zsh-syntax-highlighting"]
+	path = etc/zsh/plugins/zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "etc/zsh/plugins/zsh-vim-mode"]
+	path = etc/zsh/plugins/zsh-vim-mode
+	url = https://github.com/softmoth/zsh-vim-mode.git
