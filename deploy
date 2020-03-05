@@ -69,7 +69,7 @@ case "$1" in
         makelinks "$DOTDIR/usr" "$DATA_HOME"
         ;;
     "all")
-        actions="bin etc usr dot"
+        actions="bin etc usr home"
         for action in $actions; do
             $0 $action
         done
