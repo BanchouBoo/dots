@@ -28,7 +28,7 @@ for arg in $args; do
 done
 [ "$tempstring" ] && args=$(echo "$args" | sed "s~$tempstring~\"$tempstring\"~")
 
-st -c fzfmenu -e sh -c "cat $input | fzf $args | tee $output" &
+st -c fzfmenu -e sh -c "cat $input | fzf --print-query $args | tail -n 1 | tee $output" &
 
 # handle ctrl+c outside child terminal window
 trap 'kill $! 2>/dev/null; rm -f $input $output' EXIT

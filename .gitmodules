@@ -13,3 +13,6 @@
 [submodule "etc/zsh/plugins/zsh-vim-mode"]
 	path = etc/zsh/plugins/zsh-vim-mode
 	url = https://github.com/softmoth/zsh-vim-mode.git
+[submodule "etc/kak/plugins/plug.kak"]
+	path = etc/kak/plugins/plug.kak
+	url = https://github.com/andreyorst/plug.kak.git
