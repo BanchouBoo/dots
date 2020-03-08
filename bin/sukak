@@ -1,0 +1,3 @@
+#!/bin/sh
+
+KAKOUNE_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/kak" sudo kak "$*"
