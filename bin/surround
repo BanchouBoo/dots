@@ -22,7 +22,8 @@ fi
 if echo "$SURROUND" | grep -Eq "^(\(|\[|\{|<)*$"; then
 	END="$(echo "$SURROUND" | rev | sed -e 's/(/)/g' -e 's/\[/]/g' -e 's/{/}/g' -e 's/</>/g')"
 elif echo "$SURROUND" | grep -Eq "^<.*>$"; then
-	END="$(echo "$SURROUND" | cut -c 2- | awk '{print $1}')"
+	END="${SURROUND#?}"
+	END="${END%% *}"
 	END="</$END>"
 else
 	END="$SURROUND"
