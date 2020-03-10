@@ -1,0 +1,152 @@
+#!/bin/sh
+
+FILE="test.json"
+CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}"
+JSON_PATH="${CONFIG_DIR}/booker/database.json"
+CATEGORY_FILE="${CONFIG_DIR}/booker/categories.txt"
+
+TEMPLATE='{
+	"%s": {
+		"datetime": %s,
+		"category": "%s",
+		"details": "%s"
+	}
+}'
+
+die() {
+	>&2 printf "[\033[0;31mERROR\033[0m] %s\n" "$*"
+	exit 1
+}
+
+help() {
+	cat << "HELP"
+Options:
+	-h
+		display this help page
+
+	-a
+		add a new entry to the JSON database
+
+	-j
+		path for the JSON database to read/write from
+		defaults to $XDG_CONFIG_HOME/booker/database.json if unset
+
+	-f
+		optional filters for the JSON
+HELP
+	exit "${1:-0}"
+}
+
+add() {
+	insert_time="$(date +"%s")"
+
+	# Ensure the file for categories exist
+	[ -d "${CATEGORY_FILE%/*}" ] || mkdir -p "${CATEGORY_FILE%/*}"
+	[ -f "$CATEGORY_FILE" ] || touch "$CATEGORY_FILE"
+
+	category="$(cat "$CATEGORY_FILE" | sort \
+	| fzf --no-info --print-query --reverse \
+	--height 10% --prompt 'Select item category: ' | tail -n 1)"
+
+	[ "$category" ] || exit
+	if ! grep -qo "^${category}$" "$CATEGORY_FILE"; then
+		echo "Category not found, adding to categories file"
+		echo $category >> "${CATEGORY_FILE}"
+	fi
+	echo "Category: $category"
+	printf "Date/time: " && read -r datetime
+	datetime="$(date --date "$datetime" +"%s" 2> /dev/null)" || die "Not a valid datetime"
+	printf "Details: " && read -r details
+
+	filled_template=$(printf "$TEMPLATE" \
+		"$insert_time" \
+		"$datetime" \
+		"$category" \
+		"$details")
+
+	# Ensure the directory for the JSON database exists
+	[ -d "${JSON_PATH%/*}" ] || mkdir -p "${JSON_PATH%/*}"
+
+	if [ -s "$JSON_PATH" ]; then
+		tmp="$(mktemp)"
+		jq --tab ". + $filled_template" "$JSON_PATH" > "$tmp"
+		mv -f "$tmp" "$JSON_PATH"
+	else
+		echo "{}" | jq --tab ". + $filled_template" > "$JSON_PATH"
+	fi
+}
+
+view() {
+	getline() {
+		cat | cut -f $1 -d '
+'
+	}
+
+	trim() {
+		unset IFS
+		# IFS='\n'
+		set -- $(cat)
+		echo "$*"
+	}
+
+	trim_quotes() {
+		input="$(cat)"
+		input="${input#\"}"
+		input="${input%\"}"
+		echo "$input"
+	}
+
+	IFS=}
+	set -- $(jq 'map(.)' "$JSON_PATH" | sed -e '/{/d' -e '/\[/d' -e '/\]/d' -e 's/,//g')
+
+	for item in $@; do
+		item="$(echo $item | sed '/^$/d')"
+
+		date="$(echo $item | getline 1 | cut -d ':' -f 2 | trim)"
+		date="$(date --date="@${date}" +"%B %d, %Y @ %I:%M %p")"
+
+		category="$(echo $item | getline 2 | cut -d ':' -f 2 | trim | trim_quotes)"
+
+		details="$(echo $item | getline 3 | cut -d ':' -f 2 | trim | trim_quotes)"
+
+		printf '%s\n\t%s: %s\n\n' "$date" "$category" "$details"
+	done | less
+
+}
+
+while getopts 'havj:' opt; do
+	case "$opt" in
+		h)
+			help
+			;;
+		a)
+			[ "$DO_VIEW" ] && die "Can't view and add at the same time"
+			DO_ADD=true
+			;;
+		v)
+			[ "$DO_ADD" ] && die "Can't view and add at the same time"
+			DO_VIEW=true
+			;;
+		j)
+			JSON_PATH="$OPTARG"
+			;;
+		f)
+			FILTER="$OPTARG"
+			;;
+		*)
+			help 1
+			;;
+	esac
+done
+
+[ -d "$JSON_PATH" ] && die "JSON path should not be a directory"
+
+[ "$DO_ADD" ] && add
+
+[ "$DO_VIEW" ] && view
+
+[ "$@" ] || help
+
+# if [ "$1" = "add" ]; then
+# 	add
+# fi
