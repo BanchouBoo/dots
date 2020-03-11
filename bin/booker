@@ -100,41 +100,17 @@ add() {
 }
 
 view() {
-	getline() {
-		cat | cut -f $1 -d '
-'
-	}
+	jq -r '.[] | "\(.datetime)|\(.category)|\(.details)"' "$JSON_PATH" | \
+	while read -r line; do
+		IFS=\|
+		set -- $line
 
-	trim() {
-		unset IFS
-		# IFS='\n'
-		set -- $(cat)
-		echo "$*"
-	}
-
-	trim_quotes() {
-		input="$(cat)"
-		input="${input#\"}"
-		input="${input%\"}"
-		echo "$input"
-	}
-
-	IFS=}
-	set -- $(jq 'map(.)' "$JSON_PATH" | sed -e '/{/d' -e '/\[/d' -e '/\]/d' -e 's/,//g')
-
-	for item in $@; do
-		item="$(echo $item | sed '/^$/d')"
-
-		date="$(echo $item | getline 1 | cut -d ':' -f 2 | trim)"
-		date="$(date --date="@${date}" +"%B %d, %Y @ %I:%M %p")"
-
-		category="$(echo $item | getline 2 | cut -d ':' -f 2 | trim | trim_quotes)"
-
-		details="$(echo $item | getline 3 | cut -d ':' -f 2 | trim | trim_quotes)"
+		date="$(date --date="@${1}" +"%B %d, %Y @ %I:%M %p")"
+		category="$2"
+		details="$3"
 
 		printf '%s\n\t%s: %s\n\n' "$date" "$category" "$details"
 	done | less
-
 }
 
 while getopts 'havj:' opt; do
