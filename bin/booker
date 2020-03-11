@@ -1,9 +1,10 @@
 #!/bin/sh
 
-FILE="test.json"
-CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}"
-JSON_PATH="${CONFIG_DIR}/booker/database.json"
-CATEGORY_FILE="${CONFIG_DIR}/booker/categories.txt"
+CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/booker"
+CACHE_DIR="${XDG_CACHE_HOME:-/.cache}/booker"
+
+JSON_PATH="${CONFIG_DIR}/database.json"
+CATEGORY_FILE="${CONFIG_DIR}/categories.txt"
 
 TEMPLATE='{
 	"%s": {
@@ -37,6 +38,11 @@ HELP
 	exit "${1:-0}"
 }
 
+fzf_select() {
+	fzf --no-info --print-query --reverse \
+	--height 10% --prompt "$1" | tail -n 1
+}
+
 add() {
 	insert_time="$(date +"%s")"
 
@@ -44,19 +50,36 @@ add() {
 	[ -d "${CATEGORY_FILE%/*}" ] || mkdir -p "${CATEGORY_FILE%/*}"
 	[ -f "$CATEGORY_FILE" ] || touch "$CATEGORY_FILE"
 
+	printf "Date/time: " && read -r datetime
+	[ "$datetime" ] || datetime="now"
+	datetime="$(date --date "$datetime" +"%s" 2> /dev/null)" || die "Not a valid datetime"
+
 	category="$(cat "$CATEGORY_FILE" | sort \
-	| fzf --no-info --print-query --reverse \
-	--height 10% --prompt 'Select item category: ' | tail -n 1)"
+	| fzf_select 'Select item category: ')"
 
 	[ "$category" ] || exit
-	if ! grep -qo "^${category}$" "$CATEGORY_FILE"; then
-		echo "Category not found, adding to categories file"
+	echo "Category: $category"
+	if ! grep -iqo "^${category}$" "$CATEGORY_FILE"; then
+		echo "Adding to categories cache file"
 		echo $category >> "${CATEGORY_FILE}"
 	fi
-	echo "Category: $category"
-	printf "Date/time: " && read -r datetime
-	datetime="$(date --date "$datetime" +"%s" 2> /dev/null)" || die "Not a valid datetime"
-	printf "Details: " && read -r details
+
+	category_lower="$(echo $category | tr '[[:upper:]]' '[[:lower:]]')"
+	category_cache_file="$CACHE_DIR/categories/$category_lower"
+
+	# Ensure the category cache file exists
+	[ -d "$$CACHE_DIR/categories" ] || mkdir -p "$CACHE_DIR/categories"
+	[ -f "$category_cache_file" ] || touch "$category_cache_file"
+
+	details="$(cat "$category_cache_file" | sort \
+	| fzf_select 'Enter details: ')"
+
+	[ "$details" ] || exit
+	echo "Details: $details"
+	if ! grep -iqo "^${details}$" "$category_cache_file"; then
+		echo "Adding details to the '${category_lower}' cache"
+		echo $details >> "$category_cache_file"
+	fi
 
 	filled_template=$(printf "$TEMPLATE" \
 		"$insert_time" \
