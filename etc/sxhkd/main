@@ -34,7 +34,7 @@ super + b
 
 # org capture
 super + c
-	org-capture
+	st -c "booker" -e sh -c 'booker -a && booker -v'
 
 # toggle mic mute and send a notification with mute status
 super + m
