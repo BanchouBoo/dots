@@ -1,5 +1,4 @@
 #!/bin/sh
 xrdb "$@"
-pkill -USR1 st
-pkill -USR1 emacs
-xdotool key alt+F5
+pkill -x -USR1 st
+dwmc xrdb
