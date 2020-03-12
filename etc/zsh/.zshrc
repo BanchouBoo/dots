@@ -58,4 +58,20 @@ export LESS_TERMCAP_md=$'\033[1;34m'       # begin blink
 export LESS_TERMCAP_{me,ue}=$'\033[0m'     # reset bold/blink and underline
 export LESS_TERMCAP_us=$'\033[1;35m'       # begin underline
 
-source /home/boo/etc/broot/launcher/bash/br
+export LESSHISTFILE="${XDG_CACHE_HOME:-.cache}/less/hist"
+
+function src {
+	cd ~/opt/void-packages/
+}
+
+function dots {
+	cd ~/opt/dots/
+}
+
+function pdots {
+	cd ~/opt/dots/pdots/
+}
+
+function suckless {
+	cd ~/opt/suckless/
+}
