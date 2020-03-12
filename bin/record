@@ -11,7 +11,7 @@ mkdir -p /tmp/record
 sock=/tmp/record/sock
 pidfile=/tmp/record/pidfile
 rate=60
-savedir="$HOME/videos/recordings/"
+savedir="$HOME/opt/videos/recordings/"
 
 die() { >&2 echo "$*" ; exit 1 ; }
 isrunning() {
