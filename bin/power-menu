@@ -1,20 +1,17 @@
 #!/bin/sh
 # Power menu with fzfmenu, modify logout to match you wm
 
-res=$(echo "logout\nreboot\nshutdown\nhibernate" | fzfmenu -i --prompt 'Power Menu>')
+res=$(echo "logout\nreboot\nshutdown" | fzfmenu -i --prompt 'Power Menu>')
 
 case $res in
     "logout")
         bspc quit || dwmc quit
         ;;
     "reboot")
-        systemctl reboot
+        sudo reboot
         ;;
     "shutdown")
-        systemctl poweroff
-        ;;
-    "hibernate")
-        systemctl hibernate
+        sudo shutdown -P now
         ;;
 esac
 
