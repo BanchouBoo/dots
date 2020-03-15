@@ -1,6 +1,6 @@
 export PATH="$(find -L ~/bin/ -maxdepth 1 -type d | sed 's|/$||'| tr '\n' ':')$PATH"
 export TERMINAL=st
-export TERMINFO=${XDG_CONFIG_HOME:-$HOME/.config}/terminfo
+# export TERMINFO=${XDG_CONFIG_HOME:-$HOME/.config}/terminfo
 export EDITOR=kak
 
 export CARGO_HOME=${XDG_CONFIG_HOME:-$HOME/.config}/cargo
@@ -60,6 +60,8 @@ export LESS_TERMCAP_us=$'\033[1;35m'       # begin underline
 
 export LESSHISTFILE="${XDG_CACHE_HOME:-.cache}/less/hist"
 
+### SHORTCUTS
+
 function src {
 	cd ~/opt/void-packages/
 }
@@ -74,4 +76,11 @@ function pdots {
 
 function suckless {
 	cd ~/opt/suckless/
+}
+
+function kakrc {
+	current_dir="$PWD"
+	dots
+	kak etc/kak/kakrc
+	cd "$current_dir"
 }
