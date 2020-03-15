@@ -52,7 +52,7 @@
 
 	define-command choose-file %{
 		evaluate-commands %sh{
-			FILE="$(fzff "$(dirname $kak_buffile)" | sed 's/ /\\ /g')"
+			FILE="$(fzffrg "$(dirname $kak_buffile)" | sed 's/ /\\ /g')"
 			if [ -n "$FILE" ]; then
 				printf 'exec ": edit %s<ret>"' "$FILE"
 			fi
