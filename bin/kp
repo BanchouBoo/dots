@@ -1,0 +1,5 @@
+#!/bin/sh
+
+PID="$(ps -ef | fzf | awk '{ printf $2 }')"
+
+kill "$PID"
