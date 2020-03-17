@@ -1,0 +1,18 @@
+#!/bin/sh
+
+STATUS_FIFO="/tmp/dvtm-status.$$"
+export DVTM_CMD_FIFO="/tmp/dvtm-command.$$"
+
+[ -p "$STATUS_FIFO" ] || mkfifo -m 600 "$STATUS_FIFO" || exit 1
+[ -p "$DVTM_CMD_FIFO" ] || mkfifo -m 600 "$DVTM_CMD_FIFO" || exit 1
+
+while true; do
+	date +' %a %h %d   %I:%M'
+	sleep 1
+done > "$STATUS_FIFO" &
+
+STATUS_PID=$!
+dvtm -s "$STATUS_FIFO" -c "$DVTM_CMD_FIFO" "$@" 2> /dev/null
+kill $STATUS_PID
+wait $STATUS_PID 2> /dev/null
+rm -f "$STATUS_FIFO"
