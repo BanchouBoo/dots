@@ -1,0 +1,157 @@
+pcm.!default {
+	type asym
+	playback.pcm "plug:eqoutput"
+	capture.pcm "plug:eqinput"
+}
+
+pcm.headphones {
+	type dmix
+	ipc_key 1024
+
+	slave {
+		pcm "hw:SB,0"
+		rate 48000
+		periods 128
+		period_time 0
+		period_size 1024 # must be power of 2
+		buffer_size 8192
+	}
+}
+
+pcm.microphone {
+	type dsnoop
+	ipc_key 1025
+
+	slave {
+		pcm "hw:Snowball,0"
+		rate 48000
+		periods 128
+		period_time 0
+		period_size 1024 # must be power of 2
+		buffer_size 8192
+	}
+}
+
+pcm.eqoutput {
+	type ladspa
+
+	slave.pcm "output"
+
+	path "/usr/lib/ladspa"
+
+	plugins [
+	{
+		label mbeq
+		id 1197
+		input {
+			# controls [ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ]
+            controls [ 4   # 50hz
+                       4   # 100hz
+                       0   # 156hz
+                       0   # 220hz
+                       3.5 # 311hz
+                       4   # 440hz
+                       5.5 # 622hz
+                       3   # 880hz
+                       5   # 1250hz
+                       5   # 1750hz
+                       5   # 2500hz
+                       10  # 3500hz
+                       10  # 5000hz
+                       5   # 10000hz
+                       5   # 20000hz
+
+                       # 4.5 # 1750hz
+                       # 4.5 # 2500hz
+                       # 9.5 # 3500hz
+                       # 9.5 # 5000hz
+                       # 10 # 10000hz
+                       # 10 # 20000hz
+                     ]
+			}
+		}
+	]
+}
+
+pcm.eqinput {
+	type ladspa
+
+	slave.pcm "plug:microphone"
+
+	path "/usr/lib/ladspa"
+
+	plugins [
+	{
+		label mbeq
+		id 1197
+		input {
+			# controls [ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ]
+            controls [ -35 # 50hz
+                       -35 # 100hz
+                       -35 # 156hz
+                       0 # 220hz
+                       0 # 311hz
+                       0 # 440hz
+                       0 # 622hz
+                       0 # 880hz
+                       0 # 1250hz
+                       0 # 1750hz
+                       0 # 2500hz
+                       0 # 3500hz
+                       0 # 5000hz
+                       0 # 10000hz
+                       0 # 20000hz
+                     ]
+			}
+		}
+	]
+}
+
+pcm.loopin {
+	type dmix
+	ipc_key 1026
+
+	slave {
+		pcm "hw:Loopback,0,0"
+		rate 48000
+		periods 128
+		period_time 0
+		period_size 1024 # must be power of 2
+		buffer_size 8192
+	}
+}
+
+pcm.loopout {
+	type hw
+	card "Loopback"
+	device 1
+	subdevice 0
+}
+
+pcm.mdev {
+	type multi
+
+	slaves.a.pcm pcm.headphones
+	slaves.a.channels 2
+
+	slaves.b.pcm pcm.loopin
+	slaves.b.channels 2
+
+	bindings.0.slave a
+	bindings.0.channel 0
+
+	bindings.1.slave a
+	bindings.1.channel 1
+
+	bindings.2.slave b
+	bindings.2.channel 0
+
+	bindings.3.slave b
+	bindings.3.channel 1
+}
+
+pcm.output {
+	type plug
+	slave.pcm mdev
+	route_policy "duplicate"
+}
