@@ -38,7 +38,7 @@ super + c
 
 # toggle mic mute and send a notification with mute status
 super + m
-	if amixer -c 2 set Mic toggle | grep "\[on\]"; then \
+	if amixer -c Snowball set Mic toggle | grep "\[on\]"; then \
 		MUTE_MESSAGE="Mic unmuted"; \
 	else \
 		MUTE_MESSAGE="Mic muted"; \
