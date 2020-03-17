@@ -2,11 +2,10 @@
 
 CURRENT_DIR="$PWD"
 WORKING_DIR="${1:-$PWD}"
-# [ -d "$WORKING_DIR" ] || "Not a valid directory"
 
 while [ -z "$FINAL_SELECTION" ]; do
 	cd "$WORKING_DIR" && WORKING_DIR="$PWD" || "Not a valid directory"
-	selection=$({ echo "."; echo ".."; rg --files; } | fzfmenu --preview 'cat {}')
+	selection=$({ echo "."; echo ".."; rg --hidden --files; } | fzfmenu --preview 'cat {}')
 	[ "$selection" ] || exit
 	case $selection in
 		"..")
