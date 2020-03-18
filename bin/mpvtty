@@ -1,4 +1,0 @@
-#!/bin/sh
-# play mpv directly on the framebuffer
-
-mpv --vo=gpu --gpu-api=opengl --gpu-context=drm "$@"
