@@ -1,0 +1,17 @@
+#!/bin/sh
+
+hex2rgb() {
+	# format: ff2233
+	s=${1#??}
+	printf '%d %d %d' "0x${1%????}" "0x${s%??}" "0x${1#????}"
+}
+
+mult=$2
+set -- $(hex2rgb "$1")
+
+for i; do
+	a=$(echo "$i * $mult" | bc)
+	a=${a%.*}
+	[ "$a" -gt 255 ] && a=255
+	printf '%02x' $a
+done
