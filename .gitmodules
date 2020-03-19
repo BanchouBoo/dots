@@ -16,3 +16,6 @@
 [submodule "etc/kak/plugins/plug.kak"]
 	path = etc/kak/plugins/plug.kak
 	url = https://github.com/andreyorst/plug.kak.git
+[submodule "etc/trackma/anime-relations"]
+	path = etc/trackma/anime-relations
+	url = https://github.com/erengy/anime-relations.git
