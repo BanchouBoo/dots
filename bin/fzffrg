@@ -15,7 +15,7 @@ while [ -z "$FINAL_SELECTION" ]; do
 			FINAL_SELECTION="$WORKING_DIR"
 			;;
 		*)
-			FINAL_SELECTION="$selection"
+			FINAL_SELECTION="$WORKING_DIR/$selection"
 			;;
 	esac
 done
