@@ -25,7 +25,9 @@ compton &
 
 start lutris
 start qbittorrent
-start discord-uncrash "$BOOTIQUE_OUTPUT_DIR/discord.css"
-start pulseeffects --gapplication-service
+start discord-uncrash
+start unclutter -idle 1
+# start discord-uncrash "$BOOTIQUE_OUTPUT_DIR/discord.css"
+# start pulseeffects --gapplication-service
 
 termstart weechat
