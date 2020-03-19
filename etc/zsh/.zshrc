@@ -59,6 +59,7 @@ export LESS_TERMCAP_{me,ue}=$'\033[0m'     # reset bold/blink and underline
 export LESS_TERMCAP_us=$'\033[1;35m'       # begin underline
 
 export LESSHISTFILE="${XDG_CACHE_HOME:-.cache}/less/hist"
+export WEECHAT_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/weechat"
 
 ### SHORTCUTS
 
