@@ -32,7 +32,7 @@ Options:
 		open JSON database in a human-readable format
 		you may also pipe in JSON if you want to view filtered data, data must be accesed initally with .[]
 
-	-j
+	-j [filepath]
 		path for the JSON database to read/write from
 		defaults to $XDG_CONFIG_HOME/booker/database.json if unset
 HELP
