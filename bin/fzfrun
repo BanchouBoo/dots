@@ -6,4 +6,4 @@ for dir in $PATH; do
 			printf '%s\n' "${file##*/}"
 		fi
 	done
-done | sort -u | fzfmenu --no-info --reverse --preview "man {}" --preview-window right:70%:wrap "$@" | ${SHELL:-"/bin/sh"} &
+done | sort -u | fzfmenu --no-info --reverse --preview "man {}" --preview-window right:70%:wrap "$@" | sh &
