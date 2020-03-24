@@ -1,24 +1,36 @@
+. "${XDG_CONFIG_HOME:=$HOME/.config}"
+. "${XDG_DATA_HOME:=$HOME/.local/share}"
+. "${XDG_CACHE_HOME:=~/.cache}"
+export XDG_CONFIG_HOME XDG_DATA_HOME XDG_CACHE_HOME
+
+### XDG COMPATIBILITY
+HISTFILE="$XDG_CACHE_HOME/zsh/history"
+ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/zcompdump-${HOST/.*/}-$ZSH_VERSION"
+
+export CARGO_HOME=$XDG_CONFIG_HOME/cargo
+export TERMINFO=$XDG_DATA_HOME/terminfo
+export LESSHISTFILE="$XDG_CACHE_HOME/less/hist"
+export WEECHAT_HOME="$XDG_CONFIG_HOME/weechat"
+
+# Add ~/bin/ and it's subfolders to the path
 export PATH="$(find -L ~/bin/ -maxdepth 1 -type d | sed 's|/$||'| tr '\n' ':')$PATH"
+
+# Assign programs to variables
 export TERMINAL=st
-# export TERMINFO=${XDG_CONFIG_HOME:-$HOME/.config}/terminfo
 export EDITOR=kak
 
-export CARGO_HOME=${XDG_CONFIG_HOME:-$HOME/.config}/cargo
-
 # History
-HISTFILE="${XDG_CACHE_HOME:-~/.cache}/zsh/history"
 HISTSIZE=10000
 SAVEHIST=10000
 
 # Completion
-ZSH_COMPDUMP="${XDG_CACHE_HOME:-~/.cache}/zsh/zcompdump-${HOST/.*/}-$ZSH_VERSION"
 source $ZDOTDIR/zshcomp
 
 # Options
 setopt appendhistory autocd extendedglob
 unsetopt beep
 
-# Plugins
+### PLUGINS
 source "$ZDOTDIR/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=4'
 
@@ -37,15 +49,13 @@ source "$ZDOTDIR/plugins/fzf-tab/fzf-tab.plugin.zsh"
 autoload -U colors && colors
 source $ZDOTDIR/prompts/boo.zsh-theme
 
-# source "${XDG_CONFIG_HOME:-~/.config}/user-dirs.dirs"
-
 # User files to source that are under VC
 find "$ZDOTDIR/source" -type f | while read -r file; do
 	source "$file"
 done
 
 # User files to source that are NOT under VC
-find "${XDG_DATA_HOME:-~/.local/share}/zsh/source" -type f | while read -r file; do
+find "$XDG_DATA_HOME/zsh/source" -type f | while read -r file; do
 	source "$file"
 done
 
@@ -58,9 +68,7 @@ export LESS_TERMCAP_md=$'\033[1;34m'       # begin blink
 export LESS_TERMCAP_{me,ue}=$'\033[0m'     # reset bold/blink and underline
 export LESS_TERMCAP_us=$'\033[1;35m'       # begin underline
 
-export LESSHISTFILE="${XDG_CACHE_HOME:-.cache}/less/hist"
-export WEECHAT_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/weechat"
-
+# Local man path
 export MANPATH="$HOME/bin/man:"
 
 ### SHORTCUTS
