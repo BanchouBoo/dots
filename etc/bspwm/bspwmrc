@@ -1,5 +1,22 @@
 #!/bin/sh
 
+### HELPERS ###
+
+# set colors from Xresources to variables
+eval $(xrdb -q | while read -r line; do
+    case $line in
+        *\*.*|Bspwm.*)
+            colorname=${line%%:*}
+            colorname=${colorname#*.}
+            colorvalue=${line#*:}
+            colorvalue=${colorvalue##[[:space:]]}
+            printf '%s=%s\n' "$colorname" "$colorvalue"
+            ;;
+    esac
+done)
+
+###############
+
 ### PROGRAMS ###
 
 autostart &
