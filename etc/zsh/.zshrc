@@ -61,6 +61,8 @@ export LESS_TERMCAP_us=$'\033[1;35m'       # begin underline
 export LESSHISTFILE="${XDG_CACHE_HOME:-.cache}/less/hist"
 export WEECHAT_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/weechat"
 
+export MANPATH="$HOME/bin/man:"
+
 ### SHORTCUTS
 
 function src {
