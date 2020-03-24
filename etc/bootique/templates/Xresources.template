@@ -47,7 +47,7 @@ dwm.selbgcolor:             #<color2>
 dwm.selfgcolor:             #<background>
 
 ! st
-st.font:                    <font>:pixelsize=17:antialias=true:autohint=true
+st.font:                    <font>:pixelsize=16:antialias=true:autohint=true
 st.termname:                xterm-256color
 st.tabspaces:               4
 st.borderpx:                20
