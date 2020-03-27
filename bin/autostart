@@ -1,33 +1,26 @@
 #!/bin/sh
 
-### FUNCTIONS ###
-
 start() {
     COMMAND=$1
     shift 1
     ARGS=$*
-    test $(pgrep -u "$USER" -ic "$COMMAND") -eq 0 && $COMMAND $ARGS &
+    pgrep -u "$USER" -ic "$COMMAND" > /dev/null || $COMMAND $ARGS &
 }
 
 termstart() {
     COMMAND=$1
     shift 1
     ARGS=$*
-    test $(pgrep -u "$USER" -ic "$COMMAND") -eq 0 && st -c $COMMAND $COMMAND $ARGS &
+    pgrep -u "$USER" -ic "$COMMAND" > /dev/null || st -c $COMMAND $COMMAND $ARGS &
 }
 
-#################
-
 start-sxhkd
-compton &
-# $THEMEDIR/active-theme/fehbg &
 "$BOOTIQUE_OUTPUT_DIR/fehbg" &
 
+start picom
 start lutris
 start qbittorrent
 start discord-uncrash
 start unclutter -idle 1
-# start discord-uncrash "$BOOTIQUE_OUTPUT_DIR/discord.css"
-# start pulseeffects --gapplication-service
 
 termstart weechat
