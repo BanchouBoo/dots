@@ -14,5 +14,5 @@ if kak -l | grep "godot"; then
     # FILE="'$(echo ${FILE} | sed "s/'/''/g")'"
 	printf "eval -verbatim -client client0 edit %s %s %s" "${FILE}" "${LINE}" "${COLUMN}" | kak -p "godot"
 else
-	st -c kakoune -n kakoune kak -s "godot" "$FILE" "+${LINE}:${COLUMN}"
+	st -c kakoune kak -s "godot" "$FILE" "+${LINE}:${COLUMN}"
 fi
