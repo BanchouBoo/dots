@@ -3,8 +3,8 @@ alias df="df -h"                          # human-readable sizes
 alias free="free -m"                      # show sizes in MB
 alias less="less -FWR"
 
-alias ls="ls --color"
-alias la="ls -a"
+alias ls="ls --color -F"
+alias la="ls -A"
 
 alias copy="xclip -sel clip"
 alias paste="xclip -o -sel clip"
