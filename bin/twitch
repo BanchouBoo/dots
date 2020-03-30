@@ -1,7 +1,7 @@
 #!/bin/sh
 # Start Twitch stream and the matching chat in weechat if proper env vars are set
 
-mpv "https://www.twitch.tv/$*" &
+mpv --force-window=immediate "https://www.twitch.tv/$*" &
 
 if [ ! "$TWITCH_USER" ] || [ ! "$TWITCH_AUTH" ]; then
     echo "TWITCH_USER and/or TWITCH_AUTH not set, not starting chat."
