@@ -20,7 +20,7 @@
 
 ### HOOKS ###
 	hook global WinCreate .* %{
-		set-option global termcmd 'xst -e sh -c'
+		set-option global termcmd 'st -e sh -c'
 	}
 
 	hook global BufOpenFile "%val{config}/kakrc" %{
