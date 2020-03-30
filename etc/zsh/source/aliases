@@ -13,6 +13,7 @@ alias :q="exit"
 alias pfetch="EDITOR=kakoune pfetch"
 
 alias i="sudo xbps-install"
+alias r="sudo xbps-remove"
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 

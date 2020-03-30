@@ -22,8 +22,7 @@ super + 0
 super + q
 	dwmc killclient
 
-# move window between master/slave
-# or not this is weird
+# increment/decrement master count
 super + {d,i}
 	dwmc incnmaster {-,+}1
 
