@@ -11,6 +11,7 @@ export CARGO_HOME=$XDG_CONFIG_HOME/cargo
 export TERMINFO=$XDG_DATA_HOME/terminfo
 export LESSHISTFILE="$XDG_CACHE_HOME/less/hist"
 export WEECHAT_HOME="$XDG_CONFIG_HOME/weechat"
+export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
 
 # Add ~/bin/ and it's subfolders to the path
 export PATH="$(find -L ~/bin/ -maxdepth 1 -type d | sed 's|/$||'| tr '\n' ':')$PATH"
