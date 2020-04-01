@@ -1,87 +1,108 @@
 #!/bin/sh
 
 info() {
-    printf "\r  [ \033[00;34m..\033[0m ] %s\n" "$1"
+	printf "\r  [ \033[00;34m..\033[0m ] %s\n" "$1"
 }
 
 query() {
-    printf "\r  [ \033[0;33m??\033[0m ] %s\n" "$1"
+	printf "\r  [ \033[0;33m??\033[0m ] %s\n" "$1"
 }
 
 success() {
-    printf "\r\033[2K  [ \033[00;32mOK\033[0m ] %s\n" "$1"
+	printf "\r\033[2K  [ \033[00;32mOK\033[0m ] %s\n" "$1"
 }
 
 warn() {
-    printf "\r\033[2K  [\033[0;33mWARN\033[0m] %s\n" "$1"
+	printf "\r\033[2K  [\033[0;33mWARN\033[0m] %s\n" "$1"
 }
 
 fail() {
-    printf "\r\033[2K  [\033[0;31mFAIL\033[0m] %s\n" "$1"
-    exit 1
+	printf "\r\033[2K  [\033[0;31mFAIL\033[0m] %s\n" "$1"
+	exit 1
 }
 
 makelinks() {
-    sourcedir=$1
-    targetdir=$2
-    files="$(find $sourcedir/ -mindepth 1 -maxdepth 1 -not -name '#*' -not -name '*deps')"
-    for filepath in $files; do
-        file=$(basename "$filepath")
-        if [ -f "$targetdir/$file" ] || [ -d "$targetdir/$file" ]; then
-            if [ ! "$(realpath "$filepath")" = "$(realpath "$targetdir/$file")" ]; then
-                warn "File/folder already exists at $targetdir/$file, skipping link"
-            fi
-        else
-            info "Making symlink for $file"
-            ln -s "$sourcedir/$file" "$targetdir/$file"
-        fi
-    done
+	# files="$(find $1/ -mindepth 1 -maxdepth 1 -not -name '#*' -not -name '*deps')"
+	files=$(for file in "$1"/*; do
+		echo "${file##*/}"
+	done)
+
+	for file in $files; do
+		if [ -f "$2/$file" ]; then
+			if [ ! "$(realpath "$1/$file")" = "$(realpath "$2/$file")" ]; then
+				warn "File already exists at $2/$file, skipping link"
+			fi
+		elif [ -d "$2/$file" ]; then
+			if [ ! "$(realpath "$1/$file")" = "$(realpath "$2/$file")" ]; then
+				query "Folder already exists, would you like to link subfolders and files to it? [y/n]"
+				while [ ! "$confirm" ]; do
+					read -r confirm
+					case $confirm in
+						[yY]*)
+							makelinks "$1/$file" "$2/$file"
+							;;
+						[nN]*)
+							info "Skipping link for $file"
+							;;
+						*)
+							warn "Invalid response, expecting y/n"
+							unset confirm
+							;;
+					esac
+				done
+				unset confirm
+			fi
+		else
+			info "Making symlink for $file"
+			ln -s "$1/$file" "$2/$file"
+		fi
+	done
 }
 
 if [ $# -gt 1 ]; then
-    fail "Too many arguments, try 'deploy help'"
+	fail "Too many arguments, try 'deploy help'"
 fi
 
 DOTDIR="$(realpath "$(dirname "$0")")"
 PRIVDOTDIR="$(realpath "$(dirname "$0")/pdots")"
 case "$1" in
-    "bin")
-        test ! -d "$HOME/bin" && mkdir "$HOME/bin"
-        info "Making symlinks to $HOME/bin"
-        [ -d "$PRIVDOTDIR/bin" ] && makelinks "$PRIVDOTDIR/bin" "$HOME/bin"
-        makelinks "$DOTDIR/bin" "$HOME/bin"
-        ;;
-    "etc")
-        CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
-        info "Making symlinks for $CONFIG_HOME"
+	"bin")
+		test ! -d "$HOME/bin" && mkdir "$HOME/bin"
+		info "Making symlinks to $HOME/bin"
+		[ -d "$PRIVDOTDIR/bin" ] && makelinks "$PRIVDOTDIR/bin" "$HOME/bin"
+		makelinks "$DOTDIR/bin" "$HOME/bin"
+		;;
+	"etc")
+		CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+		info "Making symlinks for $CONFIG_HOME"
 		[ -d "$PRIVDOTDIR/etc" ] && makelinks "$PRIVDOTDIR/etc" "$CONFIG_HOME"
-        makelinks "$DOTDIR/etc" "$CONFIG_HOME"
-        ;;
-    "home")
-        info "Making symlinks for $HOME"
+		makelinks "$DOTDIR/etc" "$CONFIG_HOME"
+		;;
+	"home")
+		info "Making symlinks for $HOME"
 		[ -d "$PRIVDOTDIR/home" ] && makelinks "$PRIVDOTDIR/home" "$HOME"
 		makelinks "$DOTDIR/home" "$HOME"
-        ;;
-    "usr")
-        DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
-        info "Making symlinks for $DATA_HOME"
+		;;
+	"usr")
+		DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+		info "Making symlinks for $DATA_HOME"
 		[ -d "$PRIVDOTDIR/usr" ] && makelinks "$PRIVDOTDIR/usr" "$DATA_HOME"
-        makelinks "$DOTDIR/usr" "$DATA_HOME"
-        ;;
-    "all")
-        actions="bin etc usr home"
-        for action in $actions; do
-            $0 $action
-        done
-        ;;
-    ""|"help")
-        echo "deploy
+		makelinks "$DOTDIR/usr" "$DATA_HOME"
+		;;
+	"all")
+		actions="bin etc usr home"
+		for action in $actions; do
+			$0 $action
+		done
+		;;
+	""|"help")
+		echo "deploy
   - bin  - create symlinks from DOTFILEDIR/bin/* to HOME/bin/
   - etc  - create symlinks from DOTFILEDIR/etc/* to XDG_CONFIG_HOME/
   - home - create symlinks from DOTFILEDIR/dot/* to HOME/
   - usr  - create symlinks from DOTFILEDIR/usr/* to XDG_DATA_HOME/
   - all  - do all of the above"
-        ;;
-    *)
-        fail "Invalid argument, try 'deploy help'"
+		;;
+	*)
+		fail "Invalid argument, try 'deploy help'"
 esac
