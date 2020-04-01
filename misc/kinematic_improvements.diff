@@ -99,25 +99,25 @@ index d42bd6adaf..8ee24bf13b 100644
  	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "motion/sync_to_physics"), "set_sync_to_physics", "is_sync_to_physics_enabled");
  }
 diff --git a/scene/2d/physics_body_2d.h b/scene/2d/physics_body_2d.h
-index 6766bafde3..7ce441d214 100644
+index 6766bafde3..1585952022 100644
 --- a/scene/2d/physics_body_2d.h
 +++ b/scene/2d/physics_body_2d.h
-@@ -192,6 +192,10 @@ private:
- 	void _body_inout(int p_status, ObjectID p_instance, int p_body_shape, int p_local_shape);
+@@ -326,6 +326,10 @@ private:
+ 	Transform2D last_valid_transform;
  	void _direct_state_changed(Object *p_state);
  
 +	Vector2 slide_floor(Vector2 p_motion, Vector2 p_up_direction, float p_floor_max_angle, Collision p_collision);
 +	Vector2 slide_ceiling(Vector2 p_motion, Vector2 p_up_direction, float p_floor_max_angle, Collision p_collision);
 +	Vector2 slide_wall(Vector2 p_motion, Vector2 p_up_direction, float p_floor_max_angle, Collision p_collision); 
 +
- 	bool _test_motion(const Vector2 &p_motion, bool p_infinite_inertia = true, float p_margin = 0.08, const Ref<Physics2DTestMotionResult> &p_result = Ref<Physics2DTestMotionResult>());
- 
  protected:
+ 	void _notification(int p_what);
+ 	static void _bind_methods();
 diff --git a/scene/3d/physics_body.cpp b/scene/3d/physics_body.cpp
-index caeae90238..2453580742 100644
+index 1f95560c7a..d5205c2d19 100644
 --- a/scene/3d/physics_body.cpp
 +++ b/scene/3d/physics_body.cpp
-@@ -1191,6 +1191,8 @@ Vector3 KinematicBody::move_and_slide(const Vector3 &p_linear_velocity, const Ve
+@@ -1192,6 +1192,8 @@ Vector3 KinematicBody::move_and_slide(const Vector3 &p_linear_velocity, const Ve
  				if (p_up_direction == Vector3()) {
  					//all is a wall
  					on_wall = true;
@@ -126,7 +126,7 @@ index caeae90238..2453580742 100644
  				} else {
  					if (Math::acos(collision.normal.dot(p_up_direction)) <= p_floor_max_angle + FLOOR_ANGLE_THRESHOLD) { //floor
  
-@@ -1207,16 +1209,19 @@ Vector3 KinematicBody::move_and_slide(const Vector3 &p_linear_velocity, const Ve
+@@ -1208,16 +1210,19 @@ Vector3 KinematicBody::move_and_slide(const Vector3 &p_linear_velocity, const Ve
  								return Vector3();
  							}
  						}
@@ -149,7 +149,7 @@ index caeae90238..2453580742 100644
  				for (int j = 0; j < 3; j++) {
  					if (locked_axis & (1 << j)) {
  						body_velocity[j] = 0;
-@@ -1234,6 +1239,53 @@ Vector3 KinematicBody::move_and_slide(const Vector3 &p_linear_velocity, const Ve
+@@ -1235,6 +1240,53 @@ Vector3 KinematicBody::move_and_slide(const Vector3 &p_linear_velocity, const Ve
  	return body_velocity;
  }
  
@@ -203,7 +203,7 @@ index caeae90238..2453580742 100644
  Vector3 KinematicBody::move_and_slide_with_snap(const Vector3 &p_linear_velocity, const Vector3 &p_snap, const Vector3 &p_up_direction, bool p_stop_on_slope, int p_max_slides, float p_floor_max_angle, bool p_infinite_inertia) {
  
  	bool was_on_floor = on_floor;
-@@ -1420,6 +1472,10 @@ void KinematicBody::_bind_methods() {
+@@ -1421,6 +1473,10 @@ void KinematicBody::_bind_methods() {
  	ClassDB::bind_method(D_METHOD("get_slide_count"), &KinematicBody::get_slide_count);
  	ClassDB::bind_method(D_METHOD("get_slide_collision", "slide_idx"), &KinematicBody::_get_slide_collision);
  
