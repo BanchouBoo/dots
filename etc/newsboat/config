@@ -14,7 +14,7 @@ color listfocus_unread black yellow
 # color listfocus         color85 default bold
 # color listfocus_unread  color85 default bold
 color info black green reverse
-# color info              color36 default reverse 
+# color info              color36 default reverse
 
 # # highlights
 # highlight article "https?://[^ ]+" 		color117 default
@@ -22,7 +22,7 @@ color info black green reverse
 # highlight article "\\[image\\ [0-9]+\\]" 	color117 default
 
 # Keybinds
-browser "exo-open --launch WebBrowser %u" # not a keybinding
+browser "xdg-open %u"
 macro m set browser "mpv %u"; open-in-browser ; set browser "exo-open --launch WebBrowser %u"
 bind-key k up
 bind-key j down
