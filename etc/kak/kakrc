@@ -1,3 +1,5 @@
+#### TODO: Redo the hell out of my keybinds
+
 ### STYLE ###
 	colorscheme improved-term
 
@@ -12,7 +14,6 @@
 		set-option global aligntab true
 		set-option global tabstop 4
 
-		set global ui_options ncurses_enable_mouse=false
 		set global ui_options ncurses_assistant=cat
 
 		# show all keys
@@ -21,10 +22,7 @@
 ### HOOKS ###
 	hook global WinCreate .* %{
 		set-option global termcmd 'st -e sh -c'
-	}
-
-	hook global BufOpenFile "%val{config}/kakrc" %{
-		set-option buffer tabstop 2
+		# set global ui_options ncurses_enable_mouse=false
 	}
 
 ### COMMANDS ###
@@ -42,22 +40,12 @@
 		}
 	}
 
-	define-command buffer-list %{
-		evaluate-commands %sh{
-			eval set -- "$kak_quoted_buflist"
-			BUFFER=$(printf "%s\n" "$@" | fzfmenu -i --prompt 'Buffer> ')
-			[ "$BUFFER" ] && printf "buffer %%{%s}" "$BUFFER"
-		}
+	# Select a file to edit with ripgrep
+	define-command rgedit -params 1 -docstring "rgedit <filename>: select file with ripgrep" \
+	-shell-script-candidates %{ rg --files } %{
+		edit %arg{1}
 	}
-
-	define-command choose-file %{
-		evaluate-commands %sh{
-			FILE="$(fzffrg "$(dirname $kak_buffile)" | sed 's/ /\\ /g')"
-			if [ -n "$FILE" ]; then
-				printf 'exec ": edit %s<ret>"' "$FILE"
-			fi
-		}
-	}
+	alias global re rgedit
 
 	define-command align-with-spaces %{
 		set-option current aligntab false
@@ -75,24 +63,24 @@
 		map global normal <space> , -docstring 'leader'
 		map global normal , <space>
 
-		map global normal & ':align-with-spaces<ret>'
+		map global normal & ': align-with-spaces<ret>'
 
 	## USER MODE (leader)
 		# modes
 		# map global user -docstring 'Buffer management'             b ': enter-user-mode file<ret>'
 		# map global user -docstring 'Clipboard'                     y ': enter-user-mode clip<ret>'
 
-		map global user -docstring 'surround selections'           s ': surround<ret>'
-		map global user -docstring 'comment lines'                 c ': comment-line<ret>'
+		map global user -docstring 'surround selections'            s ': surround<ret>'
+		map global user -docstring 'comment lines'                  c ': comment-line<ret>'
 
 	## CLIP MODE (y) NOT USING MODES
-		map global user -docstring 'yank to system clipboard'      y '<a-|>xclip -sel clip<ret>'
-		map global user -docstring 'paste (after) from clipboard'  p '<a-!>xclip -o -sel clip<ret>'
-		map global user -docstring 'paste (before) from clipboard' P '!xclip -o -sel clip<ret>'
+		map global user -docstring 'yank to system clipboard'       y '<a-|>xclip -sel clip<ret>'
+		map global user -docstring 'paste (after) from clipboard'   p '<a-!>xclip -o -sel clip<ret>'
+		map global user -docstring 'paste (before) from clipboard'  P '!xclip -o -sel clip<ret>'
 
 	## FILE MODE (b) NOT USING MODES
-		map global user -docstring 'change buffer through rofi'    b ': buffer-list<ret>'
-		map global user -docstring 'open a file chooser in rofi'   f ': choose-file<ret>'
+		map global user -docstring 'change buffer'                  b ': b '
+		map global user -docstring 'open a file'                    f ': re '
 
 	## INSERT MODE
 		# use tab with completions
