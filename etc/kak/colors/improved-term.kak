@@ -53,8 +53,14 @@ face global BufferPadding blue,default
 
 hook global ModeChange push:normal:insert %{
 	face window PrimaryCursor black,bright-green
+	face global SecondaryCursor black,white+fg
+	face global PrimaryCursorEol black,yellow+fg
+	face global SecondaryCursorEol black,yellow+fg
 }
 
 hook global ModeChange pop:insert:normal %{
 	face window PrimaryCursor black,white
+	face global SecondaryCursor black,white+fg
+	face global PrimaryCursorEol black,cyan+fg
+	face global SecondaryCursorEol black,cyan+fg
 }
