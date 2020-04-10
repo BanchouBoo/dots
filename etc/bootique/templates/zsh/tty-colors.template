@@ -1,28 +1,37 @@
 #!/bin/zsh
 booexec: chmod +x <file>
 if [ "$TERM" = "linux" ]; then
-    echo -en "\e]P0<color0>" #black
-    echo -en "\e]P8<color8>" #darkgrey
+	# BLACK
+    printf "\e]P0<color0>"
+    printf "\e]P8<color8>"
 
-    echo -en "\e]P1<color1>" #darkred
-    echo -en "\e]P9<color9>" #red
+	# RED
+    printf "\e]P1<color1>"
+    printf "\e]P9<color9>"
 
-    echo -en "\e]P2<color2>" #darkgreen
-    echo -en "\e]PA<color10>" #green
+	# GREEN
+    printf "\e]P2<color2>"
+    printf "\e]PA<color10>"
 
-    echo -en "\e]P3<color3>" #brown
-    echo -en "\e]PB<color11>" #yellow
+	# YELLOW
+    printf "\e]P3<color3>"
+    printf "\e]PB<color11>"
 
-    echo -en "\e]P4<color4>" #darkblue
-    echo -en "\e]PC<color12>" #blue
+	# BLUE
+    printf "\e]P4<color4>"
+    printf "\e]PC<color12>"
 
-    echo -en "\e]P5<color5>" #darkmagenta
-    echo -en "\e]PD<color13>" #magenta
+	# MAGENTA
+    printf "\e]P5<color5>"
+    printf "\e]PD<color13>"
 
-    echo -en "\e]P6<color6>" #darkcyan
-    echo -en "\e]PE<color14>" #cyan
+	# CYAN
+    printf "\e]P6<color6>"
+    printf "\e]PE<color14>"
 
-    echo -en "\e]P7<color7>" #lightgrey
-    echo -en "\e]PF<color15>" #white
-    clear #for background artifacting
+	# WHITE
+    printf "\e]P7<color7>"
+    printf "\e]PF<color15>"
+
+    clear # for background artifacting
 fi
