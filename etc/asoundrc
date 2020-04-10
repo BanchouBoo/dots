@@ -1,6 +1,7 @@
 pcm.!default {
 	type asym
 	playback.pcm "plug:eqoutput"
+	# playback.pcm "hw:SB,0"
 	capture.pcm "plug:eqinput"
 }
 
@@ -60,13 +61,6 @@ pcm.eqoutput {
                        10  # 5000hz
                        5   # 10000hz
                        5   # 20000hz
-
-                       # 4.5 # 1750hz
-                       # 4.5 # 2500hz
-                       # 9.5 # 3500hz
-                       # 9.5 # 5000hz
-                       # 10 # 10000hz
-                       # 10 # 20000hz
                      ]
 			}
 		}
@@ -86,21 +80,21 @@ pcm.eqinput {
 		id 1197
 		input {
 			# controls [ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ]
-            controls [ -35 # 50hz
-                       -35 # 100hz
-                       -35 # 156hz
-                       0 # 220hz
-                       0 # 311hz
-                       0 # 440hz
-                       0 # 622hz
-                       0 # 880hz
-                       0 # 1250hz
-                       0 # 1750hz
-                       0 # 2500hz
-                       0 # 3500hz
-                       0 # 5000hz
-                       0 # 10000hz
-                       0 # 20000hz
+            controls [ -100 # 50hz
+                       -100 # 100hz
+                       -100 # 156hz
+                       -10  # 220hz
+                       0    # 311hz
+                       0    # 440hz
+                       0    # 622hz
+                       -100 # 880hz
+                       -100 # 1250hz
+                       -15  # 1750hz
+                       -5   # 2500hz
+                       -5   # 3500hz
+                       -5   # 5000hz
+                       -100 # 10000hz
+                       -100 # 20000hz
                      ]
 			}
 		}
