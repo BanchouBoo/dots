@@ -146,7 +146,7 @@ command = "texlab"
 [language.csharp]
 filetypes = ["csharp"]
 roots = ["*.csproj"]
-command = "/home/boo/downloads/omnisharp-linux-x64/run"
+command = "/home/boo/opt/downloads/omnisharp-linux-x64/run"
 args = ["-lsp"]
 # command = "omnisharp"
 # args = ["-lsp"]
