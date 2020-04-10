@@ -1,17 +1,17 @@
 #!/bin/sh
 
 start() {
-    COMMAND=$1
-    shift 1
-    ARGS=$*
-    pgrep -u "$USER" -ic "$COMMAND" > /dev/null || $COMMAND $ARGS &
+	COMMAND=$1
+	shift 1
+	ARGS=$*
+	pgrep -u "$USER" -ic "$COMMAND" > /dev/null || $COMMAND $ARGS &
 }
 
 termstart() {
-    COMMAND=$1
-    shift 1
-    ARGS=$*
-    pgrep -u "$USER" -ic "$COMMAND" > /dev/null || st -c $COMMAND $COMMAND $ARGS &
+	COMMAND=$1
+	shift 1
+	ARGS=$*
+	pgrep -u "$USER" -ic "$COMMAND" > /dev/null || st -c $COMMAND $COMMAND $ARGS &
 }
 
 start-sxhkd
