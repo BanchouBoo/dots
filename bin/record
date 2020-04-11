@@ -7,38 +7,80 @@
 # deps: ffmpeg, slop
 #
 
+# -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+: "${RECORD_FRAMERATE:=60}"
+: "${RECORD_OUTPUT_DIR:=$PWD}"
+# -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
 mkdir -p /tmp/record
 sock=/tmp/record/sock
 pidfile=/tmp/record/pidfile
-rate=60
-savedir="$HOME/opt/videos/recordings/"
 
-die() { >&2 echo "$*" ; exit 1 ; }
-isrunning() {
-    [ -f $pidfile ] && [ -e /proc/$(cat $pidfile) ]
-    return $?
+msg() { printf '* %s\n' "$*" ; }
+die() { >&2 msg "$*" ; exit 1 ; }
+
+usage() { die 'Usage: record [-o] [-r]' ; }
+
+isrunning() { kill -0 "$(getpid)" 2>/dev/null ; return "$?" ; }
+
+getpid() {
+	[ -s "$pidfile" ] && read -r pid < "$pidfile"
+	echo "${pid:-?}"
 }
 
-if isrunning ; then
-    echo q >> $sock
-    rm -r /tmp/record
-    notify-send "Video saved in $savedir"
-else
-    echo > $sock
-    set -- $(slop -l -c "${SLOPCOLOR:-0.3,0.4,0.6,0.4}" -q -f '%x %y %w %h')
+start() {
+	isrunning && die "Another instance already exists: $(getpid)"
 
-    # note: need this for mp4s to play in firefox, requires ffmpeg 4.0.2+ "-pix_fmt yuv420p"
-    #       note-note: this is breaking script for some people if added?
-    #
-    # "${savedir}$(date '+%Y-%m-%d %H-%M-%S')"
-    <$sock ffmpeg -y -f x11grab -show_region 1 -s ${3}x${4} \
-        -framerate $rate -i ${display:=:0.0}+${1},${2} \
-        -vcodec libx264 -preset:v fast -profile:v baseline -pix_fmt yuv420p \
-		-threads 4 \
-        -filter:v "crop=iw-mod(iw\\,2):ih-mod(ih\\,2)" \
-        "${savedir}$(date '+%Y-%m-%d %H-%M-%S').mp4" > /tmp/record/log \
-        2> /tmp/record/err_log &
+	# set -- $(xrectsel -f '%x %y %w %h')
+	set -- $(slop -l -c '0.3,0.4,0.6,0.4' -q -f '%x %y %w %h')
+	file="$RECORD_OUTPUT_DIR/$(date '+%Y.%m.%d-%H:%M:%S').mp4"
 
-    echo "* recording on pid $!"
-    echo $! > $pidfile
-fi
+	:>$sock
+	<$sock ffmpeg -y -f x11grab -show_region 1 -s "${3}x${4}" \
+		-framerate "$RECORD_FRAMERATE" \
+		-i "${DISPLAY:-:0}+${1},${2}" -vcodec libx264 \
+		-pix_fmt yuv420p -filter:v "crop=iw-mod(iw\\,2):ih-mod(ih\\,2)" \
+		"$file" > /tmp/record/log 2>&1 &
+
+	msg "recording on pid $!"
+	echo "$!" > "$pidfile"
+	echo "$file" > /tmp/record/file
+}
+
+end() {
+	if isrunning ; then
+		echo q >> "$sock"
+		read -r name < /tmp/record/file
+		msg "Success! Saved as $name"
+		notify-send "Video saved in $RECORD_OUTPUT_DIR$name"
+		rm -r /tmp/record
+		exit
+	else
+		die "Nothing being recorded."
+	fi
+}
+
+toggle() {
+	if isrunning ; then
+		end
+	else
+		start
+	fi
+}
+
+while [ "$1" ] ; do
+	case $1 in
+		-r)
+			RECORD_FRAMERATE=$1
+			;;
+		-o)
+			[ -d "$2" ] || usage
+			RECORD_OUTPUT_DIR=$2
+			shift
+			;;
+		 *) usage
+	esac
+	shift
+done
+
+toggle
