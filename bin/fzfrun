@@ -2,7 +2,7 @@
 IFS=:
 for dir in $PATH; do
 	for file in "$dir"/*; do
-		test -f "$file" -a -x "$file" && \
+		test -f "$file" -a -x "$file" &&
 			printf '%s\n' "${file##*/}"
 	done
 done | sort -u | fzfmenu --no-info --reverse --preview "man {}" --preview-window right:70%:wrap "$@" | sh &
