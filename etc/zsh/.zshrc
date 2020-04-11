@@ -72,6 +72,9 @@ export LESS_TERMCAP_us=$'\033[1;35m'       # begin underline
 # Local man path
 export MANPATH="$HOME/bin/man:"
 
+# SSH Agent location
+export SSH_AUTH_SOCK="$HOME/.ssh/agent"
+
 ### SHORTCUTS
 
 function src {

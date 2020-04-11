@@ -22,5 +22,6 @@ start lutris
 start qbittorrent
 start discord-uncrash
 start unclutter -idle 1
+start ssh-agent -a "$HOME/.ssh/agent"
 
 termstart weechat
