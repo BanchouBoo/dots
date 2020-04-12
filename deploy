@@ -22,7 +22,6 @@ fail() {
 }
 
 makelinks() {
-	# files="$(find $1/ -mindepth 1 -maxdepth 1 -not -name '#*' -not -name '*deps')"
 	files=$(for file in "$1"/*; do
 		echo "${file##*/}"
 	done)
