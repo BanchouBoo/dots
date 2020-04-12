@@ -3,5 +3,4 @@
 while true; do
 	discord
 	notify-send "Discord crashed!"
-	sleep 1
 done
