@@ -4,7 +4,7 @@
 #
 # record a selected rectangle with ffmpeg
 #
-# deps: ffmpeg, slop
+# deps: ffmpeg, crud w/ my wrapper script
 #
 
 # -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
@@ -31,8 +31,7 @@ getpid() {
 start() {
 	isrunning && die "Another instance already exists: $(getpid)"
 
-	# set -- $(xrectsel -f '%x %y %w %h')
-	set -- $(slop -l -c '0.3,0.4,0.6,0.4' -q -f '%x %y %w %h')
+	set -- $(crud '$X $Y $W $H')
 	file="$RECORD_OUTPUT_DIR/$(date '+%Y.%m.%d-%H:%M:%S').mp4"
 
 	:>$sock

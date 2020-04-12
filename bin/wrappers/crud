@@ -1,0 +1,7 @@
+#!/bin/sh
+
+eval "$("$HOME"/bin/crud)"
+
+[ "$1" ] && {
+	eval echo $1
+} || echo "$G"
