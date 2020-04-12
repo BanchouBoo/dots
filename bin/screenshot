@@ -8,17 +8,13 @@ while getopts "u" opt; do
 			;;
 	esac
 done
-maim -q -s -u -l --color="${SLOPCOLOR:-0.3,0.4,0.6,0.4}" /tmp/screenshot.png && {
-    if [ "$UPLOAD" = true ]; then
-        0x0 /tmp/screenshot.png
-    else
+
+import -window root -crop "$(crud)" /tmp/screenshot.png 2> /dev/null && {
+	if [ "$UPLOAD" = true ]; then
+		0x0 /tmp/screenshot.png
+	else
 		xclip -sel clip -t image/png /tmp/screenshot.png
 	fi
 	rm /tmp/screenshot.png
 	notify-send "Copied screenshot to clipboard"
 }
-
-# IMAGE=$(maim -q -s -u -l --color="${SLOPCOLOR:-0.3,0.4,0.6,0.4}") && {
-# 	echo -n "$IMAGE" | xclip -sel clip -t image/png 
-# 	# notify-send "Copied screenshot to clipboard"
-# }
