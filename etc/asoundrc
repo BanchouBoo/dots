@@ -1,8 +1,26 @@
 pcm.!default {
+	@func refer
+	name { @func concat
+			strings [ "pcm."
+					{ @func getenv
+						# If this env var is set, use that, else use default
+						vars [ ALSA_DEFAULT_PCM ]
+						default "plug:eq"
+					}
+			]
+	}
+}
+
+pcm.normal {
 	type asym
-	playback.pcm "plug:eqoutput"
-	# playback.pcm "hw:SB,0"
-	capture.pcm "plug:eqinput"
+	playback.pcm "headphones"
+	capture.pcm "microphone"
+}
+
+pcm.eq {
+	type asym
+	playback.pcm "eqoutput"
+	capture.pcm "eqinput"
 }
 
 pcm.headphones {
