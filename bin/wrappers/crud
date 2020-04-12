@@ -1,6 +1,8 @@
 #!/bin/sh
 
-eval "$("$HOME"/bin/crud)"
+crud_output=$("$HOME/bin/crud") || exit 1
+
+eval "$crud_output"
 
 [ "$1" ] && {
 	eval echo $1
