@@ -1,5 +1,5 @@
 #!/bin/sh
-# Maim wrapper to copy or upload a screenshot and send a notification
+# Import+crud wrapper to copy or upload a screenshot and send a notification
 
 while getopts "u" opt; do
 	case "$opt" in
