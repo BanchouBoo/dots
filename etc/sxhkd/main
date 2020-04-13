@@ -45,6 +45,9 @@ super + m
 	fi; \
 	notify-send -t 1500 "$MUTE_MESSAGE"
 
+super + shift + m
+	amixer sset Master toggle
+
 super + control + k
 	printf "https://kakoune.org/why-kakoune/why-kakoune.html" | xclip -sel clip
 
