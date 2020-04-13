@@ -1,4 +1,5 @@
 #!/bin/sh
+# Select a file with fzfmenu using ripgrep and print it to stdout
 
 CURRENT_DIR="$PWD"
 WORKING_DIR="${1:-$PWD}"

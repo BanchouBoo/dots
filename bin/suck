@@ -1,4 +1,5 @@
 #!/bin/sh
+# Helper for running my suckless build tool
 
 cd "$HOME/opt/suckless"
 ./build.sh "$@"

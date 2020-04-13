@@ -1,4 +1,5 @@
 #!/bin/sh
+# Kill existing polybar instances and start a new one
 
 # Terminate already running bar instances
 killall -q polybar

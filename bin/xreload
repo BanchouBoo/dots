@@ -1,4 +1,6 @@
 #!/bin/sh
+# Reload Xresources and some programs that use it
+
 xrdb "$@"
 pkill -x -USR1 st
 dwmc xrdb

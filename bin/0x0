@@ -1,3 +1,5 @@
 #!/bin/sh
+# Upload a file to 0x0
+
 [ -f "${1}" ] && op=cat
 ${op:-echo} "${1:-`cat -`}" | curl -F file='@-' 'http://0x0.st' | xclip -sel clip

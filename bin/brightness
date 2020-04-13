@@ -1,4 +1,5 @@
 #!/bin/sh
+# Increase or decrease the brightness of a hex value
 
 hex2rgb() {
 	# format: ff2233

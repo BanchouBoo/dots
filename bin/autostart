@@ -1,4 +1,5 @@
 #!/bin/sh
+# Starts programs only if they aren't already running
 
 start() {
 	COMMAND=$1

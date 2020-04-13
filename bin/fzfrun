@@ -1,4 +1,6 @@
 #!/bin/sh
+# Populate fzfmenu with a list of commands in $PATH then run the selection
+
 IFS=:
 for dir in $PATH; do
 	for file in "$dir"/*; do

@@ -1,4 +1,5 @@
 #!/bin/sh
+# Kill process with fzf
 
 PID="$(ps -ef | fzf | awk '{ printf $2 }')"
 
