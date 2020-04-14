@@ -1,0 +1,12 @@
+#!/bin/sh
+
+is_repo() {
+	git rev-parse HEAD > /dev/null 2>&1
+}
+
+is_repo || exit 1
+
+files=$(git -c color.status=always status --short | \
+		fzf -m --ansi --preview 'git diff --color=always -- {-1} | sed 1,4d' \
+		--preview-window wrap | cut -c 4-)
+git add "$files"
