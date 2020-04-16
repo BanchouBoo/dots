@@ -35,5 +35,10 @@ color14: 6574a9
 color7: ffc6c7
 color15: ffc6c7
 
+! dwm
+dwm.gaps: 10
+dwm.bar.vgaps: 0
+dwm.bar.hgaps: 0
+
 wallpaper: $WALLPAPERDIR/cinna-landscape.png
 font: Fira Code Medium

@@ -10,6 +10,9 @@ dwmc viewex 3; dwmc setlayoutex 1
 dwmc viewex 4; dwmc setlayoutex 1; dwmc togglebar
 dwmc viewex 0
 
+# bootique template that sets gaps and bar padding
+sh "${XDG_CACHE_HOME:-$HOME/.cache}/bootique/dwmsettings" 2> /dev/null
+
 ###############
 
 

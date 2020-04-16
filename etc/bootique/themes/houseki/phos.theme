@@ -36,5 +36,10 @@ color14: 5ca4cc
 color7: cbf3f3
 color15: cbf3f3
 
+! dwm
+dwm.gaps: 10
+dwm.bar.vgaps: 0
+dwm.bar.hgaps: 0
+
 wallpaper: $WALLPAPERDIR/phos-face.png
 font: Fira Code Medium
