@@ -70,7 +70,7 @@ export LESS_TERMCAP_{me,ue}=$'\033[0m'     # reset bold/blink and underline
 export LESS_TERMCAP_us=$'\033[1;35m'       # begin underline
 
 # Local man path
-export MANPATH="$HOME/bin/man:"
+export MANPATH="$HOME/bin/man:/usr/share/man"
 
 # SSH Agent location
 export SSH_AUTH_SOCK="$HOME/.ssh/agent"
