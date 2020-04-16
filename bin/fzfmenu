@@ -12,23 +12,21 @@ tempstring=""
 for arg in $args; do
 	case $arg in
 		-*)
-			if [ "$tempstring" ]; then
+			[ "$tempstring" ] && {
 				args=$(echo "$args" | sed "s~$tempstring~\"$tempstring\"~")
 				tempstring=""
-			fi
+			}
 			;;
 		*)
-			if [ "$tempstring" ]; then
-				tempstring="$tempstring $arg"
-			else
+			[ "$tempstring" ] &&
+				tempstring="$tempstring $arg" ||
 				tempstring="$arg"
-			fi
 			;;
 	esac
 done
 [ "$tempstring" ] && args=$(echo "$args" | sed "s~$tempstring~\"$tempstring\"~")
 
-st -c fzfmenu -e sh -c "cat $input | fzf --print-query $args | tail -n 1 | tee $output" &
+st -n fzfmenu -e sh -c "cat $input | fzf --print-query $args | tail -n 1 | tee $output" &
 
 # handle ctrl+c outside child terminal window
 trap 'kill $! 2>/dev/null; rm -f $input $output' EXIT
