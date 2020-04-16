@@ -47,11 +47,11 @@ dwm.selbgcolor:             #<color2>
 dwm.selfgcolor:             #<background>
 
 ! st
-st.font:                    <font>:pixelsize=16:antialias=true:autohint=true
-st.tabspaces:               4
-st.borderpx:                20
-st.xfps:                    120
-st.actionfps:               60
+*.St.font:                    <font>:pixelsize=16:antialias=true:autohint=true
+*.St.tabspaces:               4
+*.St.borderpx:                20
+*.St.xfps:                    120
+*.St.actionfps:               60
 
 ! rofi
 rofi.modi:                  run,window,windowcd,calc
