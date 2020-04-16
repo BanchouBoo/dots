@@ -7,9 +7,6 @@
 [submodule "etc/zsh/plugins/zsh-autosuggestions"]
 	path = etc/zsh/plugins/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions.git
-[submodule "etc/zsh/plugins/zsh-syntax-highlighting"]
-	path = etc/zsh/plugins/zsh-syntax-highlighting
-	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
 [submodule "etc/zsh/plugins/zsh-vim-mode"]
 	path = etc/zsh/plugins/zsh-vim-mode
 	url = https://github.com/softmoth/zsh-vim-mode.git
@@ -19,3 +16,6 @@
 [submodule "etc/trackma/anime-relations"]
 	path = etc/trackma/anime-relations
 	url = https://github.com/erengy/anime-relations.git
+[submodule "etc/zsh/plugins/fast-syntax-highlighting"]
+	path = etc/zsh/plugins/fast-syntax-highlighting
+	url = https://github.com/zdharma/fast-syntax-highlighting
