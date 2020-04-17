@@ -47,7 +47,7 @@ dwm.selbgcolor:             #<color2>
 dwm.selfgcolor:             #<background>
 
 ! st
-*.St.font:                    <font>:pixelsize=16:antialias=true:autohint=true
+*.St.font:                    <font>:pixelsize=15:antialias=true:autohint=true
 *.St.tabspaces:               4
 *.St.borderpx:                20
 *.St.xfps:                    120
