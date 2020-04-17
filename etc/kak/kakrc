@@ -23,6 +23,10 @@
 	hook global WinCreate .* %{
 		set-option global termcmd 'st -e sh -c'
 		# set global ui_options ncurses_enable_mouse=false
+
+		# easymotion chars
+		# set global em_jumpchars 'aoeuidhtnsqjkxbmwvz'
+		set global em_jumpchars 'aoeuidhtsn' # dvorak homerow
 	}
 
 ### COMMANDS ###
@@ -64,6 +68,17 @@
 		map global normal , <space>
 
 		map global normal & ': align-with-spaces<ret>'
+
+		# easymotion
+		map global normal <c-w> ': easy-motion-w<ret>'
+		map global normal <c-W> ': easy-motion-W<ret>'
+
+		map global normal <c-b> ': easy-motion-b<ret>'
+		map global normal <c-B> ': easy-motion-B<ret>'
+
+		map global normal <c-x> ': easy-motion-line<ret>'
+
+		map global normal <c-r> ':easy-motion-regex<ret>'
 
 	## USER MODE (leader)
 		# modes
@@ -107,11 +122,12 @@
 	plug 'whereswaldon/shellcheck.kak'
 	plug 'delapouite/kakoune-palette'
 	plug 'Skytrias/gdscript-kak'
+	plug 'danr/kakoune-easymotion'
 
 	## LSP
 		eval %sh{kak-lsp --kakoune -s $kak_session}
 		set global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
-		hook global WinSetOption filetype=(csharp|gd|rust) %{
+		hook global WinSetOption filetype=(csharp|rust) %{
 			lsp-enable-window
 			map window normal <C-l> ': enter-user-mode lsp<ret>'
 		}
