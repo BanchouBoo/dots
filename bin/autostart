@@ -12,7 +12,7 @@ termstart() {
 	COMMAND=$1
 	shift 1
 	ARGS=$*
-	pgrep -u "$USER" -ic "$COMMAND" > /dev/null || st -c $COMMAND $COMMAND $ARGS &
+	pgrep -u "$USER" -ic "$COMMAND" > /dev/null || st -n $COMMAND $COMMAND $ARGS &
 }
 
 start-sxhkd
