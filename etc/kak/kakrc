@@ -92,6 +92,7 @@
 		map global user -docstring 'yank to system clipboard'       y '<a-|>xclip -sel clip<ret>'
 		map global user -docstring 'paste (after) from clipboard'   p '<a-!>xclip -o -sel clip<ret>'
 		map global user -docstring 'paste (before) from clipboard'  P '!xclip -o -sel clip<ret>'
+		map global user -docstring 'paste (over) from clipboard'    r '<a-d>!xclip -o -sel clip<ret>'
 
 	## FILE MODE (b) NOT USING MODES
 		map global user -docstring 'change buffer'                  b ': b '
