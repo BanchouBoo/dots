@@ -22,7 +22,7 @@ start picom
 start lutris
 start qbittorrent
 start discord-uncrash
-start unclutter -idle 1
+start unclutter -idle 1 -noevents
 start ssh-agent -a "$HOME/.ssh/agent"
 
 termstart weechat
