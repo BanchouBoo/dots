@@ -1,6 +1,10 @@
 #!/bin/sh
 # Kill process with fzf
 
-PID="$(ps -ef | fzf | awk '{ printf $2 }')"
+header="UID        PID  PPID  C STIME TTY          TIME CMD"
 
-kill "$PID"
+ps -ef | tail -n +2 | fzf --header="$header" --multi --reverse --height 30 | \
+while read -r uid pid ppid c stime tty time cmd; do
+	kill "$pid"
+	echo "Killed $cmd"
+done
