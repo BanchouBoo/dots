@@ -1,0 +1,17 @@
+#!/bin/sh
+
+dwmc disablebar
+Xephyr -br -ac -noreset -fullscreen :1 &
+sleep 1
+
+session=${1:-dwm}
+
+DISPLAY=:1 xrdb "${XDG_CONFIG_HOME:-~/.config}/Xresources"
+DISPLAY=:1 xmodmap "${XDG_CONFIG_HOME:-~/.config}/Xmodmap"
+
+DISPLAY=:1 xsetroot -cursor_name left_ptr    # Make desktop use normal cursor
+DISPLAY=:1 xset r rate 400 30                # Keyboard repeat rate
+
+DISPLAY=:1 SXHKD_SHELL=dash sxhkd -c "${XDG_CONFIG_HOME:-~/.config}/sxhkd/dwm-xephyr" &
+
+DISPLAY=:1 exec "$session"
