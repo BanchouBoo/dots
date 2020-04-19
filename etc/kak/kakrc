@@ -122,7 +122,6 @@
 	plug 'jjk96/kakoune-rainbow'
 	plug 'whereswaldon/shellcheck.kak'
 	plug 'delapouite/kakoune-palette'
-	plug 'Skytrias/gdscript-kak'
 	plug 'danr/kakoune-easymotion'
 
 	## LSP
