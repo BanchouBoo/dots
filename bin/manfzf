@@ -1,8 +1,8 @@
 #!/bin/sh
 # View man pages with fzf
 
-fzf_man_command='page={}; num="${page#*\(}"; man "${num%%[, \)]*}" "${page%%\(*}"'
+fzf_man_command='page={}; num="${page#*\(}"; man "${num%%[,\)]*}" "${page%%[,\(]*}"'
 
 man -k . | fzf --preview "$fzf_man_command" \
                --preview-window wrap \
-               --bind "enter:execute($fzf_man_command)"
+               --bind "enter:execute~$fzf_man_command~"
