@@ -15,8 +15,9 @@ termstart() {
 	pgrep -u "$USER" -ic "$COMMAND" > /dev/null || st -n $COMMAND $COMMAND $ARGS &
 }
 
-start-sxhkd
 "$BOOTIQUE_OUTPUT_DIR/fehbg" &
+
+[ "$DISPLAY" = ":1" ] && exit
 
 start picom
 start lutris

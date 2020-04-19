@@ -6,21 +6,8 @@ killall -q sxhkd
 
 CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
 
-# Check if a config exists for the current window manager, wm fetching stolen from pfetch
-command -v xprop > /dev/null && {
-	id=$(xprop -root -notype _NET_SUPPORTING_WM_CHECK)
-	id=${id##* }
-
-	wm=$(xprop -id "$id" -notype -len 25 -f _NET_WM_NAME 8t)
-	wm=${wm##*_NET_WM_NAME = \"}
-	wm=${wm%%\"*}
-
-	wm_config="$CONFIG_HOME/sxhkd/$wm"
-}
-
-if [ ! -f "$wm_config" ]; then
-	wm_config=""
-fi
+wm_config="$CONFIG_HOME/sxhkd/$1"
+[ ! -f "$wm_config" ] && wm_config=""
 
 # Launch the main sxhkd config and the config for the current wm if it exists
 SXHKD_SHELL=dash sxhkd -m 1 -c "$CONFIG_HOME/sxhkd/main" "$wm_config" &
