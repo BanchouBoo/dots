@@ -19,7 +19,7 @@ super + 0
 	dwmc viewall
 
 # close window
-super + q
+super + shift + q
 	dwmc killclient
 
 # increment/decrement master count
