@@ -1,0 +1,79 @@
+#!/bin/sh
+
+# sets XDG_CACHE_HOME to it's default if not set
+: "${XDG_CACHE_HOME:=$HOME/.cache}"
+cache_file="$XDG_CACHE_HOME/xbps-menu/pkglist"
+
+options="install
+update
+sync
+remove"
+
+options_preview='case {} in
+	install) echo "Select packages to (re)install";;
+	update) echo "Perform a full system upgrade";;
+	sync) echo "Sync remote repositories";;
+	remove) echo Select packages to uninstall;;
+esac'
+
+install_preview='pkg={}; pkg="${pkg%% *}"; xbps-query "$pkg" --property state > /dev/null &&
+# stat="Status: \033[2K\033[00;32mInstalled\033[0m" ||
+# stat="Status: \033[2K\033[0;31mNot installed\033[0m"
+stat="Status: Installed" ||
+stat="Status: Not installed"
+depends=$(xbps-query -R "$pkg" --property run_depends | sed "2,99 s/^/\t\t/")
+printf "$stat     \tDependencies:\t%s\n" "$depends" | column --separator "	" --table'
+
+remove_preview='pkg={}; pkg="${pkg%% *}"; revdeps=$(xbps-query --revdeps "$pkg" | sed "2,99 s/^/\t\t/")
+printf "Dependents:\t%s\n" "$revdeps"'
+
+log() {
+	printf "\n[ \033[00;34m..\033[0m ] %s\n" "$@"
+}
+
+install() {
+	if [ ! -f "$cache_file" ]; then
+		log "Cache file doesn't exist, syncing repos and generating cache"
+		sync
+	fi
+	packages=$(
+	fzf --multi --preview "$install_preview" \
+        --preview-window "top" < "$cache_file" | \
+	while read -r package; do
+		echo "${package%% *}"
+	done)
+	[ "$packages" ] && sudo xbps-install -f $packages
+}
+
+update() {
+	sudo xbps-install -u
+}
+
+# syncs the repos and updates the cache
+sync() {
+	log "Syncing remote repositories"
+	sudo xbps-install -S
+	mkdir -p "$XDG_CACHE_HOME/xbps-menu"
+	xbps-query -Rs "*" | while read -r line; do
+		echo "${line#????}"
+	done > "$cache_file"
+}
+
+remove() {
+	packages=$(
+	xbps-query -s "*" | while read -r line; do
+		echo "${line#????}"
+	done | \
+	fzf --multi --preview "$remove_preview" \
+        --preview-window "top" | \
+	while read -r package; do
+		echo "${package%% *}"
+	done)
+	[ "$packages" ] && sudo xbps-remove $packages
+}
+
+while :; do
+	selection=$(echo "$options" | fzf --preview "$options_preview" --preview-window "down:1")
+	[ "$selection" ] || exit
+	"$selection"
+done
