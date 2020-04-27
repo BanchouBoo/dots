@@ -1,0 +1,45 @@
+! special
+foreground: 363e4c
+background: b3b0a6
+cursorColor: 363e4c
+
+! black
+color0: b3b0a6
+color8: ccc6c0
+
+! red
+color1: 804646
+color9: a66363
+
+! green
+color2: 2f695f
+color10: 3f8c81
+
+! yellow
+color3: 8c6c22
+color11: 8a8a00
+
+! blue
+color4: 405280
+color12: 466eb3
+
+! magenta
+color5: 594680
+color13: 8066cc
+
+! cyan
+color6: 006280
+color14: 008cb3
+
+! white
+color7: 363e4c
+color15: 585873
+
+! dwm
+dwm.gaps: 10
+dwm.bar.vgaps: 0
+dwm.bar.hgaps: 0
+
+wallpaper: $WALLPAPERDIR/junkyard-rain.png
+! wallpaper: $HOME/opt/pictures/mpv/room.png
+font: Fira Code Medium
