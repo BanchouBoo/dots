@@ -2,10 +2,10 @@
 booexec: chmod +x <file>; <file>
 # Reset everything to 0
 dwmc setgaps 0
-dwmc setvertpad 0
-dwmc sethorizpad 0
+! dwmc setvertpad 0
+! dwmc sethorizpad 0
 
 # Set the gaps
 dwmc setgaps <dwm.gaps>
-dwmc setvertpad <dwm.bar.vgaps>
-dwmc sethorizpad <dwm.bar.hgaps>
+! dwmc setvertpad <dwm.bar.vgaps>
+! dwmc sethorizpad <dwm.bar.hgaps>
