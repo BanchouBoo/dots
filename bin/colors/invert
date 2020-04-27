@@ -1,0 +1,49 @@
+#!/bin/sh
+
+input="${1#\#}"
+
+hex2rgb() {
+    r=${1%%????}
+    g=${1##??}
+    g=${g%%??}
+    b=${1##????}
+
+    r=$((0x$r))
+    g=$((0x$g))
+    b=$((0x$b))
+}
+
+invhex2rgb() {
+    r=${1%%????}
+    g=${1##??}
+    g=${g%%??}
+    b=${1##????}
+
+    r=$((0x$r*-1+255))
+    g=$((0x$g*-1+255))
+    b=$((0x$b*-1+255))
+}
+
+case $2 in
+	hex|"")
+		invhex2rgb "$input"
+		printf '%02x%02x%02x\n' "$r" "$g" "$b"
+		;;
+	rgb)
+		invhex2rgb "$input"
+		printf '%d %d %d\n' "$r" "$g" "$b"
+		;;
+	blocks)
+		hex2rgb "$input"
+		printf 'Original \033[48;2;%s;%s;%sm          \033[m    #%s\n\n' "$r" "$g" "$b" "$input"
+
+		invhex2rgb "$input"
+		printf 'Inverted \033[48;2;%s;%s;%sm          \033[m    #%02x%02x%02x\n' "$r" "$g" "$b" "$r" "$g" "$b"
+		;;
+esac
+
+# hex2rgb "$input"
+# printf 'Original \033[48;2;%s;%s;%sm          \033[m    #%s\n\n' "$r" "$g" "$b" "$input"
+
+# invhex2rgb "$input"
+# printf 'Inverted \033[48;2;%s;%s;%sm          \033[m    #%02x%02x%02x\n\n' "$r" "$g" "$b" "$r" "$g" "$b"
