@@ -1,0 +1,2 @@
+FZF_THEME="--color 'prompt:4,pointer:1,marker:5,hl:2,hl+:2,gutter:-1,fg+:0,bg+:7,info:3,border:-1'"
+export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS $FZF_THEME"
