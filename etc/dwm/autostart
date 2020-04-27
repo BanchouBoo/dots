@@ -1,5 +1,10 @@
 #!/bin/sh
 
+${XDG_CONFIG_HOME:-$HOME/.config}/dwm/bar &
+autostart &
+
+[ "$DISPLAY" != ":0" ] && exit
+
 ### LAYOUTS ###
 
 # 0 = tile
@@ -11,14 +16,6 @@ dwmc viewex 4; dwmc setlayoutex 1; dwmc togglebar
 dwmc viewex 0
 
 # bootique template that sets gaps and bar padding
-sh "${XDG_CACHE_HOME:-$HOME/.cache}/bootique/dwmsettings" 2> /dev/null
+# sh "${XDG_CACHE_HOME:-$HOME/.cache}/bootique/dwmsettings" 2> /dev/null
 
 ###############
-
-
-### PROGRAMS ###
-
-autostart &
-${XDG_CONFIG_HOME:-$HOME/.config}/dwm/bar &
-
-################
