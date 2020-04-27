@@ -17,7 +17,7 @@ termstart() {
 
 "$BOOTIQUE_OUTPUT_DIR/fehbg" &
 
-[ "$DISPLAY" = ":1" ] && exit
+[ "$DISPLAY" != ":0" ] && exit
 
 start picom
 start lutris
