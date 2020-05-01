@@ -11,8 +11,8 @@ autostart &
 # 1 = monocle
 # 2 = NULL
 
-dwmc viewex 3; dwmc setlayoutex 1
-dwmc viewex 4; dwmc setlayoutex 1; dwmc togglebar
+dwmc viewex 3 && dwmc setlayoutex 1
+dwmc viewex 4 && dwmc setlayoutex 1 && dwmc togglebar
 dwmc viewex 0
 
 # bootique template that sets gaps and bar padding
