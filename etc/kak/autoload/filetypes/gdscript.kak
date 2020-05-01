@@ -50,8 +50,8 @@ add-highlighter shared/gdscript/code/ regex '(\+%?|-%?|/|\*%?|=|\^|&|\?|\||!|>|<
 
 evaluate-commands %sh{
 	keywords="if|elif|else|for|while|match|break|continue|pass|return|class"
-	keywords="${keywords}|class_name|extends|is|not|in|as|self|tool|signal|func"
-	keywords="${keywords}|static|const|enum|var|onready|export|setget|breakpoint"
+	keywords="${keywords}|class_name|extends|is|and|or|not|in|as|self|tool|signal"
+	keywords="${keywords}|func|static|const|enum|var|onready|export|setget|breakpoint"
 	keywords="${keywords}|preload|yield|assert|remote|master|puppet|remotesync"
 	keywords="${keywords}|mastersync|puppetsync"
 
