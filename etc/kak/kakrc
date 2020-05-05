@@ -14,7 +14,7 @@
 		set-option global aligntab true
 		set-option global tabstop 4
 
-		set global ui_options ncurses_assistant=cat
+		set global ui_options ncurses_assistant=cat # meow
 
 		# show all keys
 		# set global autoinfo command|onkey|normal
@@ -88,17 +88,22 @@
 		map global user -docstring 'surround selections'            s ': surround<ret>'
 		map global user -docstring 'comment lines'                  c ': comment-line<ret>'
 
-	## CLIP MODE (y) NOT USING MODES
+		# clipboard stuff
 		map global user -docstring 'yank to system clipboard'       y '<a-|>xclip -sel clip<ret>'
 		map global user -docstring 'paste (after) from clipboard'   p '<a-!>xclip -o -sel clip<ret>'
 		map global user -docstring 'paste (before) from clipboard'  P '!xclip -o -sel clip<ret>'
 		map global user -docstring 'paste (over) from clipboard'    r '<a-d>!xclip -o -sel clip<ret>'
 
-	## FILE MODE (b) NOT USING MODES
+		# buffer/file management
 		map global user -docstring 'change buffer'                  b ': b '
 		map global user -docstring 'open a file'                    f ': re '
+		map global user -docstring 'save file'                      w ': w<ret>'
 
 	## INSERT MODE
+		# tab for indentation, instead of a literal tab char
+		map global insert <tab> ' <a-;><gt><backspace>' # add a space, then delete it later so we also indent empty lines
+		map global insert <s-tab> '<a-;><lt>'
+
 		# use tab with completions
 		hook global InsertCompletionShow .* %{
 			try %{
@@ -119,7 +124,6 @@
 
 ### PLUGINS ###
 	source "%val{config}/plugins/plug.kak/rc/plug.kak"
-	plug 'jjk96/kakoune-rainbow'
 	plug 'whereswaldon/shellcheck.kak'
 	plug 'delapouite/kakoune-palette'
 	plug 'danr/kakoune-easymotion'
