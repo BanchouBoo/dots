@@ -1,5 +1,6 @@
 #!/bin/sh
 
+pgrep crud > /dev/null || exit 1
 crud_output=$("$HOME/bin/crud") || exit 1
 
 eval "$crud_output"
