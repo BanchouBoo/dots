@@ -47,7 +47,7 @@ fzf_select() {
 	cat "$FILE" | \
 	fzf --no-info --print-query --reverse \
 	--height 10% --prompt "$PROMPT" \
-	--bind "change:reload(cat "$FILE";printf '%s\n' "{q}")" \
+	--bind "change:reload(cat \"$FILE\";printf '%s\n' "{q}")" \
 	| tail -n 1
 }
 
