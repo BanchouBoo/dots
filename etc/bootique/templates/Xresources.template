@@ -50,8 +50,6 @@ dwm.selfgcolor:             #<background>
 *.St.font:                    <font>:pixelsize=15:antialias=true:autohint=true
 *.St.tabspaces:               4
 *.St.borderpx:                20
-*.St.xfps:                    120
-*.St.actionfps:               60
 
 st.*.font:                    <font>:pixelsize=15:antialias=true:autohint=true
 st.*.tabspaces:               4
