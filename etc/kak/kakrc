@@ -22,14 +22,35 @@
 ### HOOKS ###
 	hook global WinCreate .* %{
 		set-option global termcmd 'st -e sh -c'
-		# set global ui_options ncurses_enable_mouse=false
+		set global ui_options ncurses_enable_mouse=false
 
 		# easymotion chars
 		# set global em_jumpchars 'aoeuidhtnsqjkxbmwvz'
 		set global em_jumpchars 'aoeuidhtsn' # dvorak homerow
 	}
 
+	hook global WinSetOption filetype=gdscript %{
+		define-command jumpfunc -params 1 -docstring "jumpfunc <func>: jump to a function in the script" \
+		-shell-script-candidates %{ grep "func" "$kak_buffile" | \
+									while read -r line; do \
+									line="${line%%(*}"; \
+									echo "${line##* }" ; \
+									done | sort -u} %{
+			evaluate-commands %sh{
+				line=$(grep -hn "func $1" "$kak_buffile")
+				line="${line%%:*}"
+				printf 'exec %dg' "$line"
+			}
+		}
+		alias global jf jumpfunc
+		map global user j ': jf '
+	}
+
 ### COMMANDS ###
+	define-command -hidden nil %{
+		exec ': <ret>'
+	}
+
 	define-command surround %{
 		declare-option -hidden str surround_string
 		prompt "Surround string: " %{
@@ -63,6 +84,12 @@
 		declare-user-mode clip
 
 	## NORMAL MODE
+		# unmap useless keys
+		unmap global normal <left>
+		unmap global normal <right>
+		unmap global normal <up>
+		unmap global normal <down>
+
 		# space as leader
 		map global normal <space> , -docstring 'leader'
 		map global normal , <space>
