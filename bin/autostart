@@ -3,14 +3,14 @@
 
 start() {
 	COMMAND=$1
-	shift 1
+	shift
 	ARGS=$*
 	pgrep -u "$USER" -ic "$COMMAND" > /dev/null || $COMMAND $ARGS &
 }
 
 termstart() {
 	COMMAND=$1
-	shift 1
+	shift
 	ARGS=$*
 	pgrep -u "$USER" -ic "$COMMAND" > /dev/null || st -n $COMMAND $COMMAND $ARGS &
 }
@@ -23,7 +23,7 @@ start picom
 start lutris
 start qbittorrent
 start discord-uncrash
-start unclutter -idle 1 -noevents
+start unclutter --timeout 1
 start ssh-agent -a "$HOME/.ssh/agent"
 
 termstart weechat
