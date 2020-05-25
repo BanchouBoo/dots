@@ -1,10 +1,10 @@
-#### TODO: Redo the hell out of my keybinds
+#### TODO: Redo the hell out of my keybinds, play around with phantom-selection
 
 ### STYLE ###
 	colorscheme improved-term
 
 	## HIGHLIGHTERS
-		add-highlighter global/ number-lines -relative
+		add-highlighter global/ number-lines
 		add-highlighter global/ regex '\h*$' 0:red,red # highlight trailing whitespace
 		# add-highlighter global/linewrap column 80 magenta,magenta
 
@@ -14,27 +14,68 @@
 		set-option global aligntab true
 		set-option global tabstop 4
 
-		set global ui_options ncurses_assistant=cat # meow
-
 		# show all keys
 		# set global autoinfo command|onkey|normal
+
+### PLUGINS ###
+	source "%val{config}/plugins/plug.kak/rc/plug.kak"
+	set-option global plug_install_dir "%val{config}/plug"
+
+	plug 'whereswaldon/shellcheck.kak'
+	plug 'delapouite/kakoune-palette'
+
+	plug 'danr/kakoune-easymotion' config %{
+		set global em_jumpchars 'ahotenusid' # dvorak homerow
+
+		map global normal <c-w> ': easy-motion-w<ret>'
+		map global normal <c-W> ': easy-motion-W<ret>'
+
+		map global normal <c-b> ': easy-motion-b<ret>'
+		map global normal <c-B> ': easy-motion-B<ret>'
+
+		map global normal <c-x> ': easy-motion-line<ret>'
+	}
+
+	## LSP
+		# eval %sh{ kak-lsp --kakoune -s $kak_session }
+		# debugging
+		# eval %sh{ echo ${kak_opt_lsp_cmd} >> /tmp/kak-lsp.log }
+		# set global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
+
+		# set global lsp_diagnostic_line_error_sign '║'
+		# set global lsp_diagnostic_line_warning_sign '┊'
+
+		# define-command ne -docstring 'go to next error/warning from lsp' %{ lsp-find-error --include-warnings }
+		# define-command pe -docstring 'go to previous error/warning from lsp' %{ lsp-find-error --previous --include-warnings }
+		# define-command ee -docstring 'go to current error/warning from lsp' %{ lsp-find-error --include-warnings; lsp-find-error --previous --include-warnings }
+
+		# define-command lsp-restart -docstring 'restart lsp server' %{ lsp-stop; lsp-start }
+
+		# hook global WinSetOption filetype=(gdscript) %{
+		# 	set-option window lsp_auto_highlight_references true
+		# 	set-option window lsp_hover_anchor false
+		# 	lsp-auto-hover-enable
+		# 	echo -debug "Enabling LSP for filtetype %opt{filetype}"
+		# 	lsp-enable-window
+		# 	map window normal <C-l> ': enter-user-mode lsp<ret>'
+		# }
+
+		# hook global KakEnd .* lsp-exit
 
 ### HOOKS ###
 	hook global WinCreate .* %{
 		set-option global termcmd 'st -e sh -c'
-		set global ui_options ncurses_enable_mouse=false
 
-		# easymotion chars
-		# set global em_jumpchars 'aoeuidhtnsqjkxbmwvz'
-		set global em_jumpchars 'aoeuidhtsn' # dvorak homerow
+		# enable tom, disable jerry
+		set global ui_options 'ncurses_assistant=cat' 'ncurses_enable_mouse=false'
 	}
 
 	hook global WinSetOption filetype=gdscript %{
 		define-command jumpfunc -params 1 -docstring "jumpfunc <func>: jump to a function in the script" \
 		-shell-script-candidates %{ grep "func" "$kak_buffile" | \
 									while read -r line; do \
-									line="${line%%(*}"; \
-									echo "${line##* }" ; \
+										line="${line%%(*}"; \
+										echo "${line##* }" ; \
 									done | sort -u} %{
 			evaluate-commands %sh{
 				line=$(grep -hn "func $1" "$kak_buffile")
@@ -65,6 +106,32 @@
 		}
 	}
 
+	# define-command surround %{
+	# 	declare-option -hidden str surround_string
+	# 	prompt "Surround string: " %{
+	# 		set-option current surround_string %val{text}
+	# 		evaluate-commands %sh{
+	# 			notify-send "$kak_quoted_opt_surround_string"
+	# 			SURROUNDER="$kak_quoted_opt_surround_string"
+	# 			# SURROUNDER="$(echo $SURROUNDER | sed "s/'/'\\\''/g")"
+	# 			# SURROUNDER="$(echo $SURROUNDER | sed 's/"/""/g')"
+	# 			# SURROUNDER="$(echo $SURROUNDER | sed 's/</<lt>/g')"
+	# 			printf 'exec "|surround %s<ret>"\n' "$SURROUNDER"
+	# 		}
+	# 	}
+	# }
+
+	# define-command surround -params 1 %{
+	# 	evaluate-commands %sh{
+	# 		notify-send "$1"
+	# 		SURROUNDER="$1"
+	# 		# SURROUNDER="$(echo $SURROUNDER | sed "s/'/'\\\''/g")"
+	# 		# SURROUNDER="$(echo $SURROUNDER | sed 's/"/""/g')"
+	# 		# SURROUNDER="$(echo $SURROUNDER | sed 's/</<lt>/g')"
+	# 		printf 'exec "|surround %s<ret>"\n' "$SURROUNDER"
+	# 	}
+	# }
+
 	# Select a file to edit with ripgrep
 	define-command rgedit -params 1 -docstring "rgedit <filename>: select file with ripgrep" \
 	-shell-script-candidates %{ rg --files } %{
@@ -79,9 +146,9 @@
 
 ### KEYBINDS ###
 
-	## MODE DECLARATIONS (Not using currently)
-		declare-user-mode file
-		declare-user-mode clip
+	## MODE DECLARATIONS
+		declare-user-mode pipe
+		declare-user-mode navi
 
 	## NORMAL MODE
 		# unmap useless keys
@@ -96,16 +163,24 @@
 
 		map global normal & ': align-with-spaces<ret>'
 
-		# easymotion
-		map global normal <c-w> ': easy-motion-w<ret>'
-		map global normal <c-W> ': easy-motion-W<ret>'
+		# jumplist
+		map global normal <s-tab> <c-o> # prev jump
+		map global normal <a-tab> <c-s> # save to jumplist
 
-		map global normal <c-b> ': easy-motion-b<ret>'
-		map global normal <c-B> ': easy-motion-B<ret>'
+	## PIPE MODE (|)
+		map global normal |     ': enter-user-mode pipe<ret>'
+		map global pipe   |     -docstring 'pipe to command and replace with output' '|'
+		map global pipe   <a-|> -docstring 'pipe to command and ignore output' '<a-|>'
+		map global pipe   !     -docstring 'insert command output' '!'
+		map global pipe   <a-!> -docstring 'append command output' '<a-!>'
+		map global pipe   $     -docstring 'pipe to commands and keep successes' '$'
 
-		map global normal <c-x> ': easy-motion-line<ret>'
-
-		map global normal <c-r> ':easy-motion-regex<ret>'
+	## NAVI MODE (v)
+		map global normal v ': enter-user-mode -lock navi<ret>'
+		map global navi j -docstring 'scroll down one line'    'vj'
+		map global navi k -docstring 'scroll up one line'      'vk'
+		map global navi J -docstring 'scroll down half a page' '<c-d>'
+		map global navi K -docstring 'scroll up half a page'   '<c-u>'
 
 	## USER MODE (leader)
 		# modes
@@ -128,7 +203,7 @@
 
 	## INSERT MODE
 		# tab for indentation, instead of a literal tab char
-		map global insert <tab> ' <a-;><gt><backspace>' # add a space, then delete it later so we also indent empty lines
+		map global insert <tab> '<a-;><a-gt>'
 		map global insert <s-tab> '<a-;><lt>'
 
 		# use tab with completions
@@ -147,18 +222,4 @@
 		hook global InsertCompletionHide .* %{
 			unmap window insert <tab> <c-n>
 			unmap window insert <s-tab> <c-p>
-		}
-
-### PLUGINS ###
-	source "%val{config}/plugins/plug.kak/rc/plug.kak"
-	plug 'whereswaldon/shellcheck.kak'
-	plug 'delapouite/kakoune-palette'
-	plug 'danr/kakoune-easymotion'
-
-	## LSP
-		eval %sh{kak-lsp --kakoune -s $kak_session}
-		set global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
-		hook global WinSetOption filetype=(csharp|rust) %{
-			lsp-enable-window
-			map window normal <C-l> ': enter-user-mode lsp<ret>'
 		}
