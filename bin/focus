@@ -1,0 +1,48 @@
+#!/bin/sh
+# hide and unhide windows to help you focus
+# deps: xdotool, fzf
+
+dir=/tmp/distractions
+
+hide() {
+	mkdir -p "$dir"
+	for i; do
+		xdotool windowunmap "$i"
+		xdotool getwindowname "$i" > "$dir/$i"
+	done
+}
+
+show() {
+	for i; do
+		xdotool windowmap "$i"
+	done
+}
+
+menu() {
+	action=$(printf 'hide\nshow' | fzf --reverse --height 40%)
+	case $action in
+		hide)
+			selections=$(xdotool search --onlyvisible --name '.*' |
+			while read -r winid; do
+				winname=$(xdotool getwindowname $winid)
+				[ "$winname" ] && printf '%s %s\n' "$winid" "$winname"
+			done | fzf --multi --height 40% --reverse \
+			--with-nth 2.. | cut -d ' ' -f 1)
+			hide $selections
+			;;
+		show)
+			[ "$dir"/* = "$dir/*" ] && exit
+			selections=$(cd "$dir"; for winid in *; do
+				winname=$(xdotool getwindowname $winid)
+				[ "$winname" ] && printf '%s %s\n' "$winid" "$winname"
+			done | fzf --multi --height 40% --reverse \
+			--with-nth 2.. | cut -d ' ' -f 1)
+			show $selections
+			;;
+		*)
+			exit
+			;;
+	esac
+}
+
+menu

@@ -32,7 +32,10 @@ super + shift + f
 super + b
 	firefox
 
-# org capture
+super + shift + d
+	st -n "focus" -e sh -c "focus"
+
+# booker capture
 super + c
 	st -n "booker" -e sh -c 'booker -a && booker -v'
 
