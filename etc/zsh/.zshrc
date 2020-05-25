@@ -7,11 +7,11 @@ export XDG_CONFIG_HOME XDG_DATA_HOME XDG_CACHE_HOME
 HISTFILE="$XDG_CACHE_HOME/zsh/history"
 ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/zcompdump-${HOST/.*/}-$ZSH_VERSION"
 
-export CARGO_HOME=$XDG_CONFIG_HOME/cargo
-export TERMINFO=$XDG_DATA_HOME/terminfo
+export CARGO_HOME="$XDG_CONFIG_HOME/cargo"
+export TERMINFO="$XDG_DATA_HOME/terminfo"
 export LESSHISTFILE="$XDG_CACHE_HOME/less/hist"
 export WEECHAT_HOME="$XDG_CONFIG_HOME/weechat"
-export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
+export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
 
 # Add ~/bin/ and it's subfolders to the path
 export PATH="$HOME/bin/wrappers:$(find -L $HOME/bin/ -maxdepth 1 -type d -not -name '*wrappers' | sed 's|/$||'| tr '\n' ':')$PATH"
@@ -48,7 +48,7 @@ source "$ZDOTDIR/plugins/fzf-tab/fzf-tab.plugin.zsh"
 
 # Theme
 autoload -U colors && colors
-source $ZDOTDIR/prompts/boo.zsh-theme
+source $ZDOTDIR/prompts/star.zsh-theme
 
 # User files to source that are under VC
 find "$ZDOTDIR/source" -type f | while read -r file; do
