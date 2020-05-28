@@ -153,9 +153,6 @@ args = ["-lsp"]
 
 [language.gdscript]
 filetypes = ["gd", "gdscript"]
-roots = [".import"]
+roots = ["project.godot"]
 command = "nc"
 args = ["localhost", "6008"]
-# command = "godot-lsp"
-# command = "websocat"
-# args = ["--jsonrpc", "ws://127.0.0.1:6008/"]
