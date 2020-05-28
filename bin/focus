@@ -15,6 +15,7 @@ hide() {
 show() {
 	for i; do
 		xdotool windowmap "$i"
+		rm /tmp/distractions/"$i"
 	done
 }
 
@@ -31,7 +32,7 @@ menu() {
 			hide $selections
 			;;
 		show)
-			[ "$dir"/* = "$dir/*" ] && exit
+			[ "$(echo "$dir"/*)" = "$dir/*" ] && exit
 			selections=$(cd "$dir"; for winid in *; do
 				winname=$(xdotool getwindowname $winid)
 				[ "$winname" ] && printf '%s %s\n' "$winid" "$winname"
