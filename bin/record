@@ -31,15 +31,13 @@ getpid() {
 start() {
 	isrunning && die "Another instance already exists: $(getpid)"
 
-	set -- $(crud '$X $Y $W $H')
+	set -- $(crud '$X $Y $(($W - $W % 2)) $(($H - $H % 2))') # prevent odd numbers for width/height
 	file="$RECORD_OUTPUT_DIR/$(date '+%Y.%m.%d-%H:%M:%S').mp4"
 
 	:>$sock
 	<$sock ffmpeg -y -f x11grab -show_region 1 -s "${3}x${4}" \
-		-framerate "$RECORD_FRAMERATE" \
-		-i "${DISPLAY:-:0}+${1},${2}" -vcodec libx264 \
-		-pix_fmt yuv420p -filter:v "crop=iw-mod(iw\\,2):ih-mod(ih\\,2)" \
-		"$file" > /tmp/record/log 2>&1 &
+		-framerate "$RECORD_FRAMERATE" -i "${DISPLAY:-:0}+${1},${2}" \
+		-vcodec libx264 -pix_fmt yuv420p "$file" > /tmp/record/log 2>&1 &
 
 	msg "recording on pid $!"
 	echo "$!" > "$pidfile"
@@ -47,7 +45,7 @@ start() {
 }
 
 end() {
-	if isrunning ; then
+	if isrunning; then
 		echo q >> "$sock"
 		read -r name < /tmp/record/file
 		msg "Success! Saved as $name"
@@ -60,14 +58,14 @@ end() {
 }
 
 toggle() {
-	if isrunning ; then
+	if isrunning; then
 		end
 	else
 		start
 	fi
 }
 
-while [ "$1" ] ; do
+while [ "$1" ]; do
 	case $1 in
 		-r)
 			RECORD_FRAMERATE=$1
