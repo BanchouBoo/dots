@@ -37,7 +37,7 @@ start() {
 	:>$sock
 	<$sock ffmpeg -y -f x11grab -show_region 1 -s "${3}x${4}" \
 		-framerate "$RECORD_FRAMERATE" -i "${DISPLAY:-:0}+${1},${2}" \
-		-vcodec libx264 -pix_fmt yuv420p "$file" > /tmp/record/log 2>&1 &
+		-preset ultrafast /tmp/record/recording.mkv > /tmp/record/log 2>&1 &
 
 	msg "recording on pid $!"
 	echo "$!" > "$pidfile"
@@ -47,9 +47,12 @@ start() {
 end() {
 	if isrunning; then
 		echo q >> "$sock"
-		read -r name < /tmp/record/file
-		msg "Success! Saved as $name"
-		notify-send "Video saved in $RECORD_OUTPUT_DIR$name"
+		read -r file < /tmp/record/file
+		msg "Processing video..."
+		notify-send "Processing video..."
+		ffmpeg -i /tmp/record/recording.mkv -pix_fmt yuv420p "$file"
+		msg "Success! Saved as $file"
+		notify-send "Video saved in $file"
 		rm -r /tmp/record
 		exit
 	else
