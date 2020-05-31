@@ -16,8 +16,21 @@ xset r rate 400 30                # Keyboard repeat rate
 
 dunst &
 
-start-sxhkd "$session" &
 
 export QT_QPA_PLATFORMTHEME=qt5ct # Needed for qt applications to pull their theme from qt5ct
 
-exec "$session"
+case $session in
+	x11fs)
+		export X11FS="$HOME/x11fs"
+		mkdir -p "$X11FS"
+		x11fs "$X11FS"
+		start-sxhkd "$session" &
+		focuser
+		fusermount3 -u "$X11FS"
+		rm -rf "$X11FS"
+		;;
+	*)
+		start-sxhkd "$session" &
+		exec "$session"
+		;;
+esac
