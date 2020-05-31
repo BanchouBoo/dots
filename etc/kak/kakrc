@@ -38,7 +38,7 @@
 
 	## LSP
 		# eval %sh{ kak-lsp --kakoune -s $kak_session }
-		# debugging
+		# # debugging
 		# eval %sh{ echo ${kak_opt_lsp_cmd} >> /tmp/kak-lsp.log }
 		# set global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
 
