@@ -10,4 +10,8 @@ wm_config="$CONFIG_HOME/sxhkd/$1"
 [ ! -f "$wm_config" ] && wm_config=""
 
 # Launch the main sxhkd config and the config for the current wm if it exists
-SXHKD_SHELL=dash sxhkd -m 1 -c "$CONFIG_HOME/sxhkd/main" "$wm_config" &
+if [ "$wm_config" ]; then
+	SXHKD_SHELL=dash sxhkd -m 1 -c "$CONFIG_HOME/sxhkd/main" "$wm_config" &
+else
+	SXHKD_SHELL=dash sxhkd -m 1 -c "$CONFIG_HOME/sxhkd/main" &
+fi
