@@ -1,6 +1,6 @@
 #!/bin/sh
 
-while true; do
+while :; do
 	discord
 	notify-send "Discord crashed!"
 done
