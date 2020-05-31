@@ -2,6 +2,7 @@
 
 # sets XDG_CACHE_HOME to it's default if not set
 : "${XDG_CACHE_HOME:=$HOME/.cache}"
+SHELL=sh
 cache_file="$XDG_CACHE_HOME/xbps-menu/pkglist"
 
 options="install
