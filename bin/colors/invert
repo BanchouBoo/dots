@@ -41,9 +41,3 @@ case $2 in
 		printf 'Inverted \033[48;2;%s;%s;%sm          \033[m    #%02x%02x%02x\n' "$r" "$g" "$b" "$r" "$g" "$b"
 		;;
 esac
-
-# hex2rgb "$input"
-# printf 'Original \033[48;2;%s;%s;%sm          \033[m    #%s\n\n' "$r" "$g" "$b" "$input"
-
-# invhex2rgb "$input"
-# printf 'Inverted \033[48;2;%s;%s;%sm          \033[m    #%02x%02x%02x\n\n' "$r" "$g" "$b" "$r" "$g" "$b"
