@@ -2,7 +2,7 @@
 # Loads two sxhkd configs, one with the name "main" and one with a name matching you wm
 
 # Kill sxhkd if it's already running
-killall -q sxhkd
+pkill -x sxhkd
 
 CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
 
