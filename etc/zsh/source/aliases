@@ -16,6 +16,8 @@ alias i="sudo xbps-install"
 alias r="sudo xbps-remove"
 alias m="xbps-menu"
 
+alias yt="newsboat -u ${XDG_CONFIG_HOME:-$HOME/.config}/newsboat/yt"
+
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 function weather() {
