@@ -15,11 +15,13 @@ get_stream_data() {
 }
 
 play() {
-	mpv "https://www.twitch.tv/${1}" &
+	stream=$1
+	shift
+	streamlink "twitch.tv/${stream}" $* &
 }
 
 open_chat() {
-	st -c twitch-chat weechat -t --run-command "/server add twitch irc.chat.twitch.tv/6667 -nick=${TWITCH_USER} -password=oauth:${TWITCH_AUTH};/connect twitch;/set irc.server.twitch.autojoin \"#${1}\";/bar toggle nicklist;/bar toggle buflist;/set weechat.look.buffer_time_format \"\";/set weechat.look.prefix_align none;/set weechat.look.align_end_of_lines prefix;/buffer clear" &
+	st -c twitch-chat weechat -t --run-command "/server add twitch irc.chat.twitch.tv/6667 -nick=${TWITCH_USER} -password=oauth:${TWITCH_AUTH};/connect twitch;/set irc.server.twitch.autojoin \"#${1}\";/bar toggle nicklist;/bar toggle buflist;/set weechat.look.buffer_time_format \"\";/set weechat.look.prefix_align none;/set weechat.look.align_end_of_lines prefix;/set irc.look.display_join_message \"\";/set irc.look.smart_filter on;/filter add joinquit * irc_join,irc_part,irc_quit *;/buffer clear" &
 }
 
 close_term() {
@@ -32,6 +34,6 @@ streams=$(jq -r '.streams[].channel.name' "$stream_data")
 # streams=$(jq -r '.streams[].channel | "\(.name)\t\(.status)"' "$stream_data" | column --separator "	" --table)
 selection=$(printf '%s' "$streams" | fzf --height 20 --preview "$fzf_preview" --preview-window top:2)
 [ "$selection" ] || exit 0
-play "$selection"
+play "$selection" $*
 open_chat "$selection"
 close_term
