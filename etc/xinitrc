@@ -13,21 +13,19 @@ xrdb "${XDG_CONFIG_HOME:-~/.config}/Xresources"
 
 xsetroot -cursor_name left_ptr    # Make desktop use normal cursor
 xset r rate 400 30                # Keyboard repeat rate
+xset s off -dpms                  # Prevent screen timeout
 
 dunst &
-
 
 export QT_QPA_PLATFORMTHEME=qt5ct # Needed for qt applications to pull their theme from qt5ct
 
 case $session in
-	x11fs)
-		export X11FS="$HOME/x11fs"
-		mkdir -p "$X11FS"
-		x11fs "$X11FS"
+	boowm)
+		export WM="$HOME/fs/wm"
+		export X11FS="$WM/win"
+		export TAGS="$WM/tags"
 		start-sxhkd "$session" &
-		focuser
-		fusermount3 -u "$X11FS"
-		rm -rf "$X11FS"
+		boowm xinit
 		;;
 	*)
 		start-sxhkd "$session" &
