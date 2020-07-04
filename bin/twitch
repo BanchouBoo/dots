@@ -21,7 +21,7 @@ play() {
 }
 
 open_chat() {
-	st -c twitch-chat weechat -t --run-command "/server add twitch irc.chat.twitch.tv/6667 -nick=${TWITCH_USER} -password=oauth:${TWITCH_AUTH};/connect twitch;/set irc.server.twitch.autojoin \"#${1}\";/bar toggle nicklist;/bar toggle buflist;/set weechat.look.buffer_time_format \"\";/set weechat.look.prefix_align none;/set weechat.look.align_end_of_lines prefix;/set irc.look.display_join_message \"\";/set irc.look.smart_filter on;/filter add joinquit * irc_join,irc_part,irc_quit *;/buffer clear" &
+	st -c twitch-chat weechat -t --run-command "/server add twitch irc.chat.twitch.tv/6667 -nick=${TWITCH_USER} -password=oauth:${TWITCH_AUTH};/connect twitch;/set irc.server.twitch.autojoin \"#${1}\";/bar toggle nicklist;/bar toggle buflist;/set weechat.look.buffer_time_format \"\";/set weechat.look.prefix_align none;/set weechat.look.align_end_of_lines prefix;/set irc.look.display_join_message \"\";/set irc.look.smart_filter on;/filter add joinquit * irc_join,irc_part,irc_quit *;/set weechat.color.chat_nick_colors \"cyan,magenta,green,brown,lightblue,lightcyan,lightmagenta,lightgreen,blue\";/buffer clear" &
 }
 
 close_term() {
