@@ -1,20 +1,30 @@
 #!/bin/sh
 # import+crud wrapper to copy or upload a screenshot and send a notification
 
-while getopts "u" opt; do
+save_dir=$HOME/opt/pictures/screenshots
+
+while getopts "us" opt; do
 	case "$opt" in
 		u)
-			UPLOAD=true
+			upload=true
+			;;
+		s)
+			mkdir -p "$save_dir"
+			save=true
 			;;
 	esac
 done
 
 import -window root -crop "$(crud)" /tmp/screenshot.png 2> /dev/null && {
-	if [ "$UPLOAD" = true ]; then
+	if [ "$upload" = true ]; then
 		0x0 /tmp/screenshot.png
 	else
 		xclip -sel clip -t image/png /tmp/screenshot.png
 	fi
-	rm /tmp/screenshot.png
+	if [ "$save" = true ]; then
+		mv /tmp/screenshot.png "$save_dir/$(date '+%Y.%m.%d-%H:%M:%S').png"
+	else
+		rm /tmp/screenshot.png
+	fi
 	notify-send "Copied screenshot to clipboard"
 }
