@@ -14,7 +14,7 @@ export WEECHAT_HOME="$XDG_CONFIG_HOME/weechat"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
 
 # Add ~/bin/ and it's subfolders to the path
-export PATH="$HOME/bin/wrappers:$(find -L $HOME/bin/ -maxdepth 1 -type d -not -name '*wrappers' | sed 's|/$||'| tr '\n' ':')$PATH"
+export PATH="$HOME/bin/wrappers:$(find -L $HOME/bin/ -maxdepth 2 -type d -not -name '*wrappers' -not -name '.*' | sed 's|/$||'| tr '\n' ':')$PATH"
 
 # Assign programs to variables
 export TERMINAL=st
