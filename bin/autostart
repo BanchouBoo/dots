@@ -25,5 +25,6 @@ start qbittorrent
 start discord-uncrash
 start unclutter --timeout 1
 start ssh-agent -a "$HOME/.ssh/agent"
+start chronolog
 
 termstart weechat
