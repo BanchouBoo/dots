@@ -1,5 +1,5 @@
 #!/bin/sh
-# import+crud wrapper to copy or upload a screenshot and send a notification
+# shotgun+crud wrapper to copy or upload a screenshot and send a notification
 
 save_dir=$HOME/opt/pictures/screenshots
 
@@ -15,7 +15,7 @@ while getopts "us" opt; do
 	esac
 done
 
-import -window root -crop "$(crud)" /tmp/screenshot.png 2> /dev/null && {
+shotgun -g "$(crud)" /tmp/screenshot.png 2> /dev/null && {
 	if [ "$upload" = true ]; then
 		0x0 /tmp/screenshot.png
 	else
