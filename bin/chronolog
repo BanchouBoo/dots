@@ -1,0 +1,23 @@
+#!/bin/sh
+
+schedule=${XDG_CONFIG_HOME:-$HOME/.config}/chronolog/schedule
+[ -f "$schedule" ] || exit
+
+is_comment() {
+	case $1 in "#"*) return 0 ;; esac; return 1
+}
+
+while read -r line; do
+	is_comment "$line" && continue
+	c_time=$(date +'%s')
+	time=$(date -d "${line%%-*}" +'%s')
+	[ "$time" -lt "$c_time" ] && time=$(date -d "tomorrow ${line%%-*}" +'%s')
+	time=$((time - c_time))
+	command=${line#*-}
+	{
+		sleep "$time"
+		set -- $command
+		command=$1; shift 1
+		$command "$@"
+	} &
+done < "$schedule"
