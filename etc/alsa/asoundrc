@@ -1,13 +1,13 @@
 pcm.!default {
 	@func refer
 	name { @func concat
-			strings [ "pcm."
-					{ @func getenv
-						# If this env var is set, use that, else use default
-						vars [ ALSA_DEFAULT_PCM ]
-						default "plug:eq"
-					}
-			]
+		strings [ "pcm."
+				{ @func getenv
+					# If this env var is set, use that, else use default
+					vars [ ALSA_DEFAULT_PCM ]
+					default "plug:eq"
+				}
+		]
 	}
 }
 
