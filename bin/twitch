@@ -32,7 +32,7 @@ close_term() {
 get_stream_data
 streams=$(jq -r '.streams[].channel.name' "$stream_data")
 # streams=$(jq -r '.streams[].channel | "\(.name)\t\(.status)"' "$stream_data" | column --separator "	" --table)
-selection=$(printf '%s' "$streams" | fzf --height 20 --preview "$fzf_preview" --preview-window top:2)
+selection=$(printf '%s' "$streams" | fzf --height 20 --preview "$fzf_preview" --preview-window top:2 --print-query | tail -n 1)
 [ "$selection" ] || exit 0
 play "$selection" $*
 open_chat "$selection"
