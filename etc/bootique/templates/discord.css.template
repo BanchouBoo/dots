@@ -1,197 +1,166 @@
-:root {
-    /* special */
-    --background: #<background>;
-    --foreground: #<foreground>;
-    --cursorColor: #<cursorColor>;
+.theme-dark {
+	--background-primary: #<background>;
+	--background-secondary: #<shade:<background> 3/4>;
+	--background-secondary-alt: #<shade:<background> 3/5>;
+	--background-tertiary: #<shade:<background> 1/3>;
+	--background-floating: #<shade:<background> 1/3>;
+	--background-modifier-selected: #<foreground>12;
+	--channeltextarea-background: #<shade:<background> 3/2>;
+	--background-mentioned: #<color3>33;
+	--background-mentioned-hover: #<color3>3d;
 
-    /* black */
-    --color0: #<color0>;
-    --color8: #<color8>;
-
-    /* red */
-    --color1: #<color1>;
-    --color9: #<color9>;
-
-    /* green */
-    --color2: #<color2>;
-    --color10: #<color10>;
-
-    /* yellow */
-    --color3: #<color3>;
-    --color11: #<color11>;
-
-    /* blue */
-    --color4: #<color4>;
-    --color12: #<color12>;
-
-    /* magenta */
-    --color5: #<color5>;
-    --color13: #<color13>;
-
-    /* cyan */
-    --color6: #<color6>;
-    --color14: #<color14>;
-
-    /* white */
-    --color7: #<color7>;
-    --color15: #<color15>;
-
-
-    /* --text-normal: var(--foreground); */
-    --background-primary: var(--background);
-    --background-secondary: var(--background);
-    --background-tertiary: var(--background);
-    --deprecated-panel-background: var(--background);
-    --channeltextarea-background: var(--background);
-    --text-link: var(--color4);
+	--text-normal: #<foreground>;
+	--header-primary: #<shade:<foreground> 6/5>;
+	--header-secondary: #<shade:<foreground> 2/3>;
+	--interactive-active: #<foreground>;
+	--channels-default: #<shade:<foreground> 3/5>;
+	--interactive-hover: #<foreground>;
+	--interactive-muted: #<shade:<foreground> 1/3>;
+	--interactive-normal: #<shade:<foreground> 3/5>;
+	--text-muted: #<shade:<foreground> 1/2>;
 }
 
-/* scrollbar stuff */
-[class*="scroller"]::-webkit-scrollbar {
-    width: 5px !important;
-}
+/*** FRIENDS PAGE ***/
+	[class*="peopleColumn"] {
+		background: var(--background-primary);
+	}
 
-[class*="scroller"]::-webkit-scrollbar-track-piece {
-    display: none;
-}
+/*** USER POPOUT ***/
+	[class*="userPopout"] > [class*="headerNormal"]  {
+		background: var(--background-tertiary) !important;
+	}
 
-[class*="scroller"]::-webkit-scrollbar-thumb {
-    background-color: var(--color2) !important;
-}
+	[class*="userPopout"] > [class*="headerPlaying"]  {
+		background: #<color4> !important;
+	}
 
-[class*="scroller"]::-webkit-scrollbar-thumb,
-[class*="scroller"]::-webkit-scrollbar-track {
-    border-style: none !important;
-}
+	[class*="userPopout"] > [class*="body"],
+	[class*="userPopout"] > [class*="footer"] {
+		background: var(--background-secondary) !important;
+	}
 
-/* text input area */
-[class*="channelTextArea"] } div {
-    filter: brightness(1.5);
-}
+	[class*="userPopout"] > [class*="footer"] > [class*="quickMessage"]  {
+		background: var(--channeltextarea-background) !important;
+		border: none;
+		color: var(--text-normal);
+	}
 
-[class*="channelTextArea"] } div [class*="textAreaEnabled"] {
-    filter: brightness(calc(1/1.5));
-}
+	[class*="userPopout"] [class*="footer"] [class*="quickMessage"]::placeholder  {
+		color: var(--interactive-normal);
+	}
 
-[class*="channelTextArea"] [class*="buttons"] {
-	opacity: 0;
-}
+	[class*="userPopout"] [class*="footer"] [class*="protip"]  {
+		display: none;
+	}
 
-/* code blocks */
-code {
-    border: 1px solid var(--color2) !important;
-}
+	[class*="headerTagNoNickname"] [class*="username"] {
+		color: var(--header-primary);
+	}
 
-/* new messages top bar */
-[class*="newMessagesBar"] {
-    background: var(--color4);
-}
+	[class*="headerTagNoNickname"] span:nth-child(2) {
+		color: var(--header-secondary);
+	}
 
-/* dividers */
-hr[class*="divider"] {
-    opacity: 0; /* using `display: none;` messes up positioning when entering channels with unread messages */
-}
 
-[class*="dividerRed"] {
-    color: var(--color1);
-}
+/*** SCROLLBAR STUFF ***/
+	[class*="scroller"]::-webkit-scrollbar {
+		width: 5px !important;
+	}
 
-[class*="dividerRed"] [class*="dividerContent"]:before,
-[class*="dividerRed"] [class*="dividerContent"]:after {
-    background-color: var(--color1);
-}
+	/* hide scrollbar in server list */
+	[class*="guilds"] [class*="scroller"]::-webkit-scrollbar {
+		display: none;
+	}
 
-/* folders */
-[class*="expandedFolderBackground"] {
-    /* filter: brightness(1.5); */
-    /* background: var(--color2); */
-}
+	[class*="scroller"]::-webkit-scrollbar-track-piece {
+		display: none;
+	}
 
-foreignObject [class*="folder"] {
-    /* background: none !important; */
-    /* background: var(--color2); */
-}
+	[class*="scroller"]::-webkit-scrollbar-thumb {
+		background-color: #<color2> !important;
+	}
 
-/* friends page */
-[class*="friendsTable"] {
-    background: var(--background);
-}
+	[class*="scroller"]::-webkit-scrollbar-thumb,
+	[class*="scroller"]::-webkit-scrollbar-track {
+		border-style: none !important;
+		background: none;
+	}
 
-[class*="friendsRow"] {
-    border: none !important;
-}
+/*** NEW MESSAGE INDICATORS ***/
+	/* top blue bar */
+	[class*="newMessagesBar"] {
+	    background: #<color4>;
+	}
 
-/* text color stuff */
-[class*="username"] {
-    color: var(--color2);
-}
+	[class*="isUnread"] {
+		border-color: #<color1>;
+	}
 
-/* video player */
-[class*="mediaBarProgress"],
-[class*="mediaBarProgress"]:before,
-[class*="mediaBarProgress"]:after,
-[class*="mediaBarGrabber"] {
-    background: var(--color2) !important;
-}
+	[class*="isUnread"] > [class*="content"] {
+		color: #<color1> !important;
+	}
 
-/* icon strikethrough */
-path[class*="strikethrough"] {
-    color: var(--color1);
-}
+	[class*="isUnread"] > [class*="unreadPill"] {
+		background-color: #<color1>;
+	}
 
-/* notification badge */
-[class*="numberBadge"] {
-    background-color: var(--color1) !important;
-}
+	[class*="isUnread"] > [class*="unreadPill"] [class*="unreadPillCap"] {
+		color: #<color1>;
+		fill: #<color1>;
+	}
 
-/* online status icons, very finicky */
-/* [aria-label*="Online"]:not([aria-label*="mobile"]) rect { */
-/*     fill: var(--color2); */
-/* } */
+/*** MESSAGE INPUT BUTTONS ***/
+	[aria-label="Send a gift"],
+	[aria-label="Open GIF picker"] {
+		display: none;
+	}
 
-[aria-label*="Online"] mask + rect,
-[aria-label*="Online"] foreignObject + rect {
-    fill: var(--color2);
-}
+/*** MENTIONS ***/
+	[class*="mentioned"]:before {
+		background-color: #<color3>;
+	}
 
-[aria-label*="Do Not Disturb"] rect {
-    fill: var(--color1);
-}
+	[class*="numberBadge"] {
+		background-color: #<color1> !important;
+	}
 
-[aria-label*="Idle"] mask + rect,
-[aria-label*="Idle"] foreignObject + rect {
-    fill: var(--color3);
-}
+/*** SERVER LIST ***/
+	/* colors for add server button */
+	[class*="circleIconButton"][aria-label="Add a Server"] {
+		color: #<color2>;
+	}
 
-/* maybe remove */
-[aria-label*="Offline"] svg {
-    /* filter: grayscale(100%); */
-}
+	[class*="selected"][aria-label="Add a Server"] {
+		background: #<color2>;
+		color: #fff;
+	}
 
-/* top server list icon + servers without icons */
-[class*="listItem"] [class*="childWrapper"] {
-    color: var(--foreground) !important;
-    background: var(--color4) !important;
-}
+	/* hide server discovery */
+	[aria-label="Servers"] + [class*="tutorialContainer"] + [class*="listItem"] {
+		display: none;
+	}
 
-/* mentions */
-[class*="isMentionedCozy"],
-[class*="isMentionedCozy"]:after {
-    background: #<color3>33 !important;
-}
+	[aria-expanded="false"] [class*="folderIconWrapper"] {
+		background: #<color4>66 !important;
+	}
 
-[class*="isMentionedCozy"]:after {
-    border-left: 4px solid var(--color3);
-}
+/*** ONLINE INDICATORS ***/
+	[aria-label*="Online"] mask + rect,
+	[aria-label*="Online"] foreignObject + rect {
+	    fill: #<color2>;
+	}
 
-.mention {
-    color: var(--color4) !important;
-    background: #<color4>33 !important;
-    transition: background-color 100ms ease-out,color 100ms ease-out;
-}
+	[aria-label*="Do Not Disturb"] mask + rect,
+	[aria-label*="Do Not Disturb"] foreignObject + rect {
+	    fill: #<color1>;
+	}
 
-.mention:hover {
-    color: var(--background) !important;
-    background: var(--color4) !important;
-    transition: background-color 100ms ease-out,color 100ms ease-out;
-}
+	[aria-label*="Idle"] mask + rect,
+	[aria-label*="Idle"] foreignObject + rect {
+	    fill: #<color3>;
+	}
+
+/*** MISC ***/
+	[class*="botTagRegular"] {
+		background: #<color4>;
+	}
