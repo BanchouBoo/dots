@@ -1,0 +1,4 @@
+#!/bin/sh
+
+: ${XDG_CONFIG_HOME:=$HOME/.config}
+/usr/bin/streamlink --config "$XDG_CONFIG_HOME/streamlink/streamlinkrc" $@
