@@ -9,6 +9,7 @@ CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
 wm_config="$CONFIG_HOME/sxhkd/$1"
 [ ! -f "$wm_config" ] && wm_config=""
 
+cd "$HOME"
 # Launch the main sxhkd config and the config for the current wm if it exists
 if [ "$wm_config" ]; then
 	SXHKD_SHELL=dash sxhkd -m 1 -c "$CONFIG_HOME/sxhkd/main" "$wm_config" > /dev/null 2>&1 &
