@@ -1,5 +1,5 @@
 #!/bin/sh
-# shotgun+crud wrapper to copy or upload a screenshot and send a notification
+# shotgun+boox wrapper to copy or upload a screenshot and send a notification
 
 save_dir=$HOME/opt/pictures/screenshots
 
@@ -15,7 +15,7 @@ while getopts "us" opt; do
 	esac
 done
 
-shotgun -g "$(crud)" /tmp/screenshot.png 2> /dev/null && {
+shotgun -g "$(boox)" /tmp/screenshot.png 2> /dev/null && {
 	if [ "$upload" = true ]; then
 		0x0 /tmp/screenshot.png
 	else

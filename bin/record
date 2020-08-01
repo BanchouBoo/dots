@@ -31,7 +31,8 @@ getpid() {
 start() {
 	isrunning && die "Another instance already exists: $(getpid)"
 
-	set -- $(crud '$X $Y $(($W - $W % 2)) $(($H - $H % 2))') # prevent odd numbers for width/height
+	set -- $(boox '%x %y %w %h') # prevent odd numbers for width/height
+	set -- $1 $2 $(($3 - $3 % 2)) $(($4 - $4 % 2))
 	file="$RECORD_OUTPUT_DIR/$(date '+%Y.%m.%d-%H:%M:%S').mp4"
 
 	:>$sock
