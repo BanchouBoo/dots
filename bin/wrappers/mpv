@@ -6,4 +6,4 @@ if [ "$TERM" = linux ]; then
 	MPV_CMD="${MPV_CMD} --vo=gpu --gpu-api=opengl --gpu-context=drm"
 fi
 
-$MPV_CMD "$@"
+exec $MPV_CMD "$@"
