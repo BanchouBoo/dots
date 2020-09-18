@@ -1,3 +1,0 @@
-booexec: mv <file> $HOME/opt/suckless/crud/cfg/config.h; suck crud
-#define FOREGROUND_COLOR 0x<color2>
-#define BORDER 3

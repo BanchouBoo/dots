@@ -1,0 +1,9 @@
+booexec: mv <file> $HOME/opt/suckless/boox/cfg/src/config.h; suck boox
+#ifndef CONFIG_H
+#define CONFIG_H
+
+#define BORDER 3
+#define COLOR 0x<color2>
+#define DEFAULT_OUTPUT_FORMAT "%wx%h+%x+%y"
+
+#endif
