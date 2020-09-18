@@ -1,4 +1,5 @@
 default-stream=best
 twitch-low-latency
+twitch-disable-ads
 hls-live-edge=1
 player=mpv
