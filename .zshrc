@@ -37,6 +37,8 @@ bindkey '^n' down-line-or-search
 # include $HOME/.local/bin and all immediate subdirectories in $PATH
 PATH="$(find ${HOME}/.local/bin -maxdepth 1 -type d | paste -s -d ':'):${PATH}"
 
+export _ZO_ECHO=1
+export _ZO_RESOLVE_SYMLINKS=1
 source <(zoxide init zsh --cmd cd)
 
 export FZF_DEFAULT_OPTS="-m"
