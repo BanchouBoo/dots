@@ -41,16 +41,11 @@ export _ZO_ECHO=1
 export _ZO_RESOLVE_SYMLINKS=1
 source <(zoxide init zsh --cmd cd)
 
-export FZF_DEFAULT_OPTS="-m"
 source <(fzf --zsh)
-source "${HOME}/git/fzf-tab-completion/zsh/fzf-zsh-completion.sh"
-bindkey '^I' fzf_completion
-# TODO: do this globally on all path completions
-zstyle ':completion::*:cd:*' fzf-completion-keybindings /:accept:'repeat-fzf-completion'
-zstyle ':completion::*:ls:*' fzf-completion-keybindings /:accept:'repeat-fzf-completion'
+source "${HOME}/git/fzf-tab/fzf-tab.plugin.zsh"
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -1 --color=always $realpath'
 
 source /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
 
 alias dots="git --git-dir=${HOME}/.dots --work-tree=$HOME"
 alias lazydots="lazygit --git-dir=${HOME}/.dots --work-tree=$HOME"
-
