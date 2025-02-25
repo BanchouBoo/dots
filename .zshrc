@@ -4,8 +4,10 @@
 : ${XDG_CACHE_HOME:=${HOME}/.cache}
 export XDG_DATA_HOME XDG_CONFIG_HOME XDG_STATE_HOME XDG_CACHE_HOME
 
+zsh_cache_dir=${XDG_CACHE_HOME}/zsh
+
 autoload -U compinit promptinit select-word-style
-compinit
+compinit -d "${zsh_cache_dir}/compdump"
 promptinit
 prompt gentoo
 
@@ -21,7 +23,7 @@ setopt hist_ignore_space
 setopt SHARE_HISTORY
 HISTSIZE=10000
 SAVEHIST=10000
-HISTFILE="${XDG_CACHE_HOME}/zsh/history"
+HISTFILE="${zsh_cache_dir}/history"
 
 # completion cache
 zstyle ':completion::complete:*' use-cache 1
