@@ -28,6 +28,9 @@ HISTFILE="${zsh_cache_dir}/history"
 # completion cache
 zstyle ':completion::complete:*' use-cache 1
 
+# case insensitive completion + match anywhere in name
+zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' '+l:|=* r:|=*'
+
 bindkey -e
 
 # context-sensitive history navigation
