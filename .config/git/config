@@ -1,0 +1,21 @@
+[user]
+	email = 32691832+BanchouBoo@users.noreply.github.com
+	name = Boo
+[column]
+	ui = auto
+[branch]
+	sort = -committerdate
+[tag]
+	sort = version:refname
+[diff]
+	algorithm = histogram
+	colorMoved = plain
+	mnemonicPrefix = true
+	renames = true
+[push]
+	autoSetupRemote = true
+	followTags = true
+[commit]
+	verbose = true
+[merge]
+	conflictstyle = zdiff3
