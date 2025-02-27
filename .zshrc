@@ -20,9 +20,9 @@ select-word-style bash
 
 setopt hist_ignore_all_dups
 setopt hist_ignore_space
-setopt SHARE_HISTORY
-HISTSIZE=10000
-SAVEHIST=10000
+setopt share_history
+HISTSIZE=100000
+SAVEHIST=100000
 HISTFILE="${zsh_cache_dir}/history"
 
 # completion cache
