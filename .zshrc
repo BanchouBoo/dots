@@ -54,4 +54,4 @@ source /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
 
 alias dots="git --git-dir=${HOME}/.dots --work-tree=$HOME"
 alias lazydots="lazygit --git-dir=${HOME}/.dots --work-tree=$HOME"
-alias ls="ls --color"
+alias ls="ls --color --group-directories-first -hv"
