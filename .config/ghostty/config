@@ -1,0 +1,17 @@
+##################
+#### FUNCTION ####
+##################
+window-inherit-working-directory = true
+
+##################
+### AESTHETICS ###
+##################
+theme = houseki
+# window-decoration = none
+
+window-padding-x = 5
+window-padding-y = 5
+window-padding-balance = true
+window-padding-color = extend
+
+selection-invert-fg-bg = true
