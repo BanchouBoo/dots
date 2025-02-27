@@ -6,10 +6,10 @@ export XDG_DATA_HOME XDG_CONFIG_HOME XDG_STATE_HOME XDG_CACHE_HOME
 
 zsh_cache_dir=${XDG_CACHE_HOME}/zsh
 
-autoload -U compinit promptinit select-word-style
+autoload -U compinit select-word-style
 compinit -d "${zsh_cache_dir}/compdump"
-promptinit
-prompt gentoo
+PS1='[%F{blue}%B%~%b%f]
+%F{%(?.green.red)}%(?.❯.🞬)%f '
 
 setopt autocd
 setopt extendedglob
