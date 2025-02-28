@@ -39,8 +39,9 @@ bindkey '^p' up-line-or-search
 bindkey '^[[B' down-line-or-search
 bindkey '^n' down-line-or-search
 
-# include $HOME/.local/bin and all immediate subdirectories in $PATH
-PATH="$(find ${HOME}/.local/bin -maxdepth 1 -type d | paste -s -d ':'):${PATH}"
+# include $HOME/.local/bin and all subdirectories in $PATH
+user_bin_dirs=(${HOME}/.local/bin ${HOME}/.local/bin/**/*(/))
+PATH="${(j.:.)user_bin_dirs}:${PATH}"
 
 export _ZO_ECHO=1
 export _ZO_RESOLVE_SYMLINKS=1
