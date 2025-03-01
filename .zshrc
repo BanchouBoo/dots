@@ -64,7 +64,8 @@ alias ls="ls --color --group-directories-first -hv"
 
 ranger () {
     local file=/tmp/rangerdir
-    /usr/bin/ranger --choosedir="${file}" "$@" < "$TTY"
+    ranger_path=$(which -p ranger)
+    "${ranger_path}" --choosedir="${file}" "$@" < "$TTY"
     # redirect necessary because of zoxide printing directory
     cd $(< "$file") >/dev/null
     zle && zle reset-prompt
