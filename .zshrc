@@ -5,6 +5,7 @@
 export XDG_DATA_HOME XDG_CONFIG_HOME XDG_STATE_HOME XDG_CACHE_HOME
 
 zsh_cache_dir=${XDG_CACHE_HOME}/zsh
+zsh_plugin_dir=${XDG_CONFIG_HOME}/zsh/plugins
 
 autoload -U compinit select-word-style
 compinit -d "${zsh_cache_dir}/compdump"
@@ -51,7 +52,7 @@ export _ZO_RESOLVE_SYMLINKS=1
 source <(zoxide init zsh --cmd cd)
 
 source <(fzf --zsh)
-source "${HOME}/git/fzf-tab/fzf-tab.plugin.zsh"
+source "${zsh_plugin_dir}/fzf-tab/fzf-tab.plugin.zsh"
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -1 --color=always $realpath'
 
 source /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
