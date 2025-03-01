@@ -30,7 +30,8 @@ SAVEHIST=100000
 HISTFILE="${zsh_cache_dir}/history"
 
 # completion cache
-zstyle ':completion::complete:*' use-cache 1
+zstyle ':completion:*' use-cache 1
+zstyle ':completion:*' cache-path "${zsh_cache_dir}/completion-cache"
 
 # case insensitive completion + match anywhere in name
 zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' '+l:|=* r:|=*'
