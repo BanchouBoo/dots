@@ -63,6 +63,10 @@ alias lazydots="lazygit --git-dir=${HOME}/.dots --work-tree=$HOME"
 alias ls="ls --color --group-directories-first -hv"
 
 ranger () {
+    # prevent nesting
+    if [ -n "$RANGER_LEVEL" ]; then
+        exit
+    fi
     local file=/tmp/rangerdir
     local ranger_path=$(which -p ranger)
     "${ranger_path}" --choosedir="${file}" "$@" < "$TTY"
