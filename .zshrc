@@ -10,6 +10,9 @@ autoload -U compinit select-word-style
 compinit -d "${zsh_cache_dir}/compdump"
 PS1='[%F{blue}%B%~%b%f]
 %F{%(?.green.red)}%(?.❯.🞬)%f '
+if [ -n "$RANGER_LEVEL" ]; then
+    PS1="[%F{magenta}ranger%f] ${PS1}"
+fi
 
 setopt autocd
 setopt extendedglob
