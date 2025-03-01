@@ -45,8 +45,8 @@ bindkey '^[[B' down-line-or-search
 bindkey '^n' down-line-or-search
 
 # include $HOME/.local/bin and all subdirectories in $PATH
-user_bin_dirs=(${HOME}/.local/bin ${HOME}/.local/bin/**/*(/))
-PATH="${(j.:.)user_bin_dirs}:${PATH}"
+typeset -U path
+path=(${HOME}/.local/bin ${HOME}/.local/bin/**/*(/) $path)
 
 export _ZO_ECHO=1
 export _ZO_RESOLVE_SYMLINKS=1
