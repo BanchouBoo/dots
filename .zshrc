@@ -68,8 +68,7 @@ ranger () {
         exit
     fi
     local file=/tmp/rangerdir
-    local ranger_path=$(which -p ranger)
-    "${ranger_path}" --choosedir="${file}" "$@" < "$TTY"
+    "$commands[ranger]" --choosedir="${file}" "$@" < "$TTY"
     # redirect necessary because of zoxide printing directory
     cd $(< "$file") >/dev/null
     zle && zle reset-prompt
