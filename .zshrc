@@ -48,7 +48,6 @@ bindkey '^n' down-line-or-search
 typeset -U path
 path=(${HOME}/.local/bin ${HOME}/.local/bin/**/*(/) $path)
 
-export _ZO_ECHO=1
 export _ZO_RESOLVE_SYMLINKS=1
 source <(zoxide init zsh --cmd cd)
 
