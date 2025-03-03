@@ -38,8 +38,8 @@ setopt extendedglob
 select-word-style bash
 
 setopt hist_ignore_all_dups
-setopt hist_ignore_space
-setopt share_history
+setopt hist_ignore_space # don't save commands that start with space
+setopt share_history # share history between zsh instances
 HISTSIZE=100000
 SAVEHIST=100000
 HISTFILE="${zsh_cache_dir}/history"
@@ -60,7 +60,7 @@ bindkey '^[[B' down-line-or-search
 bindkey '^n' down-line-or-search
 
 # include $HOME/.local/bin and all subdirectories in $PATH
-typeset -U path
+typeset -U path # prevents duplicate entries
 path=(${HOME}/.local/bin ${HOME}/.local/bin/**/*(/) $path)
 
 export _ZO_RESOLVE_SYMLINKS=1
