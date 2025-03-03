@@ -9,11 +9,26 @@ zsh_plugin_dir=${XDG_CONFIG_HOME}/zsh/plugins
 
 autoload -U compinit select-word-style
 compinit -d "${zsh_cache_dir}/compdump"
-PS1='[%F{blue}%B%~%b%f]
-%F{%(?.green.red)}%(?.❯.🞬)%f '
-if [ -n "$RANGER_LEVEL" ]; then
-    PS1="[%F{magenta}ranger%f] ${PS1}"
-fi
+
+prompt () {
+    unset PS1
+    if [ -n "$RANGER_LEVEL" ]; then
+        PS1+='[%F{magenta}ranger%f] '
+    fi
+    PS1+='[%F{blue}%B%~%b%f]'
+    if [ -d ".git" ]; then
+        head="$(< .git/HEAD)"
+        head=${head##*/}
+        # if head is a specific commit, try to find tag name
+        while read -r line; do
+            [[ "$line" == "$head"* ]] && head=${line##*/}
+        done < .git/packed-refs
+        PS1+=" [%F{yellow}${head}%f]"
+    fi
+    PS1+=$'\n'
+    PS1+='%F{%(?.green.red)}%(?.❯.🞬)%f '
+}
+precmd_functions+=(prompt)
 
 setopt autocd
 setopt extendedglob
