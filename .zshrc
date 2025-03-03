@@ -18,10 +18,15 @@ prompt () {
     PS1+='[%F{blue}%B%~%b%f]'
     if [ -d ".git" ]; then
         head="$(< .git/HEAD)"
-        head=${head##*/}
+        head=${head#*refs/heads/}
         # if head is a specific commit, try to find tag name
         while read -r line; do
-            [[ "$line" == "$head"* ]] && head=${line##*/}
+            [[ "$line" == '#'* ]] && continue
+            line_arr=(${=line})
+            commit=$line_arr[1]
+            ref=$line_arr[2]
+            [ "$head" = "$commit" ] && [[ "$ref" == "refs/tags"* ]] &&
+                head="${ref#refs/tags/}"
         done < .git/packed-refs
         PS1+=" [%F{yellow}${head}%f]"
     fi
