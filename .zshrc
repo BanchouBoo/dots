@@ -87,7 +87,7 @@ ranger () {
         exit
     fi
     local file=/tmp/rangerdir
-    "$commands[ranger]" --choosedir="${file}" "$@" < "$TTY"
+    _ZO_FZF_OPTS='--height=100%' "$commands[ranger]" --choosedir="${file}" "$@" < "$TTY"
     # redirect necessary because of zoxide printing directory
     cd $(< "$file") >/dev/null
     zle && zle reset-prompt
