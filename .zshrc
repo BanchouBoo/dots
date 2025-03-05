@@ -73,7 +73,7 @@ source <(zoxide init zsh --cmd cd)
 
 source <(fzf --zsh)
 source "${zsh_plugin_dir}/fzf-tab/fzf-tab.plugin.zsh"
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -1 --color=always $realpath'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -1p --color=always $realpath'
 
 source /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
 
