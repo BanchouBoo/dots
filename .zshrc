@@ -20,7 +20,7 @@ prompt () {
         head="$(< .git/HEAD)"
         head=${head#*refs/heads/}
         # if head is a specific commit, try to find tag name
-        while read -r line; do
+	[ -f .git/packed-refs ] && while read -r line; do
             [[ "$line" == '#'* ]] && continue
             line_arr=(${=line})
             commit=$line_arr[1]
