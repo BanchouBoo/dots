@@ -1,0 +1,3 @@
+#!/bin/sh
+
+_ZO_FZF_OPTS="--height=100% --preview='ls -1p --group-directories-first --color=always {2..}'" /usr/bin/ranger "$@"
