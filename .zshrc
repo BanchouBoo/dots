@@ -67,6 +67,7 @@ bindkey '^n' down-line-or-search
 # include $HOME/.local/bin and all subdirectories in $PATH
 typeset -U path # prevents duplicate entries
 path=(${HOME}/.local/bin ${HOME}/.local/bin/**/*(/) $path)
+path=(${HOME}/misc/arm-gnu-toolchain-14.2.rel1-x86_64-arm-none-eabi/bin $path)
 
 export _ZO_RESOLVE_SYMLINKS=1
 source <(zoxide init zsh --cmd cd)
