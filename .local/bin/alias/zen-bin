@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# ensures smooth trackpad scrolling in X
+MOZ_USE_XINPUT2=1 exec /usr/bin/zen-bin "$@"
