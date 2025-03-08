@@ -1,0 +1,13 @@
+#!/bin/sh
+# utility script to print the current directory for use in windows applications running in wine
+
+pwd=$(pwd "$@")
+
+{
+    case "$pwd" in
+        *"/drive_c/"*) pwd="/${pwd##*/drive_c/}"; printf 'C:' ;;
+        *"/c:/"*) pwd="/${pwd##*/c:/}"; printf 'C:' ;;
+        *) printf 'Z:'
+    esac
+    printf '%s\n' "$pwd"
+} | tr '/' '\\'
