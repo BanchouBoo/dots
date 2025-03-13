@@ -4,6 +4,8 @@
 : ${XDG_CACHE_HOME:=${HOME}/.cache}
 export XDG_DATA_HOME XDG_CONFIG_HOME XDG_STATE_HOME XDG_CACHE_HOME
 
+export RLWRAP_HOME="${XDG_DATA_HOME}/rlwrap"
+
 zsh_cache_dir=${XDG_CACHE_HOME}/zsh
 zsh_plugin_dir=${XDG_CONFIG_HOME}/zsh/plugins
 
