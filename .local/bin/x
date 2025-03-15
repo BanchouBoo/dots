@@ -1,7 +1,7 @@
 #!/bin/sh
 
-: "${XDG_CONFIG_HOME:=~/.config}"
-: "${XDG_CACHE_HOME:=~/.cache}"
+: "${XDG_CONFIG_HOME:=${HOME}/.config}"
+: "${XDG_CACHE_HOME:=${HOME}/.cache}"
 
 export XINITRC="${XDG_CONFIG_HOME}/xinitrc"
 export XSERVERRC="${XDG_CONFIG_HOME}/xserverrc"
