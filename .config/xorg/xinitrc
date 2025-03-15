@@ -1,0 +1,29 @@
+#!/bin/sh
+
+: "${XDG_CONFIG_HOME:=${HOME}/.config}"
+: "${XDG_STATE_HOME:=${HOME}/.local/state}"
+
+system_x11_dir=/etc/X11/xinit
+system_resources="${system_x11_dir}/.Xresources"
+system_modmap="${system_x11_dir}/.Xmodmap"
+system_xinitrc_dir="${system_x11_dir}/xinitrc.d"
+
+user_resources="${XDG_CONFIG_HOME}/Xresources"
+user_modmap="${XDG_CONFIG_HOME}/Xmodmap"
+
+for file in "$system_resources" "$user_resources"; do
+    [ -f "$file" ] && xrdb -merge "$file"
+done
+
+for file in "$system_modmap" "$user_modmap"; do
+    [ -f "$file" ] && xmodmap "$file"
+done
+
+if [ -d "${system_xinitrc_dir}" ]; then
+    for file in "$system_xinitrc_dir"/?*; do
+        [ -x "$file" ] && . "$file"
+    done
+fi
+
+mkdir -p "${XDG_STATE_HOME}"
+exec awesome "$@" 2> "${XDG_STATE_HOME}/awesome.log"
