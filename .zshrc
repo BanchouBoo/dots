@@ -74,6 +74,9 @@ export _ZO_RESOLVE_SYMLINKS=1
 source <(zoxide init zsh --cmd cd)
 
 source <(fzf --zsh)
+export FZF_CTRL_R_OPTS=(
+    --reverse
+)
 source "${zsh_plugin_dir}/fzf-tab/fzf-tab.plugin.zsh"
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -1p --color=always $realpath'
 
