@@ -17,10 +17,13 @@ prompt () {
         PS1+='[%F{magenta}ranger%f] '
     fi
     PS1+='[%F{blue}%B%~%b%f]'
-    if [ -d ".git" ]; then
-        head="$(< .git/HEAD)"
+    if [ -e ".git" ]; then
+        dir=".git"
+        # for submodules
+        [ -f ".git" ] && dir=$(grep -m1 '^gitdir:' .git) && dir=${dir#gitdir:* }
+        head=$(< "${dir}/HEAD")
         head=${head#*refs/heads/}
-        # if head is a specific commit, try to find tag name
+    # if head is a specific commit, try to find tag name
 	[ -f .git/packed-refs ] && while read -r line; do
             [[ "$line" == '#'* ]] && continue
             line_arr=(${=line})
