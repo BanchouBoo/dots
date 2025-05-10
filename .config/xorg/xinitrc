@@ -25,5 +25,9 @@ if [ -d "${system_xinitrc_dir}" ]; then
     done
 fi
 
+xset r rate 300 50
+xinput set-prop "Ploopy Corporation Ploopy Pavonis Trackpad Touchpad" \
+                "libinput Tapping Enabled" 1
+
 mkdir -p "${XDG_STATE_HOME}"
-exec awesome "$@" 2> "${XDG_STATE_HOME}/awesome.log"
+exec dbus-launch --exit-with-session awesome "$@" 2> "${XDG_STATE_HOME}/awesome.log"
