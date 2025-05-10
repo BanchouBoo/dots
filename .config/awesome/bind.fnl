@@ -157,7 +157,8 @@
        "g"
        (fn [client]
          (if (= client (awful.client.getmaster))
-           (awful.client.swap.byidx 1 client)
+           (do (awful.client.focus.byidx 1 client)
+               (awful.client.swap.byidx 1 client))
            (awful.client.setmaster client)))
        {:description "change master window" :group "client"})
 
