@@ -147,7 +147,13 @@
         1
         (fn [client]
           (client:activate {:context "mouse_click" :action "mouse_move"})))
-      (awful.button 
+      (awful.button
+        [mod]
+        2
+        (fn [client]
+          (set client.floating (not client.floating))
+          (client:raise)))
+      (awful.button
         [mod]
         3
         (fn [client]
