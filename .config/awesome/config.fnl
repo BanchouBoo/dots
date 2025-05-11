@@ -51,11 +51,6 @@
   (fn [client]
     (client:activate {:context "mouse_enter" :raise false})))
 
-    ;awesome.register_xproperty("is_restart", "boolean")
-    ;local restart_detected = awesome.get_xproperty("is_restart") ~= nil
-    ;awesome.set_xproperty("is_restart", true)
-    ;return restart_detected
-
 ; autostart programs
 (when (not (is-restart))
   (awful.spawn.once "gentoo-pipewire-launcher")
