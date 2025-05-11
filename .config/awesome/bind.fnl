@@ -137,7 +137,12 @@
 (client.connect_signal
   "request::default_mousebindings"
   #(awful.mouse.append_client_mousebindings
-     [(awful.button 
+     [(awful.button
+        []
+        1
+        (fn [client]
+          (client:activate {:context :mouse_click})))
+      (awful.button
         [mod]
         1
         (fn [client]
