@@ -38,14 +38,29 @@
      #(awful.client.focus.byidx -1)
      {:description "next window" :group "awesome"})
    (awful.key
+     [mod :Mod1]
+     "r"
+     #(awful.tag.setmwfact 0.50)
+     {:description "reset master ratio" :group "awesome"})
+   (awful.key
      [mod]
      "h"
-     #(awful.tag.incmwfact -0.05)
+     #(awful.tag.incmwfact -0.02)
      {:description "decrease master ratio" :group "awesome"})
    (awful.key
      [mod]
      "l"
-     #(awful.tag.incmwfact 0.05)
+     #(awful.tag.incmwfact 0.02)
+     {:description "increase master ratio" :group "awesome"})
+   (awful.key
+     [mod :Mod1]
+     "h"
+     #(awful.client.incwfact -0.02)
+     {:description "decrease master ratio" :group "awesome"})
+   (awful.key
+     [mod :Mod1]
+     "l"
+     #(awful.client.incwfact 0.02)
      {:description "increase master ratio" :group "awesome"})
    (awful.key
      [mod :Shift]
