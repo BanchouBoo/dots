@@ -45,11 +45,43 @@
       screen
       (. awful.layout.layouts 1))))
 
-; sloppy focus
+(fn focus-hover []
+  (let [client mouse.current_client]
+    (when client
+      (client:activate {:context "mouse_enter" :raise false}))))
+
+(local focus-timer
+  (gears.timer {:timeout (/ 1 60)
+                :autostart false
+                :callback focus-hover
+                :single_shot true}))
+
+; focus window when mouse enters it
 (client.connect_signal
   "mouse::enter"
   (fn [client]
     (client:activate {:context "mouse_enter" :raise false})))
+
+; focus window under cursor when changing tags
+(tag.connect_signal
+  "property::selected"
+  #(focus-timer:start))
+
+; focus window under cursor when closing a window
+(client.connect_signal
+  "request::unmanage"
+  #(focus-timer:start))
+
+; focus window under cursor when closing a window
+(client.connect_signal
+  "request::unmanage"
+  #(focus-timer:start))
+
+; focus window under cursor when window changes tags
+; unused for now since it also fires the signal when a new window is created
+;(client.connect_signal
+;  "tagged"
+;  #(focus-timer:start))
 
 ; autostart programs
 (when (not (is-restart))
