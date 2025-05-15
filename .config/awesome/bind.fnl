@@ -190,6 +190,14 @@
        {:description "change master window" :group "client"})
 
      (awful.key
+       [mod :Mod1]
+       "f"
+       (fn [client]
+         (set client.maximized (not client.maximized))
+         (client:raise))
+       {:description "toggle maximized" :group "client"})
+
+     (awful.key
        [mod]
        "f"
        (fn [client]
