@@ -172,7 +172,8 @@
         [mod]
         3
         (fn [client]
-          (client:activate {:context "mouse_click" :action "mouse_resize"})))]))
+          (client:activate {:context "mouse_click" :action "mouse_resize"})))
+     ]))
 
 (client.connect_signal
   "request::default_keybindings"
