@@ -24,7 +24,7 @@
      [mod]
      "m"
      #(awful.spawn "wpctl set-mute @DEFAULT_SINK@ toggle")
-     {:description "previous window" :group "awesome"})
+     {:description "toggle mute" :group "awesome"})
 
    ; window navigation
    (awful.key
