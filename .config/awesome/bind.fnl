@@ -25,6 +25,23 @@
      "m"
      #(awful.spawn "wpctl set-mute @DEFAULT_SINK@ toggle")
      {:description "toggle mute" :group "awesome"})
+   (awful.key
+     [mod :Mod1]
+     "m"
+     #(each [_ c (ipairs (client.get))]
+        (when (= c.class "mpv")
+          ; xdotool doesn't work here if the mpv window is focused
+          (if (= c client.focus)
+              (do
+                (root.fake_input "key_release" "Super_L")
+                (root.fake_input "key_release" "Alt_L")
+                (root.fake_input "key_release" "m")
+                (root.fake_input "key_press" "m")
+                (root.fake_input "key_release" "m")
+                (root.fake_input "key_press" "Super_L")
+                (root.fake_input "key_press" "Alt_L"))
+              (awful.spawn ["xdotool" "key" "--window" (tostring c.window) "m"]))))
+     {:description "toggle mute on all mpv windows" :group "awesome"})
 
    ; window navigation
    (awful.key
