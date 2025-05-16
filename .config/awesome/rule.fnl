@@ -25,6 +25,11 @@
       {:id "Tag 9"
        :rule_any {:class ["qBittorrent"]}
        :properties {:tag :9}})
+    (ruled.client.append_rule
+      {:id "Anki"
+       :rule_any {:class ["Anki"]}
+       :except_any {:name ["^User.*Anki$"]}
+       :properties {:floating true}})
     ))
 
 (ruled.notification.connect_signal
