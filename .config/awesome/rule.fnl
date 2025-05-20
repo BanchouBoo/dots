@@ -18,6 +18,10 @@
        :rule_any {:class ["Lutris" "steam"]}
        :properties {:tag :1}})
     (ruled.client.append_rule
+      {:id "Tag 4"
+       :rule_any {:class ["Anki"]}
+       :properties {:tag :4}})
+    (ruled.client.append_rule
       {:id "Tag 5"
        :rule_any {:class ["discord"]}
        :properties {:tag :5}})

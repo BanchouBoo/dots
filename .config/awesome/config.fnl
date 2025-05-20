@@ -90,6 +90,7 @@
   (awful.spawn.once "touchegg")
   (awful.spawn.once "lutris")
   (awful.spawn.once "steam")
+  (awful.spawn.once "anki")
   (awful.spawn.once "discord")
   (awful.spawn.once "qbittorrent")
   (awful.spawn.once "unclutter --timeout 1"))
