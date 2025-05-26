@@ -1,5 +1,6 @@
 (local beautiful (require :beautiful))
 (local gears (require :gears))
+(local ruled-notification (require :ruled.notification))
 
 (local theme-path (.. user-theme-dir "/basic"))
 (local dpi beautiful.xresources.apply_dpi)
@@ -13,11 +14,11 @@
 
   :bg_normal "#101010"
   :bg_focus "#ff0000"
-  :bg_urgent "#00ff00"
+  :bg_urgent "#a33c3d"
 
   :fg_normal "#cbf3f3"
   :fg_focus "#cbf3f3"
-  :fg_urgent "#0000ff"
+  :fg_urgent "#101010"
 
   :useless_gap (dpi 5)
   :border_width (dpi 2)
@@ -37,6 +38,12 @@
   :calendar_normal_fg_color "#cbf3f370"
   :calendar_focus_bg_color "#101010"
 })
+
+(ruled-notification.connect_signal
+  "request::rules"
+  #(ruled-notification.append_rule
+     {:rule {:urgency "critical"}
+      :properties {:bg theme.bg_urgent :fg theme.fg_urgent}}))
 
 (gears.wallpaper.maximized theme.wallpaper)
 
