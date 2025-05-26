@@ -1,0 +1,42 @@
+#!/usr/bin/env zsh
+
+args=()
+urgency=normal
+timeout=5
+
+while [ "$1" ]; do
+    case $1 in
+        -u|--urgency)
+            case $2 in
+                low|normal|critical) urgency=$2 ;;
+                *) printf 'Invalid urgency "%s"\n' "$2"; exit 1 ;;
+            esac
+            shift
+            ;;
+        -t|--timeout)
+            case $2 in
+                [0-9]*) timeout=$2 ;;
+                *) printf 'Invalid timeout "%s"\n' "$2"; exit 1 ;;
+            esac
+            shift
+            ;;
+        *)
+            args+=($1)
+            ;;
+    esac
+    shift
+done
+
+title="$args[1]"
+shift args
+message="$args[@]"
+
+printf '
+    local naughty = require("naughty")
+    naughty.notify({
+        urgency = "%s",
+        timeout = %d,
+        title = "%s",
+        message = "%s"
+    })
+' "$urgency" "$timeout" "$title" "$message" | awesome-client
