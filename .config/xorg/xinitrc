@@ -30,4 +30,4 @@ xinput set-prop "Ploopy Corporation Ploopy Pavonis Trackpad Touchpad" \
                 "libinput Tapping Enabled" 1
 
 mkdir -p "${XDG_STATE_HOME}"
-exec dbus-launch --exit-with-session awesome "$@" 2> "${XDG_STATE_HOME}/awesome.log"
+exec dbus-launch --sh-syntax --exit-with-session awesome "$@" 2> "${XDG_STATE_HOME}/awesome.log"
