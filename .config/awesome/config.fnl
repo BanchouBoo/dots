@@ -72,11 +72,6 @@
   "request::unmanage"
   #(focus-timer:start))
 
-; focus window under cursor when closing a window
-(client.connect_signal
-  "request::unmanage"
-  #(focus-timer:start))
-
 ; focus window under cursor when window changes tags
 ; unused for now since it also fires the signal when a new window is created
 ;(client.connect_signal
