@@ -83,6 +83,7 @@
   (awful.spawn.once "gentoo-pipewire-launcher")
   (awful.spawn.once "picom")
   (awful.spawn.once "touchegg")
+  (awful.spawn.once "syncthing")
   (awful.spawn.once "lutris")
   (awful.spawn.once "steam")
   (awful.spawn.once "anki")
