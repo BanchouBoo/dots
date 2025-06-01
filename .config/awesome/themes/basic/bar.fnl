@@ -3,9 +3,9 @@
 (local beautiful (require :beautiful))
 (local dpi beautiful.xresources.apply_dpi)
 
-(local clock (wibox.widget.textclock "%a %B %e %I:%M "))
+(local datetime (wibox.widget.textclock "%a %B %d %I:%M "))
 (local calendar (awful.widget.calendar_popup.month))
-(calendar:attach clock "tr" {:on_hover false})
+(calendar:attach datetime "tr" {:on_hover false})
 
 (local mute_indicator
   (awful.widget.watch
@@ -49,7 +49,7 @@
                                         :spacing (dpi 10)
                                         :layout wibox.layout.fixed.horizontal}
                                      3 {1 mute_indicator
-                                        2 clock
+                                        2 datetime
                                         :spacing (dpi 10)
                                         :layout wibox.layout.fixed.horizontal}
                                      :layout wibox.layout.align.horizontal}
