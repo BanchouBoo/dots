@@ -34,6 +34,10 @@
        :rule_any {:class ["Anki"]}
        :except_any {:name ["^User.*Anki$"]}
        :properties {:floating true}})
+    (ruled.client.append_rule
+      {:id "Dragon"
+       :rule_any {:class ["Dragon"]}
+       :properties {:ontop true}})
     ))
 
 (ruled.notification.connect_signal
