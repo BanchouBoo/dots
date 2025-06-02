@@ -1,6 +1,7 @@
 (local awful (require :awful))
 (local ruled (require :ruled))
 (local naughty (require :naughty))
+(local labels (require :labels))
 
 (ruled.client.connect_signal
   "request::rules"
@@ -16,7 +17,8 @@
     (ruled.client.append_rule
       {:id "Tag 1"
        :rule_any {:class ["Lutris" "steam"]}
-       :properties {:tag :1}})
+       :properties {:tag :1}}
+       :callback #(labels.set-labels $1 ["gaming"]))
     (ruled.client.append_rule
       {:id "Tag 4"
        :rule_any {:class ["Anki"]}

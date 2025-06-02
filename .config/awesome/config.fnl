@@ -3,6 +3,7 @@
 (local naughty (require :naughty))
 (local beautiful (require :beautiful))
 (local gears (require :gears))
+(local labels (require :labels))
 
 (fn is-restart []
     (awesome.register_xproperty "is_restart" "boolean")
@@ -23,6 +24,7 @@
 (global web-browser "zen-bin")
 (global mod "Mod4")
 
+(labels.init)
 (require :bind)
 (require :rule)
 (require :themes.basic)
