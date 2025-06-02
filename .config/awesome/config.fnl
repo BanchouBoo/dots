@@ -23,9 +23,9 @@
 (global web-browser "zen-bin")
 (global mod "Mod4")
 
-(require "bind")
-(require "rule")
-(require "themes.basic")
+(require :bind)
+(require :rule)
+(require :themes.basic)
 
 ; define layouts
 (let [l awful.layout.suit]
