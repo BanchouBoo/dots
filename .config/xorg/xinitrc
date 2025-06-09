@@ -26,6 +26,7 @@ if [ -d "${system_xinitrc_dir}" ]; then
 fi
 
 xset r rate 300 50
+xset -dpms s off
 xinput set-prop "Ploopy Corporation Ploopy Pavonis Trackpad Touchpad" \
                 "libinput Tapping Enabled" 1
 
