@@ -1,0 +1,14 @@
+running() {
+    pgrep -u "$USER" -ic "$1" > /dev/null
+}
+
+running pipewire || gentoo-pipewire-launcher &
+running picom || picom &
+running touchegg || touchegg &
+running syncthing || syncthing &
+running lutris || lutris &
+running steam || steam &
+running anki || anki &
+running discord || discord &
+running qbittorrent || qbittorrent &
+running unclutter || unclutter --timeout 1 &

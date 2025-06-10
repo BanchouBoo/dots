@@ -81,14 +81,4 @@
 ;  #(focus-timer:start))
 
 ; autostart programs
-(when (not (is-restart))
-  (awful.spawn.once "gentoo-pipewire-launcher")
-  (awful.spawn.once "picom")
-  (awful.spawn.once "touchegg")
-  (awful.spawn.once "syncthing")
-  (awful.spawn.once "lutris")
-  (awful.spawn.once "steam")
-  (awful.spawn.once "anki")
-  (awful.spawn.once "discord")
-  (awful.spawn.once "qbittorrent")
-  (awful.spawn.once "unclutter --timeout 1"))
+(awful.spawn "autostart")
