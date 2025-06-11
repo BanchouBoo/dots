@@ -1,0 +1,6 @@
+#!/bin/sh
+
+terminal_proc="$(awk '/^PPid:/ {print $2}' /proc/${PPID}/status)"
+
+"$@" &
+kill "$terminal_proc"
