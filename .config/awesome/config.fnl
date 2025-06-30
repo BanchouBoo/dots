@@ -29,6 +29,9 @@
 (require :rule)
 (require :themes.basic)
 
+; disable edge snapping
+(set awful.mouse.snap.edge_enabled false)
+
 ; define layouts
 (let [l awful.layout.suit]
   (tag.connect_signal
