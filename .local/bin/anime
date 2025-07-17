@@ -1,0 +1,32 @@
+#!/bin/sh
+
+search_directory="${HOME}/videos/anime"
+export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --reverse --height=-2 --delimiter=/"
+
+list_anime() {
+    printf '%s\n' "$search_directory"/*/ | sort -f
+}
+
+pick_anime() {
+    list_anime | fzf --with-nth=6
+}
+
+list_episodes() {
+    find "$1" -iname '*.mkv' -o -iname '*.mp4' -o -iname '*.webm' | sort -f
+}
+
+pick_episode() {
+    list_episodes "$1" | fzf --with-nth=7..
+}
+
+while [ ! "$episode" ]; do
+    series=$(pick_anime) || exit 1
+
+    episode=$(pick_episode "$series")
+done
+
+terminal_proc="$(awk '/^PPid:/ {print $2}' /proc/${PPID}/status)"
+
+mpv --profile=anime "$episode" &
+ghostty -e trackma-curses &
+kill "$terminal_proc"
