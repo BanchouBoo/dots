@@ -28,6 +28,10 @@
        :rule_any {:class ["discord"]}
        :properties {:tag :5}})
     (ruled.client.append_rule
+      {:id "Tag 6"
+       :rule_any {:class ["Plover"]}
+       :properties {:tag :6}})
+    (ruled.client.append_rule
       {:id "Tag 9"
        :rule_any {:class ["qBittorrent"]}
        :properties {:tag :9}})
