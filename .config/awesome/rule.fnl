@@ -21,7 +21,7 @@
        :callback #(labels.set-labels $1 ["gaming"]))
     (ruled.client.append_rule
       {:id "Tag 4"
-       :rule_any {:class ["Anki"]}
+       :rule_any {:class ["Anki" "RSS Guard"]}
        :properties {:tag :4}})
     (ruled.client.append_rule
       {:id "Tag 5"
