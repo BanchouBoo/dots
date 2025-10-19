@@ -25,6 +25,10 @@ if [ -d "${system_xinitrc_dir}" ]; then
     done
 fi
 
+export XMODIFIERS="@im=fcitx"
+export QT_IM_MODULE=xim
+export GTK_IM_MODULE=xim
+
 xset r rate 300 50
 xset -dpms s off
 xinput set-prop "Ploopy Corporation Ploopy Pavonis Trackpad Touchpad" \
