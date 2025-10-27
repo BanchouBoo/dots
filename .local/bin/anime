@@ -25,8 +25,5 @@ while [ ! "$episode" ]; do
     episode=$(pick_episode "$series")
 done
 
-terminal_proc="$(awk '/^PPid:/ {print $2}' /proc/${PPID}/status)"
-
-mpv --profile=anime "$episode" &
-ghostty -e trackma-curses &
-kill "$terminal_proc"
+mpv --profile=anime "$episode" --no-terminal &
+exec trackma-curses
