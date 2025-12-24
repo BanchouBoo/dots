@@ -1,0 +1,32 @@
+set database "sqlite"
+set guioptions ""
+
+set recolor true
+set recolor-keephue true
+set recolor-reverse-video true
+set recolor-lightcolor "#294557"
+set recolor-darkcolor "#edc0d7"
+
+set statusbar-bg "#3d667f"
+set statusbar-fg "#ffddf7"
+
+set inputbar-bg "#294557"
+set inputbar-fg "#edc0d7"
+
+set completion-bg "#294557"
+set completion-fg "#edc0d7"
+set completion-highlight-bg "#edc0d7"
+set completion-highlight-fg "#294557"
+
+set index-bg "#294557"
+set index-fg "#edc0d7"
+set index-active-bg "#edc0d7"
+set index-active-fg "#294557"
+
+set highlight-color "rgba(103, 135, 153, 0.4)"
+set highlight-active-color "rgba(190, 161, 177, 0.5)"
+
+map h jumplist backward
+map l jumplist forward
+map k navigate previous
+map j navigate next
