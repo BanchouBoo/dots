@@ -91,6 +91,7 @@ alias lazydots="lazygit --git-dir=${HOME}/.dots --work-tree=$HOME"
 alias ls="ls --color --group-directories-first -hvp"
 alias grep="grep --color"
 alias lg="lazygit"
+alias gcrs="git clone --recurse-submodules"
 
 ranger () {
     # prevent nesting
