@@ -84,6 +84,9 @@ source "${zsh_plugin_dir}/fzf-tab/fzf-tab.plugin.zsh"
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -1p --color=always $realpath'
 
 source /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
+typeset -A ZSH_HIGHLIGHT_PATTERNS ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='bg=8,fg=7'
+ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='bg=8,fg=7'
 
 alias dots="git --git-dir=${HOME}/.dots --work-tree=$HOME"
 alias lazydots="lazygit --git-dir=${HOME}/.dots --work-tree=$HOME"
