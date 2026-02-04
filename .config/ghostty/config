@@ -1,12 +1,13 @@
 ##################
 #### FUNCTION ####
 ##################
-window-inherit-working-directory = true
+window-inherit-working-directory = false
+mouse-scroll-multiplier = 0.2
 
 ##################
 ### AESTHETICS ###
 ##################
-theme = houseki
+theme = lune
 gtk-titlebar = false
 window-decoration = false
 
