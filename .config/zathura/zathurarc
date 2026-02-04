@@ -1,11 +1,15 @@
 set database "sqlite"
 set guioptions ""
 
+set selection-clipboard clipboard
+set selection-notification false
+
 set recolor true
 set recolor-keephue true
 set recolor-reverse-video true
 set recolor-lightcolor "#294557"
 set recolor-darkcolor "#edc0d7"
+#set recolor-darkcolor "#d9a5c0"
 
 set statusbar-bg "#3d667f"
 set statusbar-fg "#ffddf7"
@@ -26,7 +30,15 @@ set index-active-fg "#294557"
 set highlight-color "rgba(103, 135, 153, 0.4)"
 set highlight-active-color "rgba(190, 161, 177, 0.5)"
 
+map f toggle_fullscreen
+map [fullscreen] f toggle_fullscreen
 map h jumplist backward
+map [fullscreen] h jumplist backward
 map l jumplist forward
+map [fullscreen] l jumplist forward
 map k navigate previous
+map [fullscreen] k navigate previous
 map j navigate next
+map [fullscreen] j navigate next
+map <Space> exec "notify-send -t 700 $PAGE"
+map [fullscreen] <Space> exec "notify-send -t 700 $PAGE"
