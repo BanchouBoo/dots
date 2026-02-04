@@ -1,0 +1,4 @@
+#!/bin/sh
+
+#steam +gyro_force_sensor_rate 1000 +gyro_speed_deadzone_enabled 0 +gyro_precision_speed_enabled 0 +gyro_filter_enabled 0 +controller_rate 1 "$@"
+steam +gyro_force_sensor_rate 1000 +gyro_speed_deadzone_enabled 0 +gyro_precision_speed_enabled 0 +gyro_filter_enabled 0 "$@"

@@ -1,14 +1,21 @@
+#!/bin/sh
+
 running() {
     pgrep -u "$USER" -ic "$1" > /dev/null
 }
 
 running pipewire || gentoo-pipewire-launcher &
-running picom || picom &
+running picom || picom -b
 running touchegg || touchegg &
 running syncthing || syncthing &
 running lutris || lutris &
-running steam || steam &
+running steam || start-steam &
+running chatterino || chatterino &
 running anki || anki &
+running rssguard || rssguard &
 running discord || discord &
 running qbittorrent || qbittorrent &
+running fcitx5 || fcitx5 &
+#running plover || plover &
 running unclutter || unclutter --timeout 1 &
+vicinae server &
