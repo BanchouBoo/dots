@@ -20,12 +20,16 @@
        :properties {:tag :1}}
        :callback #(labels.set-labels $1 ["gaming"]))
     (ruled.client.append_rule
+      {:id "Tag 3"
+       :rule_any {:class ["chatterino"]}
+       :properties {:tag :3}})
+    (ruled.client.append_rule
       {:id "Tag 4"
        :rule_any {:class ["Anki" "RSS Guard"]}
        :properties {:tag :4}})
     (ruled.client.append_rule
       {:id "Tag 5"
-       :rule_any {:class ["discord"]}
+       :rule_any {:class ["discord" "vesktop"]}
        :properties {:tag :5}})
     (ruled.client.append_rule
       {:id "Tag 6"

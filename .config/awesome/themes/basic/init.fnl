@@ -10,33 +10,34 @@
 
   :icon_font "Font Awesome 6 Free 9"
 
-  :wallpaper (.. theme-path "/phos-face.png")
+  ;:wallpaper (.. theme-path "/phos-face.png")
+  :wallpaper (.. theme-path "/starry-sky.png")
 
-  :bg_normal "#101010"
+  :bg_normal "#132530"
   :bg_focus "#ff0000"
   :bg_urgent "#a33c3d"
 
-  :fg_normal "#cbf3f3"
-  :fg_focus "#cbf3f3"
+  :fg_normal "#edc0d7"
+  :fg_focus "#edc0d7"
   :fg_urgent "#101010"
 
   :useless_gap (dpi 5)
   :border_width (dpi 2)
-  :border_color_normal "#101010"
-  :border_color_active "#cbf3f3"
+  :border_color_normal "#132530"
+  :border_color_active "#edc0d7"
   :border_color_marked "#0ff000"
   :tooltip_opacity 0
 
-  :taglist_bg_focus "#41a387"
-  :taglist_fg_focus "#101010"
-  :taglist_bg_urgent "#cbf3f3"
-  :taglist_fg_urgent "#101010"
-  :taglist_fg_empty "#cbf3f370"
-  :taglist_fg_occupied "#cbf3f3"
+  :taglist_bg_focus "#edc0d7"
+  :taglist_fg_focus "#132530"
+  :taglist_bg_urgent "#db7272"
+  :taglist_fg_urgent "#132530"
+  :taglist_fg_empty "#edc0d770"
+  :taglist_fg_occupied "#edc0d7"
 
-  :calendar_weekday_fg_color "#41a387"
-  :calendar_normal_fg_color "#cbf3f370"
-  :calendar_focus_bg_color "#101010"
+  :calendar_weekday_fg_color "#edc0d7"
+  :calendar_normal_fg_color "#edc0d770"
+  :calendar_focus_bg_color "#132530"
 })
 
 (ruled-notification.connect_signal

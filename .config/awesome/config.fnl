@@ -21,8 +21,7 @@
 (global user-theme-dir (.. (gears.filesystem.get_configuration_dir) "/themes"))
 
 (global terminal "ghostty")
-(global web-browser "zen-bin")
-(global mod "Mod4")
+(global web-browser "zen")
 
 (labels.init)
 (require :bind)
@@ -82,6 +81,12 @@
 ;(client.connect_signal
 ;  "tagged"
 ;  #(focus-timer:start))
+
+; temp solution to prevent games from minimizing when they lose focus
+(client.connect_signal
+  "property::minimized"
+  (fn [client]
+    (set client.minimized false)))
 
 ; autostart programs
 (awful.spawn "autostart")
