@@ -13,7 +13,7 @@ running steam || start-steam &
 running chatterino || chatterino &
 running anki || anki &
 running rssguard || rssguard &
-running discord || discord &
+running vesktop || vesktop &
 running qbittorrent || qbittorrent &
 running fcitx5 || fcitx5 &
 #running plover || plover &
