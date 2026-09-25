@@ -2,7 +2,6 @@
 #### FUNCTION ####
 ##################
 window-inherit-working-directory = false
-mouse-scroll-multiplier = 0.2
 
 ##################
 ### AESTHETICS ###
