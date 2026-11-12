@@ -11,27 +11,40 @@ zsh_plugin_dir=${XDG_CONFIG_HOME}/zsh/plugins
 autoload -U compinit select-word-style
 compinit -d "${zsh_cache_dir}/compdump"
 
+find_git_root() {
+    local dir="${1:-$PWD}"
+    while [ "$dir" != "" ]; do
+        if [ -e "${dir}/.git" ]; then
+            echo "$dir"
+            return 0
+        fi
+        dir=${dir%/*}
+    done
+    return 1
+}
+
 prompt () {
     unset PS1
     if [ -n "$RANGER_LEVEL" ]; then
         PS1+='[%F{magenta}ranger%f] '
     fi
     PS1+='[%F{blue}%B%~%b%f]'
-    if [ -e ".git" ]; then
-        dir=".git"
+    local git_root=$(find_git_root)
+    if [ "$git_root" != "" ]; then
+        local dir="${git_root}/.git"
         # for submodules
-        [ -f ".git" ] && dir=$(grep -m1 '^gitdir:' .git) && dir=${dir#gitdir:* }
+        [ -f "${git_root}/.git" ] && dir=$(grep -m1 '^gitdir:' "${git_root}/.git") && dir=${dir#gitdir:* }
         head=$(< "${dir}/HEAD")
         head=${head#*refs/heads/}
-    # if head is a specific commit, try to find tag name
-	[ -f .git/packed-refs ] && while read -r line; do
+        # if head is a specific commit, try to find tag name
+        [ -f "${git_root}/.git/packed-refs" ] && while read -r line; do
             [[ "$line" == '#'* ]] && continue
             line_arr=(${=line})
             commit=$line_arr[1]
             ref=$line_arr[2]
             [ "$head" = "$commit" ] && [[ "$ref" == "refs/tags"* ]] &&
                 head="${ref#refs/tags/}"
-        done < .git/packed-refs
+        done < "${git_root}/.git/packed-refs"
         PS1+=" [%F{yellow}${head}%f]"
     fi
     PS1+=$'\n'
